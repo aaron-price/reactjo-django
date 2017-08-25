@@ -97,7 +97,6 @@ def obj_prepend(path, data):
     if duplicate:
         print(data['content'] + ' already exists in ' + existing_data + '... skipping.')
     else:
-        print("AFTER_START", target['after_start'])
         before = file[:after_start]
         content = data['content']
         after = file[after_start:]
