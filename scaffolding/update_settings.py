@@ -21,8 +21,8 @@ def update_settings():
         }
         f(s, 'w', data)
 
-        middleware  = '\n\tcorsheaders.middleware.CorsMiddleware'
-        middleware += '\n\tdjango.middleware.common.CommonMiddleware'
+        middleware  = "\n\t'corsheaders.middleware.CorsMiddleware'"
+        middleware += "\n\t'django.middleware.common.CommonMiddleware'"
         data = {
             'target': ['MIDDLEWARE'],
             'content': middleware
@@ -34,7 +34,7 @@ def update_settings():
         'target': "ALLOWED_HOSTS = []",
         'content': "ALLOWED_HOSTS = ['localhost']"
     }
-    f(p('dev_settings'), 'a', data)
+    f(p('dev_settings'), 'w', data)
 
     whitelist  = "\nCORS_ORIGIN_WHITELIST = ("
     whitelist += "\n\t'localhost:3000'"

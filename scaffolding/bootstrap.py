@@ -24,6 +24,7 @@ def bootstrap():
     # Build Django project
     os.chdir(p('backend'))
     startproject(project_name)
+    startapp('api')
 
     # Settings
     f(p('settings'), 'mkdir')
@@ -37,8 +38,8 @@ def bootstrap():
     f(p('settings') + '/production.py', 'w', settings_file)
     f(p('app', app_name = project_name) + '/settings.py', 'd')
 
-    # API app
-    startapp('api')
-
     from helpers.cli import manage
     manage(['migrate'])
+
+    f(p('serializers.py'), 'w', '')
+    f(p('permissions.py'), 'w', '')

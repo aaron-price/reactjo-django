@@ -182,11 +182,11 @@ def path_manager(query, **kwargs):
 		string = manage_py()
 	if query in ['settings', 'settingsroot']:
 		string = settings()
-	if query in ['settingsbase']:
+	if query in ['settingsbase', 'basesettings']:
 		string = os.path.join(settings(), 'base.py')
-	if query in ['settingsdev','settingsdevelopment']:
+	if query in ['settingsdev','settingsdevelopment', 'devsettings','developmentsettings']:
 		string = os.path.join(settings(), 'development.py')
-	if query in ['settingsprod','settingsproduction']:
+	if query in ['settingsprod','settingsproduction', 'prodsettings', 'productionsettings']:
 		string = os.path.join(settings(), 'production.py')
 	if query in ['app']:
 		string = app(**kwargs)
