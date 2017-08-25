@@ -1,6 +1,8 @@
 from scaffolding.bootstrap import bootstrap
-from scaffolding.setup_drf import setup_drf
+from scaffolding.update_settings import update_settings
+from scaffolding.user_auth import user_auth
 
 def new():
 	bootstrap()
-	setup_drf()
+	update_settings()
+	user_auth()

@@ -29,15 +29,15 @@ def test_paths():
 	assert(expected == actual)
 
 	expected = os.getcwd() + '/reactjorc/extensions/django/assets'
-	actual = p('assets', ext_name = 'django')
+	actual = p('assets', name = 'django')
 	assert(expected == actual)
 
 	expected = os.getcwd() + '/reactjorc/extensions/django/helpers'
-	actual = p('helpers', ext_name = 'django')
+	actual = p('helpers', name = 'django')
 	assert(expected == actual)
 
 	expected = os.getcwd() + '/reactjorc/extensions/django/scaffolding'
-	actual = p('scaffolding', ext_name = 'django')
+	actual = p('scaffolding', name = 'django')
 	assert(expected == actual)
 
 	# BACKEND
@@ -57,44 +57,44 @@ def test_paths():
 	actual = p('manage.py')
 	assert(expected == actual)
 
-	expected = os.getcwd() + '/backend/www/settings'
+	expected = os.getcwd() + '/backend/www/www/settings'
 	actual = p('settings')
 	assert(expected == actual)
 
-	expected = os.getcwd() + '/backend/www/settings/base.py'
+	expected = os.getcwd() + '/backend/www/www/settings/base.py'
 	actual = p('settings_base')
 	assert(expected == actual)
 
-	expected = os.getcwd() + '/backend/www/settings/development.py'
+	expected = os.getcwd() + '/backend/www/www/settings/development.py'
 	actual = p('settings_dev')
 	assert(expected == actual)
 
-	expected = os.getcwd() + '/backend/www/settings/production.py'
+	expected = os.getcwd() + '/backend/www/www/settings/production.py'
 	actual = p('settings_prod')
 	assert(expected == actual)
 
 	expected = os.getcwd() + '/backend/www/foo'
-	actual = p('app', app_name = 'foo')
+	actual = p('app', name = 'foo')
 	assert(expected == actual)
 
 	expected = os.getcwd() + '/backend/www/foo/views.py'
-	actual = p('views.py', app_name = 'foo')
+	actual = p('views.py', name = 'foo')
 	assert(expected == actual)
 
 	expected = os.getcwd() + '/backend/www/foo/admin.py'
-	actual = p('admin.py', app_name = 'foo')
+	actual = p('admin.py', name = 'foo')
 	assert(expected == actual)
 
 	expected = os.getcwd() + '/backend/www/foo/models.py'
-	actual = p('models.py', app_name = 'foo')
+	actual = p('models.py', name = 'foo')
 	assert(expected == actual)
 
 	expected = os.getcwd() + '/backend/www/foo/urls.py'
-	actual = p('urls.py', app_name = 'foo')
+	actual = p('urls.py', name = 'foo')
 	assert(expected == actual)
 
 	expected = os.getcwd() + '/backend/www/foo/tests.py'
-	actual = p('tests.py', app_name = 'foo')
+	actual = p('tests.py', name = 'foo')
 	assert(expected == actual)
 
 	expected = os.getcwd() + '/backend/www/api/serializers.py'
@@ -113,69 +113,5 @@ def test_paths():
 	expected = os.getcwd() + '/frontend/webpack.config.js'
 	actual = p('webpack.config.js')
 	assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/.babelrc'
-	# actual = p('babel')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/Procfile'
-	# actual = p('procfile')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/requirements.txt'
-	# actual = p('requirements')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/requirements.txt'
-	# actual = p('requirements')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www'
-	# actual = p('app', 'www')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www/settings.py'
-	# actual = p('settings')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www/views.py'
-	# actual = p('views', 'www')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www/urls.py'
-	# actual = p('urls', 'www')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www/tests.py'
-	# actual = p('tests', 'www')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www/templates'
-	# actual = p('templates', 'www')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www/templates/www'
-	# actual = p('templates', 'www') + '/www'
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www/templates/www/home.html'
-	# actual = p('home.html', 'www')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www/templates/www/react'
-	# actual = p('react', 'www')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www/templates/www/react/components'
-	# actual = p('components', 'www')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www/templates/www/react/containers'
-	# actual = p('containers', 'www')
-	# assert(expected == actual)
-	#
-	# expected = os.getcwd() + '/www/www/templates/www/react/containers/Home.js'
-	# actual = p('Home.js', 'www')
-	# assert(expected == actual)
 
 	teardown_config()
