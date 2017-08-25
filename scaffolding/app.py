@@ -37,3 +37,6 @@ def new_app(name):
 
     models_asset = f(assets_path + '/models/imports.py', 'r')
     f(p('models.py', name=name), 'w', models_asset)
+
+    urls_asset = f(assets_path + '/urls/base_app_url.py', 'r')
+    f(p('urls.py', name=name), 'w', urls_asset)
