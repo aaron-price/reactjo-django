@@ -14,5 +14,5 @@ def pip(args):
 	subprocess.call(['pip'] + args)
 
 def startproject(name):
-	os.chdir(p('super_root'))
+	os.chdir(p('backend'))
 	subprocess.call(['django-admin', 'startproject', name])

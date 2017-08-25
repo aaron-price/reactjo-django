@@ -1,4 +1,4 @@
-from helpers.bootstrap import bootstrap
+from scaffolding.bootstrap import bootstrap
 
 def new():
 	bootstrap()
