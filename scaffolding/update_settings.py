@@ -1,12 +1,20 @@
 from helpers.file_manager import file_manager as f
 from helpers.path_manager import path_manager as p
 
+def new_app_settings(name):
+    all_settings = [p('base_settings') ,p('dev_settings'), p('prod_settings')]
+    for s in all_settings:
+        data = {
+            'target': ['INSTALLED_APPS'],
+            'content': "\n\t'{}',".format(name)
+        }
+        f(s, 'a', data)
+
 def update_settings():
     all_settings = [p('base_settings') ,p('dev_settings'), p('prod_settings')]
     for s in all_settings:
         apps  = "\n\t'rest_framework',"
         apps += "\n\t'rest_framework.authtoken',"
-        apps += "\n\t'api',"
         apps += "\n\t'corsheaders',"
         data = {
             'target': ['INSTALLED_APPS'],
@@ -41,8 +49,6 @@ def update_settings():
     whitelist += "\n\t'127.0.0.1:3000'"
     whitelist += "\n)"
     f(p('dev_settings'), 'a', whitelist)
-
-
 
     # PROD ONLY
     data = {
