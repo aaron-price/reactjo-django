@@ -115,11 +115,11 @@ def backend_project():
 def manage_py():
 	return os.path.join(backend_project(), 'manage.py')
 
-def settings():
-	return os.path.join(backend_project(), 'settings')
-
 def app(app_name):
 	return os.path.join(backend_project(), app_name)
+
+def settings():
+	return os.path.join(app(app_name = PROJECT_NAME), 'settings')
 
 def views(app_name):
 	return os.path.join(app(app_name), 'views.py')
@@ -137,10 +137,10 @@ def tests(app_name):
 	return os.path.join(app(app_name), 'tests.py')
 
 def serializers(app_name = 'api'):
-	return os.path.join(app(app_name), 'serializers.py')
+	return os.path.join(app(app_name = 'api'), 'serializers.py')
 
 def permissions(app_name = 'api'):
-	return os.path.join(app(app_name), 'permissions.py')
+	return os.path.join(app(app_name = 'api'), 'permissions.py')
 
 # FRONTEND
 def frontend():
