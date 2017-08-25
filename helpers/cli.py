@@ -7,8 +7,7 @@ def npm(args):
 	subprocess.call(['npm'] + args)
 
 def manage(args):
-	os.chdir(p('manage.py'))
-	subprocess.call(['python', 'manage.py'] + args)
+	subprocess.call(['python', p('manage.py')] + args)
 
 def pip(args):
 	subprocess.call(['pip'] + args)
