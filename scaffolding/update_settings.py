@@ -29,13 +29,13 @@ def update_settings():
         }
         f(s, 'w', data)
 
-        middleware  = "\n\t'corsheaders.middleware.CorsMiddleware'"
-        middleware += "\n\t'django.middleware.common.CommonMiddleware'"
-        data = {
+        middleware  = "\n\t'corsheaders.middleware.CorsMiddleware',"
+        middleware += "\n\t'django.middleware.common.CommonMiddleware',"
+        middleware_data = {
             'target': ['MIDDLEWARE'],
             'content': middleware
         }
-        f(s, 'p', data)
+        f(s, 'p', middleware_data)
 
     # DEV ONLY
     data = {

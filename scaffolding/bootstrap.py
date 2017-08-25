@@ -25,7 +25,7 @@ def bootstrap():
     os.chdir(p('backend'))
     startproject(project_name)
 
-    # URLS
+    # URLS - root
     urls_path = p('urls', name=project_name)
     urls_asset = f(p('assets', name='reactjo_django') + '/urls/root_urls.py', 'r')
     f(urls_path, 'w', urls_asset)
