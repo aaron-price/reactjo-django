@@ -8,11 +8,15 @@ def npm(args):
 
 def manage(args):
 	os.chdir(p('backend_project'))
-	subprocess.call(['python', 'manage.py'] + args)
+	subprocess.call(['python3', 'manage.py'] + args)
 
 def pip(args):
-	subprocess.call(['pip'] + args)
+	subprocess.call(['pip3'] + args)
 
 def startproject(name):
 	os.chdir(p('backend'))
 	subprocess.call(['django-admin', 'startproject', name])
+
+def startapp(name):
+	os.chdir(p('backend_project'))
+	subprocess.call(['python3', 'manage.py', 'startapp', name])
