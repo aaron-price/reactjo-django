@@ -2,14 +2,6 @@ import os
 import subprocess
 
 def bootstrap():
-    # Project name and config
-    from helpers.config_manager import get_cfg, set_cfg
-    from helpers.ui import string_input, boolean_input
-    cfg = get_cfg()
-    project_name = string_input('Give the project a name')
-    cfg['project_name'] = project_name
-    set_cfg(cfg)
-
     # Pip requirements
     from helpers.cli import pip, startproject
     from helpers.file_manager import file_manager as f
