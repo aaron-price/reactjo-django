@@ -1,29 +1,11 @@
-# Start with this if you haven't already
+# Installation
+
+Start with this if you haven't already
 
 ```bash
 virtualenv venv
 source venv/bin/activate
 pip install reactjo
-```
-
-# If you want to create a new extension 
-
-1. Clone the template
-```bash
-reactjo extend
-cd template
-```
-
-2. Make some changes
-3. Make a new repo on github
-4. Set it as the remote origin
-5. Push the template to the new repo
-That's it! People can now use it as a Reactjo extension.
-
-# If you want to install a new extension into a project
-
-1. Initialize reactjo if you haven't already
-```bash
 reactjo init
 ```
 
@@ -31,15 +13,19 @@ reactjo init
 
 ```
 {
-    "title": "your-extension-title-NO-SPACES-ALLOWED",
-    "uri": "https://github.com/your-name/your-extensions-repo.git"
+    "uri": "https://github.com/aaron-price/django_trial.git",
+    "rc_home": "django_trial",
+    "branch": "master"
 }
 ```
+Note that branch is optional and defaults to master.
 
 3. Back in your terminal, run:
 ```
 reactjo update
 ```
+This clones the extension into reactjorc/extensions/django_trial
+It will be listening for the commands listed below, in Usage.
 
 # Usage
 

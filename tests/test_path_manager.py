@@ -1,117 +1,61 @@
 from tests.config_mock import setup_config, teardown_config
-setup_config()
-
-from helpers.path_manager import path_manager as p
+from helpers.path_manager import mkdir, parse_shortcuts
 import os
 
-def test_paths():
-	# SUPER ROOT
-	# Aside from super_root, there's also backend_root, and frontend_root below.
-	expected = os.getcwd()
-	actual = p('super_root')
-	assert(expected == actual)
+def test_parse_shortcuts():
+    setup_config()
+    from helpers.config_manager import get_cfg
+    cfg = get_cfg()
 
-	# REACTJORC
-	expected = os.getcwd() + '/reactjorc'
-	actual = p('reactjorc')
-	assert(expected == actual)
+    actual = parse_shortcuts('$su')
+    expected = os.getcwd()
+    assert(actual == expected)
 
-	expected = os.getcwd() + '/reactjorc/config.json'
-	actual = p('config')
-	assert(expected == actual)
+    actual = parse_shortcuts('$su/some/path')
+    expected = os.path.join(os.getcwd(), 'some/path')
+    assert(actual == expected)
 
-	expected = os.getcwd() + '/reactjorc/extensions'
-	actual = p('extensions')
-	assert(expected == actual)
+    actual = parse_shortcuts('$rc')
+    expected = os.path.join(cfg['paths']['super_root'], 'reactjorc')
+    assert(actual == expected)
 
-	expected = os.getcwd() + '/reactjorc/extensions/django'
-	actual = os.path.join(p('extensions'), 'django')
-	assert(expected == actual)
+    actual = parse_shortcuts('$prj')
+    expected = cfg['paths']['project_root']
+    assert(actual == expected)
 
-	expected = os.getcwd() + '/reactjorc/extensions/django/assets'
-	actual = p('assets', name = 'django')
-	assert(expected == actual)
+    actual = parse_shortcuts('$out')
+    expected = os.path.join(cfg['paths']['project_root'], 'your_output_home_here')
+    assert(actual == expected)
 
-	expected = os.getcwd() + '/reactjorc/extensions/django/helpers'
-	actual = p('helpers', name = 'django')
-	assert(expected == actual)
+    actual = parse_shortcuts('$ext')
+    expected = os.path.join(
+        cfg['paths']['super_root'],
+        'reactjorc/extensions/your_rc_home_here')
+    assert(actual == expected)
 
-	expected = os.getcwd() + '/reactjorc/extensions/django/scaffolding'
-	actual = p('scaffolding', name = 'django')
-	assert(expected == actual)
+    actual = parse_shortcuts('$assets')
+    expected = os.path.join(
+        cfg['paths']['super_root'],
+        'reactjorc/extensions/your_rc_home_here',
+        'assets')
+    assert(actual == expected)
 
-	# BACKEND
-	expected = os.getcwd() + '/backend'
-	actual = p('backend')
-	assert(expected == actual)
+    actual = parse_shortcuts('$assets/test.txt')
+    expected = os.path.join(
+        cfg['paths']['super_root'],
+        'reactjorc/extensions/your_rc_home_here',
+        'assets/test.txt')
+    assert(actual == expected)
 
-	expected = os.getcwd() + '/backend/requirements.txt'
-	actual = p('requirements')
-	assert(expected == actual)
 
-	expected = os.getcwd() + '/backend/www'
-	actual = p('backend_project')
-	assert(expected == actual)
 
-	expected = os.getcwd() + '/backend/www/manage.py'
-	actual = p('manage.py')
-	assert(expected == actual)
 
-	expected = os.getcwd() + '/backend/www/www/settings'
-	actual = p('settings')
-	assert(expected == actual)
+def test_mkdir():
+    from helpers.config_manager import get_cfg
+    mkdir('$su/tests/sandbox/path_manager', 'pm')
+    assert(os.path.exists('tests/sandbox/path_manager'))
+    assert('pm' in get_cfg()['paths'].keys())
 
-	expected = os.getcwd() + '/backend/www/www/settings/base.py'
-	actual = p('settings_base')
-	assert(expected == actual)
-
-	expected = os.getcwd() + '/backend/www/www/settings/development.py'
-	actual = p('settings_dev')
-	assert(expected == actual)
-
-	expected = os.getcwd() + '/backend/www/www/settings/production.py'
-	actual = p('settings_prod')
-	assert(expected == actual)
-
-	expected = os.getcwd() + '/backend/www/foo'
-	actual = p('app', name = 'foo')
-	assert(expected == actual)
-
-	expected = os.getcwd() + '/backend/www/foo/views.py'
-	actual = p('views.py', name = 'foo')
-	assert(expected == actual)
-
-	expected = os.getcwd() + '/backend/www/foo/admin.py'
-	actual = p('admin.py', name = 'foo')
-	assert(expected == actual)
-
-	expected = os.getcwd() + '/backend/www/foo/models.py'
-	actual = p('models.py', name = 'foo')
-	assert(expected == actual)
-
-	expected = os.getcwd() + '/backend/www/foo/urls.py'
-	actual = p('urls.py', name = 'foo')
-	assert(expected == actual)
-
-	expected = os.getcwd() + '/backend/www/foo/tests.py'
-	actual = p('tests.py', name = 'foo')
-	assert(expected == actual)
-
-	expected = os.getcwd() + '/backend/www/api/serializers.py'
-	actual = p('serializers.py')
-	assert(expected == actual)
-
-	expected = os.getcwd() + '/backend/www/api/permissions.py'
-	actual = p('permissions.py')
-	assert(expected == actual)
-
-	# FRONTEND
-	expected = os.getcwd() + '/frontend'
-	actual = p('frontend')
-	assert(expected == actual)
-
-	expected = os.getcwd() + '/frontend/webpack.config.js'
-	actual = p('webpack.config.js')
-	assert(expected == actual)
-
-	teardown_config()
+    # Teardown.
+    os.rmdir(parse_shortcuts('$su/tests/sandbox/path_manager'))
+    teardown_config()
