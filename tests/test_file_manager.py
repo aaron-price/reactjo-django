@@ -1,3 +1,4 @@
+import os
 from helpers.file_manager import file_manager
 
 good_path = 'tests/sandbox/exists'
@@ -13,19 +14,20 @@ settings_kittens = 'tests/sandbox/settings_kittens.py'
 new_settings = 'tests/sandbox/new_settings.py'
 settings_custom = 'tests/sandbox/settings_config_custom.py'
 
-def debug_print(e, a):
-    print("EXPECTED")
-    print(e)
-    print("ACTUAL")
-    print(a)
 
 
 # Check existence.
 def test_file_manager_existance():
     assert(file_manager(good_path, 'exists') == True)
-    assert(file_manager(bad_path, 'exists') == False) 
+    assert(file_manager(bad_path, 'exists') == False)
     assert(file_manager(good_file, 'exists') == True)
     assert(file_manager(bad_file, 'exists') == False)
+
+# Check a path
+def test_file_manager_path():
+    actual = file_manager('$prj/backend/foo/bar', 'path')
+    expected = os.getcwd() + '/www/backend/foo/bar'
+    assert(actual == expected)
 
 # Writing
 def test_file_manager_writing():
@@ -33,6 +35,15 @@ def test_file_manager_writing():
     assert(file_manager(new_file, 'exists') == False)
     file_manager(new_file, 'write', contents)
     assert(file_manager(new_file, 'exists') == True)
+
+def test_file_write_from_path():
+    src = '$su/tests/sandbox/write_from_src.txt'
+    target = '$su/tests/sandbox/write_from_target.txt'
+    file_manager(target, 'w', src)
+
+    actual = file_manager(target, 'r')
+    expected = 'Hello World\n'
+    assert(actual == expected)
 
 def test_file_manager_line_remove():
     settings = file_manager(settings_file, 'r')
@@ -163,8 +174,6 @@ def test_file_manager_templating():
     data = {'app_name': 'Fooness','model_name': 'Bar'}
     component = file_manager(basic_component, 'f', data)
 
-    print("PARSE THIS!", component)
-    
     file_manager(parsed_component, 'w', component)
 
     expected = file_manager(expected_parsed_component, 'r')
@@ -175,6 +184,3 @@ def test_file_manager_templating():
 def test_file_manager_removing():
     file_manager(new_file, 'remove')
     assert(file_manager(new_file, 'exists') == False)
-
-
-

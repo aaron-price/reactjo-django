@@ -5,6 +5,7 @@ import re
 from six import string_types
 from helpers.data_detection import get_brackets, get_type, list_index_positions, detect_duplicate
 from helpers.commas import soft_comma
+from helpers.path_manager import parse_shortcuts
 
 def file_append(path, content):
     file = open(path, 'a')
@@ -34,10 +35,6 @@ def file_write(path, content):
     file = open(path, 'w')
     file.write(content)
     file.close()
-
-def mkdir(path):
-    if not os.path.exists(path):
-        os.mkdir(path)
 
 def file_remove(path):
     os.remove(path)
@@ -97,6 +94,7 @@ def obj_prepend(path, data):
     if duplicate:
         print(data['content'] + ' already exists in ' + existing_data + '... skipping.')
     else:
+        print("AFTER_START", target['after_start'])
         before = file[:after_start]
         content = data['content']
         after = file[after_start:]
@@ -165,11 +163,18 @@ def file_parse(path, data):
     return string
 
 def file_manager(path, query, data = None):
+    path = parse_shortcuts(path)
     q = query.lower()
+
+    # If data is a path, then pass the file contents instead of the path
+    if isinstance(data, string_types):
+        if os.path.exists(parse_shortcuts(data)):
+            data = file_manager(data, 'r')
+
     if q == 'exists':
         return os.path.exists(path)
-    if q == 'mkdir':
-        mkdir(path)
+    if q == 'path':
+        return path
     if q in ['w', 'write', 'create']:
         if isinstance(data, string_types):
             file_write(path, data)
