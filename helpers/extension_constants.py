@@ -3,4 +3,4 @@
 OUTPUT_HOME = 'backend'
 
 # file_manager('$rc/assets') == 'super_root/reactjorc/extensions/django_trial/assets'
-RC_HOME = 'django_trial'
+RC_HOME = 'reactjo_django'

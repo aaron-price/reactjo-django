@@ -13,8 +13,8 @@ reactjo init
 
 ```
 {
-    "uri": "https://github.com/aaron-price/django_trial.git",
-    "rc_home": "django_trial",
+    "uri": "https://github.com/aaron-price/reactjo_django.git",
+    "rc_home": "reactjo_django",
     "branch": "master"
 }
 ```
