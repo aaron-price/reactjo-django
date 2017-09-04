@@ -36,7 +36,7 @@ def build_settings(prev_path):
     }
     f(old_settings_path, 'a', data)
 
-    if cfg['need_users']:
+    if cfg['need_users'] == 'True':
         f(old_settings_path, 'a', "\nAUTH_USER_MODEL = 'api.UserProfile'")
 
     drf_settings = dedent("""
@@ -51,7 +51,7 @@ def build_settings(prev_path):
     }
     """)
 
-    if cfg['need_users']:
+    if cfg['need_users'] == 'True':
         f(old_settings_path, 'a', drf_settings)
 
     data = {

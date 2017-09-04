@@ -30,7 +30,7 @@ def build_structure():
     wl('Add /api and /api-auth to root urls')
 
     f('$man/api/models.py', 'w', '$assets/models/imports.py')
-    if cfg['need_users']:
+    if cfg['need_users'] == 'True':
         f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
         wl('Built a default User model')
 
