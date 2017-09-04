@@ -171,9 +171,9 @@ def file_manager(path, query, data = None):
         if os.path.exists(parse_shortcuts(data)):
             data = file_manager(data, 'r')
 
-    if q == 'exists':
+    if q in ['?','exists']:
         return os.path.exists(path)
-    if q == 'path':
+    if q in ['$' ,'path']:
         return path
     if q in ['w', 'write', 'create']:
         if isinstance(data, string_types):
