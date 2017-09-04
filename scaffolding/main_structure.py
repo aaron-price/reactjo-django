@@ -8,18 +8,24 @@ def build_settings_structure():
     path_above_settings = f(
         '$out/{}/{}'.format(OUTPUT_HOME, OUTPUT_HOME),
         '$')
+    settings_dir = os.path.join(path_above_settings, 'settings')
 
+    # settings dir
+    mkdir(settings_dir, 'settings_dir')
+
+    # __init__ file
     init_asset = f('$assets/settings_init.py', 'r')
-    init_output = f(os.path.join(path_above_settings, '__init__.py'), '$')
+    init_output = f(os.path.join(settings_dir, '__init__.py'), '$')
     f(init_output, 'w', init_asset)
 
-    settings_dir = os.path.join(path_above_settings, 'settings')
-    mkdir(settings_dir, 'settings_dir')
+    # Settings variables
     old_settings_path = f(os.path.join(path_above_settings, 'settings.py'), '$')
     old_settings_file = f(old_settings_path, 'r')
     base_settings_path = f(os.path.join(settings_dir, 'base.py'), '$')
     prod_settings_path = f(os.path.join(settings_dir, 'production.py'), '$')
     dev_settings_path = f(os.path.join(settings_dir, 'development.py'), '$')
+
+    # Append apps and AUTH_USER_MODEL
     data = {
         'target': ['INSTALLED_APPS'],
         'content': "\n\t'api',\n\t'rest_framework',\n\t'rest_framework.authtoken',\n\t'corsheaders',"
@@ -27,12 +33,14 @@ def build_settings_structure():
     f(old_settings_path, 'a', data)
     f(old_settings_path, 'a', "\nAUTH_USER_MODEL = 'api.UserProfile'")
 
+    # Copy settings files into dir, and remove original
     f(base_settings_path, 'w', old_settings_file)
     f(prod_settings_path, 'w', old_settings_file)
     f(dev_settings_path, 'w', old_settings_file)
     f(os.path.join(settings_dir, '__init__.py'), 'w', ' ')
     f(old_settings_path, 'd')
 
+    # ENV specific configs
     data = {
         'target': ['ALLOWED_HOSTS'],
         'content': "'localhost', '127.0.0.1'"
