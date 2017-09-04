@@ -7,10 +7,19 @@ from textwrap import dedent
 from scaffolding.settings import build_settings
 from helpers.config_manager import get_cfg
 
+def user_auth_structure():
+    cfg = get_cfg()
+    if cfg['need_users'] == 'True':
+        f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
+        f('$man/api/serializers.py', 'a', '$assets/models/UserProfile.py')
+        f('$man/api/views.py', 'a', '$assets/models/users.py')
+        f('$man/api/urls.py', 'a', '$assets/urls/user_urls.py')
+        wl('Added a model, serializer, urls, and view for Users')
+
 def build_structure():
     # Pip install require
     prev_path = os.getcwd()
-    cfg = get_cfg()
+
     mkdir(f('$out', '$'))
     f('$out/requirements.txt', 'w', '$assets/requirements.txt')
     os.chdir(f('$out', '$'))
@@ -30,9 +39,11 @@ def build_structure():
     wl('Add /api and /api-auth to root urls')
 
     f('$man/api/models.py', 'w', '$assets/models/imports.py')
-    if cfg['need_users'] == 'True':
-        f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
-        wl('Built a default User model')
+    f('$man/api/serializers.py', 'w', '$assets/serializers/imports.py')
+    f('$man/api/views.py', 'w', '$assets/views/users.py')
+    f('$man/api/urls.py', 'w', '$assets/urls/base_app_url.py')
+    wl('Prepped the api views, models, urls, and serializers files')
+    user_auth_structure()
 
     os.chdir(f('$man', '$'))
     subprocess.run(['python3', 'manage.py', 'makemigrations'])
