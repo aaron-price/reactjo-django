@@ -8,7 +8,7 @@ from scaffolding.settings import build_settings
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.ui import boolean_input
 
-def user_auth_structure(prev_path):
+def user_auth_structure():
     cfg = get_cfg()
     if cfg['need_users'] == 'True':
         f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
@@ -29,15 +29,6 @@ def user_auth_structure(prev_path):
         end = old_urls[route_start:]
         f('$man/api/urls.py', 'w', begin + mid + end)
         wl('Added stuff for Users')
-
-    need_su = boolean_input('Would you like to create a superuser now?', 'y')
-    cfg['need_superuser'] = need_su
-    set_cfg(cfg)
-
-    if need_su:
-        os.chdir(f('$man', '$'))
-        subprocess.run(['python3', 'manage.py', 'createsuperuser'])
-        os.chdir(prev_path)
 
 def build_structure():
     # Pip install require
@@ -75,3 +66,9 @@ def build_structure():
     subprocess.run(['python3', 'manage.py', 'migrate'])
     os.chdir(prev_path)
     wl('Ran some database migrations')
+
+    need_su = boolean_input('Would you like to create a superuser now?', 'y')
+    if need_su:
+        os.chdir(f('$man', '$'))
+        subprocess.run(['python3', 'manage.py', 'createsuperuser'])
+        os.chdir(prev_path)
