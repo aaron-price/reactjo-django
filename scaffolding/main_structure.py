@@ -22,4 +22,8 @@ def build_structure():
     subprocess.run(['python3', 'manage.py', 'startapp', 'api'])
     wl('Create api app', prev_path)
 
+
     build_settings(prev_path)
+    os.chdir(prev_path)
+    f('$out/backend/urls.py', 'w', '$assets/urls/root_urls.py')
+    wl('Add /api and /api-auth to root urls')
