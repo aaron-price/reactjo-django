@@ -3,6 +3,7 @@ from helpers.file_manager import file_manager as f
 from helpers.worklist import worklist as wl
 import os, subprocess
 from helpers.extension_constants import OUTPUT_HOME
+from textwrap import dedent
 
 def build_settings_structure():
     path_above_settings = f(
@@ -20,7 +21,6 @@ def build_settings_structure():
 
     # Settings variables
     old_settings_path = f(os.path.join(path_above_settings, 'settings.py'), '$')
-    old_settings_file = f(old_settings_path, 'r')
     base_settings_path = f(os.path.join(settings_dir, 'base.py'), '$')
     prod_settings_path = f(os.path.join(settings_dir, 'production.py'), '$')
     dev_settings_path = f(os.path.join(settings_dir, 'development.py'), '$')
@@ -34,6 +34,7 @@ def build_settings_structure():
     f(old_settings_path, 'a', "\nAUTH_USER_MODEL = 'api.UserProfile'")
 
     # Copy settings files into dir, and remove original
+    old_settings_file = f(old_settings_path, 'r')
     f(base_settings_path, 'w', old_settings_file)
     f(prod_settings_path, 'w', old_settings_file)
     f(dev_settings_path, 'w', old_settings_file)
@@ -42,8 +43,8 @@ def build_settings_structure():
 
     # ENV specific configs
     data = {
-        'target': ['ALLOWED_HOSTS'],
-        'content': "'localhost', '127.0.0.1'"
+        'target': "ALLOWED_HOSTS =",
+        'content': "ALLOWED_HOSTS = ['localhost', '127.0.0.1']"
     }
     f(dev_settings_path, 'a', data)
 
@@ -53,12 +54,12 @@ def build_settings_structure():
     }
     f(prod_settings_path, 'w', data)
 
-    cors = """
-        CORS_ORIGIN_WHITELIST = (
-        	'localhost:3000'
-        	'127.0.0.1:3000'
-        )
-    """.replace('\t','')
+    cors = dedent("""\
+    CORS_ORIGIN_WHITELIST = (
+    	'localhost:3000'
+    	'127.0.0.1:3000'
+    )
+    """)
     f(dev_settings_path, 'a', cors)
 
 def build_structure():
