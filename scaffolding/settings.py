@@ -4,9 +4,12 @@ from helpers.worklist import worklist as wl
 import os
 from helpers.extension_constants import OUTPUT_HOME
 from textwrap import dedent
+from helpers.config_manager import get_cfg
 
 def build_settings(prev_path):
     os.chdir(prev_path)
+    cfg = get_cfg()
+
     path_above_settings = f(
         '$out/{}/{}'.format(OUTPUT_HOME, OUTPUT_HOME),
         '$')
@@ -32,17 +35,24 @@ def build_settings(prev_path):
         'content': "\n\t'api',\n\t'rest_framework',\n\t'rest_framework.authtoken',\n\t'corsheaders',"
     }
     f(old_settings_path, 'a', data)
-    f(old_settings_path, 'a', "\nAUTH_USER_MODEL = 'api.UserProfile'")
+
+    if cfg['need_users']:
+        f(old_settings_path, 'a', "\nAUTH_USER_MODEL = 'api.UserProfile'")
 
     drf_settings = dedent("""
     REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': (
             'rest_framework.authentication.BasicAuthentication',
             'rest_framework.authentication.SessionAuthentication',
+        ),
+        'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.IsAuthenticatedOrReadOnly'
         )
     }
     """)
-    f(old_settings_path, 'a', drf_settings)
+
+    if cfg['need_users']:
+        f(old_settings_path, 'a', drf_settings)
 
     data = {
         'target': "BASE_DIR =",
