@@ -13,6 +13,8 @@ def user_auth_structure():
         f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
         f('$man/api/serializers.py', 'a', '$assets/serializers/user_profile.py')
         f('$man/api/views.py', 'a', '$assets/views/users.py')
+        f('$man/api/permissions.py', 'a', '$assets/permissions/post_own_content.py')
+        f('$man/api/permissions.py', 'a', '$assets/permissions/update_own_profile.py')
 
         # Puts the user routes below the router, but above urlpatterns
         route_flag = '# Register new routes below'
@@ -50,6 +52,7 @@ def build_structure():
 
     f('$man/api/models.py', 'w', '$assets/models/imports.py')
     f('$man/api/serializers.py', 'w', '$assets/serializers/imports.py')
+    f('$man/api/permissions.py', 'w', '$assets/permissions/imports.py')
     f('$man/api/views.py', 'w', '$assets/views/imports.py')
     f('$man/api/urls.py', 'w', '$assets/urls/base_app_url.py')
     wl('Prepped the api views, models, urls, and serializers files')
