@@ -40,8 +40,8 @@ def build_settings_structure():
     f(dev_settings_path, 'a', data)
 
     data = {
-        'target': ['DEBUG'],
-        'content': 'False'
+        'target': 'DEBUG = True',
+        'content': 'DEBUG = False'
     }
     f(prod_settings_path, 'w', data)
 
