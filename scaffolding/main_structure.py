@@ -25,13 +25,29 @@ def build_settings_structure():
     prod_settings_path = f(os.path.join(settings_dir, 'production.py'), '$')
     dev_settings_path = f(os.path.join(settings_dir, 'development.py'), '$')
 
-    # Append apps and AUTH_USER_MODEL
+    # Edit old settings file
     data = {
         'target': ['INSTALLED_APPS'],
         'content': "\n\t'api',\n\t'rest_framework',\n\t'rest_framework.authtoken',\n\t'corsheaders',"
     }
     f(old_settings_path, 'a', data)
     f(old_settings_path, 'a', "\nAUTH_USER_MODEL = 'api.UserProfile'")
+
+    drf_settings = dedent("""
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+        )
+    }
+    """)
+    f(old_settings_path, 'a', drf_settings)
+
+    data = {
+        'target': ['MIDDLEWARE', 3],
+        'content': "\n\t'corsheaders.middleware.CorsMiddleware',\n\t'django.middleware.common.CommonMiddleware'"
+    }
+    f(old_settings_path, 'a', data)
 
     # Copy settings files into dir, and remove original
     old_settings_file = f(old_settings_path, 'r')
