@@ -25,13 +25,13 @@ def build_structure():
 
     build_settings(prev_path)
     os.chdir(prev_path)
-    f('$out/backend/backend/urls.py', 'w', '$assets/urls/root_urls.py')
+    f('$man/backend/urls.py', 'w', '$assets/urls/root_urls.py')
     wl('Add /api and /api-auth to root urls')
 
-    f('$out/backend/api/models.py', 'w', '$assets/models/base_models.py')
+    f('$man/api/models.py', 'w', '$assets/models/base_models.py')
     wl('Built a default User model')
 
-    os.chdir(f('$out/backend/backend', '$'))
+    os.chdir(f('$man', '$'))
     subprocess.run(['python3', 'manage.py', 'makemigrations'])
     subprocess.run(['python3', 'manage.py', 'migrate'])
     os.chdir(prev_path)
