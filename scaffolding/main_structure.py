@@ -44,9 +44,10 @@ def build_settings_structure():
     f(old_settings_path, 'a', drf_settings)
 
     data = {
-        'target': ['MIDDLEWARE', 3],
+        'target': ['MIDDLEWARE', 2],
         'content': "\n\t'corsheaders.middleware.CorsMiddleware',\n\t'django.middleware.common.CommonMiddleware'"
     }
+
     f(old_settings_path, 'a', data)
 
     # Copy settings files into dir, and remove original
@@ -69,7 +70,7 @@ def build_settings_structure():
     }
     f(prod_settings_path, 'w', data)
 
-    cors = dedent("""
+    cors = dedent("""\
     CORS_ORIGIN_WHITELIST = (
     	'localhost:3000'
     	'127.0.0.1:3000'
