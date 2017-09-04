@@ -13,7 +13,17 @@ def user_auth_structure():
         f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
         f('$man/api/serializers.py', 'a', '$assets/models/UserProfile.py')
         f('$man/api/views.py', 'a', '$assets/models/users.py')
-        f('$man/api/urls.py', 'a', '$assets/urls/user_urls.py')
+
+        # Puts the user routes below the router, but above urlpatterns
+        route_flag = '# Register new routes below'
+        route_start = f(
+            '$man/api/urls.py',
+            'r').find(route_flag) + len(route_flag) + 1
+        old_urls = f('$man/api/urls.py', 'r')
+        begin = old_urls[:route_start]
+        mid = f('$assets/urls/user_urls.py', 'r')
+        end = old_urls[route_start:]
+        f('$man/api/urls.py', 'w', begin + mid + end)
         wl('Added a model, serializer, urls, and view for Users')
 
 def build_structure():
