@@ -12,14 +12,14 @@ def build_structure():
     mkdir(f('$out', '$'))
     f('$out/requirements.txt', 'w', '$assets/requirements.txt')
     os.chdir(f('$out', '$'))
-    subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
+    subprocess.run(['pip3', 'install', '-r', 'requirements.txt'])
     wl('Installed pip packages', prev_path)
 
     # Start django project
     subprocess.run(['django-admin', 'startproject', 'backend'])
     wl('Created Django project', prev_path)
-    os.chdir(f('$out/backend', '$'))
-    subprocess.run(['python', 'manage.py', 'startapp', 'api'])
+    os.chdir('backend')
+    subprocess.run(['python3', 'manage.py', 'startapp', 'api'])
     wl('Create api app', prev_path)
 
-    build_settings()
+    build_settings(prev_path)

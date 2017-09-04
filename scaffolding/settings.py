@@ -5,7 +5,8 @@ import os
 from helpers.extension_constants import OUTPUT_HOME
 from textwrap import dedent
 
-def build_settings():
+def build_settings(prev_path):
+    os.chdir(prev_path)
     path_above_settings = f(
         '$out/{}/{}'.format(OUTPUT_HOME, OUTPUT_HOME),
         '$')
