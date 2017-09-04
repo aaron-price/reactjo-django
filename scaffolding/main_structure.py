@@ -38,7 +38,6 @@ def build_settings_structure():
     f(base_settings_path, 'w', old_settings_file)
     f(prod_settings_path, 'w', old_settings_file)
     f(dev_settings_path, 'w', old_settings_file)
-    f(os.path.join(settings_dir, '__init__.py'), 'w', ' ')
     f(old_settings_path, 'd')
 
     # ENV specific configs
