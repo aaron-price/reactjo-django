@@ -15,6 +15,7 @@ def user_auth_structure():
         f('$man/api/views.py', 'a', '$assets/views/users.py')
         f('$man/api/permissions.py', 'a', '$assets/permissions/post_own_content.py')
         f('$man/api/permissions.py', 'a', '$assets/permissions/update_own_profile.py')
+        f('$man/api/admin.py', 'a', '$assets/admin/users.py')
 
         # Puts the user routes below the router, but above urlpatterns
         route_flag = '# Register new routes below'
@@ -26,7 +27,7 @@ def user_auth_structure():
         mid = f('$assets/urls/user_urls.py', 'r')
         end = old_urls[route_start:]
         f('$man/api/urls.py', 'w', begin + mid + end)
-        wl('Added a model, serializer, urls, and view for Users')
+        wl('Added stuff for Users')
 
 def build_structure():
     # Pip install require
@@ -55,7 +56,8 @@ def build_structure():
     f('$man/api/permissions.py', 'w', '$assets/permissions/imports.py')
     f('$man/api/views.py', 'w', '$assets/views/imports.py')
     f('$man/api/urls.py', 'w', '$assets/urls/base_app_url.py')
-    wl('Prepped the api views, models, urls, and serializers files')
+    f('$man/api/admin.py', 'w', '$assets/admin/import.py')
+    wl('Prepped the api files')
     user_auth_structure()
 
     os.chdir(f('$man', '$'))
