@@ -46,7 +46,7 @@ def build_settings_structure():
         'target': "ALLOWED_HOSTS =",
         'content': "ALLOWED_HOSTS = ['localhost', '127.0.0.1']"
     }
-    f(dev_settings_path, 'a', data)
+    f(dev_settings_path, 'w', data)
 
     data = {
         'target': 'DEBUG = True',
@@ -54,7 +54,7 @@ def build_settings_structure():
     }
     f(prod_settings_path, 'w', data)
 
-    cors = dedent("""\
+    cors = dedent("""
     CORS_ORIGIN_WHITELIST = (
     	'localhost:3000'
     	'127.0.0.1:3000'
