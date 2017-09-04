@@ -50,7 +50,7 @@ def build_structure():
 
     f('$man/api/models.py', 'w', '$assets/models/imports.py')
     f('$man/api/serializers.py', 'w', '$assets/serializers/imports.py')
-    f('$man/api/views.py', 'w', '$assets/views/users.py')
+    f('$man/api/views.py', 'w', '$assets/views/imports.py')
     f('$man/api/urls.py', 'w', '$assets/urls/base_app_url.py')
     wl('Prepped the api views, models, urls, and serializers files')
     user_auth_structure()
