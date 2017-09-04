@@ -30,3 +30,8 @@ def build_structure():
 
     f('$out/backend/api/models.py', 'w', '$assets/models/base_models.py')
     wl('Built a default User model')
+
+    os.chdir(f('$out/backend/backend', '$'))
+    subprocess.run(['python3', 'manage.py', 'makemigrations'])
+    subprocess.run(['python3', 'manage.py', 'migrate'])
+    os.chdir(prev_path)
