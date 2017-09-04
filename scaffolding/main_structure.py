@@ -43,10 +43,17 @@ def build_settings_structure():
     """)
     f(old_settings_path, 'a', drf_settings)
 
+    data = {
+        'target': "BASE_DIR =",
+        'content': "BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))"
+    }
+    f(old_settings_path, 'w', data)
+
+
     # Add cors to middle of Middleware by replacing the whole list.
     old_file = f(old_settings_path, 'r')
     mid_i_begin = old_file.find('MIDDLEWARE = [')
-    mid_i_end = old_file.find(']', mid_i_begin)
+    mid_i_end = old_file.find(']', mid_i_begin) + 1
 
     new_middle = dedent("""\
     MIDDLEWARE = [
