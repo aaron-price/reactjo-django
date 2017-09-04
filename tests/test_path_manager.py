@@ -1,5 +1,6 @@
 from tests.config_mock import setup_config, teardown_config
 from helpers.path_manager import mkdir, parse_shortcuts
+from helpers.extension_constants import RC_HOME, OUTPUT_HOME
 import os
 
 def test_parse_shortcuts():
@@ -24,26 +25,29 @@ def test_parse_shortcuts():
     assert(actual == expected)
 
     actual = parse_shortcuts('$out')
-    expected = os.path.join(cfg['paths']['project_root'], 'your_output_home_here')
+    expected = os.path.join(cfg['paths']['project_root'], OUTPUT_HOME)
     assert(actual == expected)
 
     actual = parse_shortcuts('$ext')
     expected = os.path.join(
         cfg['paths']['super_root'],
-        'reactjorc/extensions/your_rc_home_here')
+        'reactjorc/extensions',
+        RC_HOME)
     assert(actual == expected)
 
     actual = parse_shortcuts('$assets')
     expected = os.path.join(
         cfg['paths']['super_root'],
-        'reactjorc/extensions/your_rc_home_here',
+        'reactjorc/extensions',
+        RC_HOME,
         'assets')
     assert(actual == expected)
 
     actual = parse_shortcuts('$assets/test.txt')
     expected = os.path.join(
         cfg['paths']['super_root'],
-        'reactjorc/extensions/your_rc_home_here',
+        'reactjorc/extensions',
+        RC_HOME,
         'assets/test.txt')
     assert(actual == expected)
 
