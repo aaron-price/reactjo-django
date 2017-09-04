@@ -11,7 +11,7 @@ def user_auth_structure():
     cfg = get_cfg()
     if cfg['need_users'] == 'True':
         f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
-        f('$man/api/serializers.py', 'a', '$assets/serializers/UserProfile.py')
+        f('$man/api/serializers.py', 'a', '$assets/serializers/user_profile.py')
         f('$man/api/views.py', 'a', '$assets/views/users.py')
 
         # Puts the user routes below the router, but above urlpatterns
