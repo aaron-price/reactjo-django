@@ -59,7 +59,7 @@ def build_structure():
     f('$man/api/urls.py', 'w', '$assets/urls/base_app_url.py')
     f('$man/api/admin.py', 'w', '$assets/admin/imports.py')
     wl('Prepped the api files')
-    user_auth_structure(prev_path)
+    user_auth_structure()
 
     os.chdir(f('$man', '$'))
     subprocess.run(['python3', 'manage.py', 'makemigrations'])
