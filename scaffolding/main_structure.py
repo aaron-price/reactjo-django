@@ -8,7 +8,7 @@ from scaffolding.settings import build_settings
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.ui import boolean_input
 
-def user_auth_structure():
+def user_auth_structure(prev_path):
     cfg = get_cfg()
     if cfg['need_users'] == 'True':
         f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
@@ -68,7 +68,7 @@ def build_structure():
     f('$man/api/urls.py', 'w', '$assets/urls/base_app_url.py')
     f('$man/api/admin.py', 'w', '$assets/admin/imports.py')
     wl('Prepped the api files')
-    user_auth_structure()
+    user_auth_structure(prev_path)
 
     os.chdir(f('$man', '$'))
     subprocess.run(['python3', 'manage.py', 'makemigrations'])
