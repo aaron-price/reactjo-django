@@ -52,6 +52,7 @@ def build_structure():
     f('$man/backend/urls.py', 'w', '$assets/urls/root_urls.py')
     wl('Add /api and /api-auth to root urls')
 
+    # App files
     f('$man/api/models.py', 'w', '$assets/models/imports.py')
     f('$man/api/serializers.py', 'w', '$assets/serializers/imports.py')
     f('$man/api/permissions.py', 'w', '$assets/permissions/imports.py')
@@ -61,12 +62,14 @@ def build_structure():
     wl('Prepped the api files')
     user_auth_structure()
 
+    # Migrations
     os.chdir(f('$man', '$'))
     subprocess.run(['python3', 'manage.py', 'makemigrations'])
     subprocess.run(['python3', 'manage.py', 'migrate'])
     os.chdir(prev_path)
     wl('Ran some database migrations')
 
+    # Superusers
     need_su = boolean_input('Would you like to create a superuser now?', 'y')
     if need_su:
         os.chdir(f('$man', '$'))
