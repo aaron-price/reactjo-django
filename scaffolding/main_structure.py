@@ -24,8 +24,8 @@ def build_settings_structure():
         'target': ['INSTALLED_APPS'],
         'content': "\n\t'api',\n\t'rest_framework',\n\t'rest_framework.authtoken',\n\t'corsheaders',"
     }
-    f(old_settings_file, 'a', data)
-    f(old_settings_file, 'a', "\nAUTH_USER_MODEL = 'api.UserProfile'")
+    f(old_settings_path, 'a', data)
+    f(old_settings_path, 'a', "\nAUTH_USER_MODEL = 'api.UserProfile'")
 
     f(base_settings_path, 'w', old_settings_file)
     f(prod_settings_path, 'w', old_settings_file)
