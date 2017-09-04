@@ -56,7 +56,7 @@ def build_structure():
     f('$man/api/permissions.py', 'w', '$assets/permissions/imports.py')
     f('$man/api/views.py', 'w', '$assets/views/imports.py')
     f('$man/api/urls.py', 'w', '$assets/urls/base_app_url.py')
-    f('$man/api/admin.py', 'w', '$assets/admin/import.py')
+    f('$man/api/admin.py', 'w', '$assets/admin/imports.py')
     wl('Prepped the api files')
     user_auth_structure()
 
