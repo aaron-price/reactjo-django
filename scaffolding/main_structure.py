@@ -25,5 +25,8 @@ def build_structure():
 
     build_settings(prev_path)
     os.chdir(prev_path)
-    f('$out/backend/urls.py', 'w', '$assets/urls/root_urls.py')
+    f('$out/backend/backend/urls.py', 'w', '$assets/urls/root_urls.py')
     wl('Add /api and /api-auth to root urls')
+
+    f('$out/backend/api/models.py', 'w', '$assets/models/base_models.py')
+    wl('Built a default User model')
