@@ -5,7 +5,9 @@ import os, subprocess
 from helpers.extension_constants import OUTPUT_HOME
 
 def build_settings_structure():
-    path_above_settings = f('$out/{}/{}'.format(OUTPUT_HOME), '$')
+    path_above_settings = f(
+        '$out/{}/{}'.format('OUTPUT_HOME', 'OUTPUT_HOME'), 
+        '$')
 
     init_asset = f('$assets/settings_init.py', 'r')
     init_output = f(os.path.join(path_above_settings, '__init__.py'), '$')
