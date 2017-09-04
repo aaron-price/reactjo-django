@@ -43,12 +43,27 @@ def build_settings_structure():
     """)
     f(old_settings_path, 'a', drf_settings)
 
-    data = {
-        'target': ['MIDDLEWARE', 2],
-        'content': "\n\t'corsheaders.middleware.CorsMiddleware',\n\t'django.middleware.common.CommonMiddleware'"
-    }
+    # Add cors to middle of Middleware by replacing the whole list.
+    old_file = f(old_settings_path, 'r')
+    mid_i_begin = old_file.find('MIDDLEWARE = [')
+    mid_i_end = old_file.find(']', mid_i_begin)
 
-    f(old_settings_path, 'a', data)
+    new_middle = dedent("""\
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]""")
+
+    # Assemble the pieces.
+    begin = old_file[:mid_i_begin]
+    end = old_file[mid_i_end:]
+    f(old_settings_path, 'w', begin + new_middle + end)
 
     # Copy settings files into dir, and remove original
     old_settings_file = f(old_settings_path, 'r')
