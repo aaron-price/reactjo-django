@@ -46,7 +46,7 @@ def build_settings(prev_path):
             'rest_framework.authentication.SessionAuthentication',
         ),
         'DEFAULT_PERMISSION_CLASSES': (
-            'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+            'rest_framework.permissions.IsAuthenticatedOrReadOnly',
         )
     }
     """)
