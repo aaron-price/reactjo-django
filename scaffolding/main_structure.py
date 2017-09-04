@@ -6,7 +6,7 @@ from helpers.extension_constants import OUTPUT_HOME
 
 def build_settings_structure():
     path_above_settings = f(
-        '$out/{}/{}'.format(OUTPUT_HOME, OUTPUT_HOME), 
+        '$out/{}/{}'.format(OUTPUT_HOME, OUTPUT_HOME),
         '$')
 
     init_asset = f('$assets/settings_init.py', 'r')
@@ -16,7 +16,7 @@ def build_settings_structure():
     settings_dir = os.path.join(path_above_settings, 'settings')
     mkdir(settings_dir, 'settings_dir')
     old_settings_path = f(os.path.join(path_above_settings, 'settings.py'), '$')
-    old_settings_file = f(old_settings_file, 'r')
+    old_settings_file = f(old_settings_path, 'r')
     base_settings_path = f(os.path.join(settings_dir, 'base.py'), '$')
     prod_settings_path = f(os.path.join(settings_dir, 'production.py'), '$')
     dev_settings_path = f(os.path.join(settings_dir, 'development.py'), '$')
