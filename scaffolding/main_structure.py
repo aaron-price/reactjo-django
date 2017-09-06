@@ -17,6 +17,7 @@ def user_auth_structure():
         f('$man/api/permissions.py', 'a', '$assets/permissions/post_own_content.py')
         f('$man/api/permissions.py', 'a', '$assets/permissions/update_own_profile.py')
         f('$man/api/admin.py', 'a', '$assets/admin/users.py')
+        f('$man/api/urls.py', 'w', '$assets/urls/app_urls_with_users.py')
 
         # Puts the user routes below the router, but above urlpatterns
         route_flag = '# Register new routes below'
@@ -57,7 +58,7 @@ def build_structure():
     f('$man/api/serializers.py', 'w', '$assets/serializers/imports.py')
     f('$man/api/permissions.py', 'w', '$assets/permissions/imports.py')
     f('$man/api/views.py', 'w', '$assets/views/imports.py')
-    f('$man/api/urls.py', 'w', '$assets/urls/base_app_url.py')
+    f('$man/api/urls.py', 'w', '$assets/urls/app_urls_without_users.py')
     f('$man/api/admin.py', 'w', '$assets/admin/imports.py')
     wl('Prepped the api files')
     user_auth_structure()
