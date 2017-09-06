@@ -7,11 +7,18 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'email',)
 
-class LoginViewSet(viewsets.ViewSet):
-    """Checks email and password and returns an auth token"""
-    serializer_class = AuthTokenSerializer
-    permission_classes = (AllowAny,)
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
 
-    def create(self, request):
-        """Use the ObtainAuthToken APIView to validate and create a token."""
-        return ObtainAuthToken().post(request)
+
+class LoginViewSet(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        response = super(LoginViewSet, self).post(request, *args, **kwargs)
+        token = Token.objects.get(key=response.data['token'])
+
+        return Response({
+            'token': token.key,
+            'id': token.user_id,
+            "name": request.data.get('username')
+        })
