@@ -7,6 +7,7 @@ from scaffolding.view import scaffold_view
 from scaffolding.serializer import scaffold_serializer
 from scaffolding.permission import scaffold_permission
 from scaffolding.url import scaffold_url
+from helpers.file_manager import file_manager as f
 
 def scaffold():
 	need_model = boolean_input('Do you need a new model?', 'y')
@@ -18,7 +19,7 @@ def scaffold():
 
 		scaffold_model()
 		prev_path = os.getcwd()
-		os.chdir('$man')
+		os.chdir(f('$man', '$')
 		subprocess.run(['python', 'manage.py', 'makemigrations'])
 		subprocess.run(['python', 'manage.py', 'migrate'])
 		os.chdir(prev_path)
