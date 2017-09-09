@@ -14,4 +14,4 @@ def scaffold_url():
         'target': '# Register new routes below',
         'content': route
     }
-    f('$api/url.py', 'a', data)
+    f('$api/urls.py', 'a', data)
