@@ -27,7 +27,7 @@ def return_model():
 
 
 def quote(string):
-	return "''{}'".format(string)
+	return "'{}'".format(string)
 
 def get_model_field():
     cfg = get_cfg()
