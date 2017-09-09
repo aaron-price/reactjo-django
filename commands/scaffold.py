@@ -7,6 +7,7 @@ from scaffolding.view import scaffold_view
 from scaffolding.serializer import scaffold_serializer
 from scaffolding.permission import scaffold_permission
 from scaffolding.url import scaffold_url
+from scaffolding.admin import scaffold_admin
 from helpers.file_manager import file_manager as f
 
 def scaffold():
@@ -28,3 +29,4 @@ def scaffold():
 	scaffold_serializer()
 	scaffold_permission()
 	scaffold_url()
+	scaffold_admin()
