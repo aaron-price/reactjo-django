@@ -43,7 +43,7 @@ def get_model_field():
     }
 
     if field_type in ['CharField', 'CommaSeparatedIntegerField', 'EmailField']:
-        ml = string_input('max_length', 255)
+        ml = str(string_input('max_length', '255'))
         field_object['options'].append('max_length = ' + ml)
 
     # Datefield specific arguments
@@ -107,11 +107,11 @@ def get_model_field():
             field_object['options'].append('width_field = ' + width_field)
 
     if field_type == 'SlugField':
-        max_length = string_input('max_length', 50)
+        max_length = string_input('max_length', '50')
         field_object['options'].append('max_length = ' + max_length)
 
     if field_type == 'URLField':
-        max_length = string_input('max_length', 200)
+        max_length = string_input('max_length', '200')
         field_object['options'].append('max_length = ' + max_length)
 
     foreign = False
