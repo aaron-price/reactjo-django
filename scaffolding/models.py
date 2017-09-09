@@ -125,7 +125,7 @@ def get_model_field():
             'CASCADE', 'PROTECT', 'SET_NULL',
             'SET_DEFAULT','SET()','DO_NOTHING'
         ]
-        on_delete = options_input('on_delete', choices, 'CASCADE')
+        on_delete = options_input('on_delete ', choices, 'CASCADE')
         field_object['options'].append('on_delete = ' + quote(on_delete))
 
     # Build the string
