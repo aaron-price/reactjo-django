@@ -70,7 +70,7 @@ def options_input(string, options, default = False):
 	lower_default = default.lower() if default != False else False
 	# If input is optional
 	if lower_default in lower_options:
-		answer = input(string + f'{string} (default: {default}): ').lower()
+		answer = input(f'{string} (default: {default}): ').lower()
 		if answer in lower_options:
 			return cap_option(answer)
 		else:
