@@ -116,17 +116,17 @@ def get_model_field():
 
     foreign = False
     if field_type == 'ForeignKey':
-    models = [model['title'] for model in cfg['models']]
-    models.append('self')
-    other_model = options_input('Choose a foreign model: ', models)
-    field_object['options'].append(quote(other_model))
+        models = [model['title'] for model in cfg['models']]
+        models.append('self')
+        other_model = options_input('Choose a foreign model: ', models)
+        field_object['options'].append(quote(other_model))
 
-    choices = [
-        'CASCADE', 'PROTECT', 'SET_NULL',
-        'SET_DEFAULT','SET()','DO_NOTHING'
-    ]
-    on_delete = options_input('on_delete = ', choices, 'CASCADE')
-    field_object['options'].append('on_delete = ' + quote(on_delete))
+        choices = [
+            'CASCADE', 'PROTECT', 'SET_NULL',
+            'SET_DEFAULT','SET()','DO_NOTHING'
+        ]
+        on_delete = options_input('on_delete = ', choices, 'CASCADE')
+        field_object['options'].append('on_delete = ' + quote(on_delete))
 
     # Build the string
     ftitle = field_object['title']
