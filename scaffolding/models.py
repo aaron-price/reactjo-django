@@ -80,7 +80,7 @@ def get_model_field():
         path = string_input('path = ')
         field_object['options'].append('path = ' + quote(path))
 
-        match = string_input('match. For example r'$^': ', None)
+        match = string_input("match. For example r'$^': ", None)
         if match != None:
             field_object['options'].append('match = ' + match)
 
