@@ -151,6 +151,8 @@ def scaffold_model():
     cfg = get_cfg()
     Title = string_input('What will you call your model? ')
     cfg['current_scaffold']['model']['Title'] = Title
+    cfg['current_scaffold']['model']['fields'] = []
+    set_cfg(cfg)
 
     if boolean_input(f'Create a field for {Title}? '):
         get_model_field()
