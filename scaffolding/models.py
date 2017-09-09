@@ -32,10 +32,10 @@ def quote(string):
 def get_model_field():
     cfg = get_cfg()
     field_title = string_input('Name this field')
-    field_type = options_input('Which fieldtype would you like to use?', types)
+    field_type = options_input('Which fieldtype would you like to use? ', types)
 
     # Get correct option, regardless of caps
-    field_type = types[lower_types.find(field_type.lower())]
+    field_type = types[lower_types.index(field_type.lower())]
     field_object = {
         'title': field_title,
         'type': field_type,
@@ -48,8 +48,8 @@ def get_model_field():
 
     # Datefield specific arguments
     if field_type in ['DateField', 'TimeField']:
-        auto_now = boolean_input('Use DateField auto_now?')
-        auto_now_add = boolean_input('Use DateField auto_now_add?')
+        auto_now = boolean_input('Use DateField auto_now? ')
+        auto_now_add = boolean_input('Use DateField auto_now_add? ')
 
         field_object['options'].append('auto_now = ' + auto_now)
         field_object['options'].append('auto_now_add = ' + auto_now_add)
@@ -143,16 +143,16 @@ def get_model_field():
     set_cfg(cfg)
     print(return_model())
 
-    another_field = boolean_input('Make another field?')
+    another_field = boolean_input('Make another field? ')
     if another_field:
         get_model_field()
 
 def scaffold_model():
     cfg = get_cfg()
-    Title = string_input('What will you call your model?')
+    Title = string_input('What will you call your model? ')
     cfg['current_scaffold']['model']['Title'] = Title
 
-    if boolean_input(f'Create a field for {Title} ?'):
+    if boolean_input(f'Create a field for {Title}? '):
         get_model_field()
 
     f('$api/models.py', 'a', return_model())
