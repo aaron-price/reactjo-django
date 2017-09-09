@@ -141,11 +141,17 @@ def get_model_field():
         f'{ftitle} = models.{ftype}({foptions})\n    '
     )
     set_cfg(cfg)
+    print('========================')
+    print('Your model so far:')
+    print(' ')
     print(return_model())
+    print('========================')
 
     another_field = boolean_input('Make another field? ')
     if another_field:
         get_model_field()
+
+    return cfg['current_scaffold']['model']['fields']
 
 def scaffold_model():
     cfg = get_cfg()
@@ -154,7 +160,9 @@ def scaffold_model():
     cfg['current_scaffold']['model']['fields'] = []
     set_cfg(cfg)
 
+    fields = []
     if boolean_input(f'Create a field for {Title}? '):
-        get_model_field()
+        fields = get_model_field()
 
     f('$api/models.py', 'a', return_model())
+    cfg['models'].append({'Title': Title, 'fields': fields})
