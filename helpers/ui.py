@@ -31,7 +31,7 @@ def string_input(string, default = ""):
 
 	# If input is optional
 	if default != "":
-		answer = input(string + ": ")
+		answer = input(string + f' (default: {default}): ')
 		if answer == "":
 			return default
 		else:
