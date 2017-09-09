@@ -109,3 +109,10 @@ def build_settings(prev_path):
     )
     """)
     f(dev_settings_path, 'a', cors)
+
+    # Debug toolbar, dev only
+    data = {
+        'target': ['INSTALLED_APPS'],
+        'content': "\n\t'debug_toolbar',"
+    }
+    f(dev_settings_path, 'a', data)
