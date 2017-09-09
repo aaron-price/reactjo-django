@@ -1,3 +1,5 @@
+import os, subprocess
+
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.ui import boolean_input
 from scaffolding.models import scaffold_model
@@ -11,8 +13,13 @@ def scaffold():
 	cfg = get_cfg()
 
 	if need_model:
-		scaffold_model()
 		cfg['current_scaffold'] = {'model': {}}
+		scaffold_model()
+		prev_path = os.getcwd()
+		os.chdir('$man')
+		subprocess.run(['python', 'manage.py', 'makemigrations'])
+		subprocess.run(['python', 'manage.py', 'migrate'])
+		os.chdir(prev_path)
 		set_cfg(cfg)
 
 	scaffold_view()
