@@ -4,11 +4,11 @@ from helpers.file_manager import file_manager as f
 
 def scaffold_url():
     cfg = get_cfg()
-    Title = cfg['current_scaffold']['model']['title']
+    title = cfg['current_scaffold']['model']['title']
 
     route = f('$assets/urls/new_api_url.py', 'r').format(
-        Title=Title,
-        Title_lower=Title.lower()
+        title=title,
+        title_lower=title.lower()
     )
     data = {
         'target': '# Register new routes below',
