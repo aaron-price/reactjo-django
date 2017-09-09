@@ -157,4 +157,4 @@ def scaffold_model():
     if boolean_input(f'Create a field for {Title} ?'):
         get_model_fields()
 
-    f('$api/models.py', 'a' return_model())
+    f('$api/models.py', 'a', return_model())
