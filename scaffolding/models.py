@@ -138,7 +138,7 @@ def get_model_field():
         else:
             foptions = o
     cfg['current_scaffold']['model']['fields'].append(
-        f'{ftitle} = models.{ftype}({foptions})\n\t'
+        f'{ftitle} = models.{ftype}({foptions})\n    '
     )
     set_cfg(cfg)
     print(return_model())
