@@ -3,7 +3,7 @@ from helpers.worklist import worklist as wl
 from helpers.file_manager import file_manager as f
 
 def scaffold_url():
-    cfg = get_cfg
+    cfg = get_cfg()
     Title = cfg['current_scaffold']['model']['Title']
 
     route = f('$assets/urls/new_api_url.py').format(
