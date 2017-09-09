@@ -17,7 +17,7 @@ def scaffold_serializer():
             fields += ', ' + quote(title)
 
     new_serializer = f('$assets/serializers/new.py', 'r').format(
-        Title = cfg['current_scaffold']['model']['Title'],
+        title = cfg['current_scaffold']['model']['title'],
         fields = fields
     )
 

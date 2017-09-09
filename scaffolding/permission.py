@@ -4,10 +4,10 @@ from helpers.file_manager import file_manager as f
 
 def scaffold_permission():
     cfg = get_cfg()
-    title = cfg['current_scaffold']['model']['Title']
+    title = cfg['current_scaffold']['model']['title']
 
     new_permission = f('$assets/permissions/new.py', 'r').format(
-        Title = title,
+        title = title,
         action = 'Create'
     )
 

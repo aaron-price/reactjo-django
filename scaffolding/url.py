@@ -4,7 +4,7 @@ from helpers.file_manager import file_manager as f
 
 def scaffold_url():
     cfg = get_cfg()
-    Title = cfg['current_scaffold']['model']['Title']
+    Title = cfg['current_scaffold']['model']['title']
 
     route = f('$assets/urls/new_api_url.py', 'r').format(
         Title=Title,

@@ -20,7 +20,7 @@ def return_model():
         fields += field
 
     new_model = f('$assets/models/new.py', 'r').format(
-        Title = cfg['current_scaffold']['model']['Title'],
+        title = cfg['current_scaffold']['model']['title'],
         fields = fields
     )
     return new_model
@@ -155,14 +155,15 @@ def get_model_field():
 
 def scaffold_model():
     cfg = get_cfg()
-    Title = string_input('What will you call your model? ')
-    cfg['current_scaffold']['model']['Title'] = Title
+    title = string_input('What will you call your model? ')
+    cfg['current_scaffold']['model']['title'] = title
     cfg['current_scaffold']['model']['fields'] = []
     set_cfg(cfg)
 
     fields = []
-    if boolean_input(f'Create a field for {Title}? '):
+    if boolean_input(f'Create a field for {title}? '):
         fields = get_model_field()
 
     f('$api/models.py', 'a', return_model())
-    cfg['models'].append({'Title': Title, 'fields': fields})
+    cfg['models'].append({'title': title, 'fields': fields})
+    set_cfg(cfg)

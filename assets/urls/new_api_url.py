@@ -1,2 +1,2 @@
 
-router.register('{Title_lower}', views.{Title}ViewSet)
+router.register('{title_lower}', views.{title}ViewSet)

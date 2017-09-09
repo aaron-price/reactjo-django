@@ -1,5 +1,5 @@
 
-class {Title}Serializer(serializers.ModelSerializer):
+class {title}Serializer(serializers.ModelSerializer):
     class Meta:
-        model = models.{Title}
+        model = models.{title}
         fields = ({fields})
