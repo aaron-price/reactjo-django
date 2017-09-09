@@ -6,6 +6,9 @@ def scaffold_permission():
     cfg = get_cfg()
     title = cfg['current_scaffold']['model']['Title']
 
-    new_permission = f('$assets/permissions/new.py', 'r').format(Title = title)
+    new_permission = f('$assets/permissions/new.py', 'r').format(
+        Title = title,
+        action = 'Create'
+    )
 
     f('$api/permissions.py', 'a', new_permission)
