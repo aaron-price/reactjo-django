@@ -3,8 +3,8 @@
 Start with this if you haven't already
 
 ```bash
-virtualenv venv
-source venv/bin/activate
+python3 -m venv env         # Or python -m venv env (windows)
+source env/bin/activate     # Or just env/Scripts/activate (window)
 pip install reactjo
 reactjo init
 ```
