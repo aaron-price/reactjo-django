@@ -148,8 +148,6 @@ def get_model_field():
         get_model_field()
 
 def scaffold_model():
-    print(types)
-    print(lower_types)
     cfg = get_cfg()
     Title = string_input('What will you call your model?')
     cfg['current_scaffold']['model']['Title'] = Title

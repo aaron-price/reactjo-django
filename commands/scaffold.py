@@ -14,13 +14,14 @@ def scaffold():
 
 	if need_model:
 		cfg['current_scaffold'] = {'model': {}}
+		set_cfg(cfg)
+
 		scaffold_model()
 		prev_path = os.getcwd()
 		os.chdir('$man')
 		subprocess.run(['python', 'manage.py', 'makemigrations'])
 		subprocess.run(['python', 'manage.py', 'migrate'])
 		os.chdir(prev_path)
-		set_cfg(cfg)
 
 	scaffold_view()
 	scaffold_serializer()
