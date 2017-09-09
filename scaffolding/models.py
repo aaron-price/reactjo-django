@@ -153,6 +153,6 @@ def scaffold_model():
     cfg['current_scaffold']['model']['Title'] = Title
 
     if boolean_input(f'Create a field for {Title} ?'):
-        get_model_fields()
+        get_model_field()
 
     f('$api/models.py', 'a', return_model())
