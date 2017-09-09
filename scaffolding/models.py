@@ -1,7 +1,7 @@
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.worklist import worklist as wl
 from helpers.file_manager import file_manager as f
-from helpers.ui import string_input, options_input, int_input, boolean_input
+from helpers.ui import string_input, options_input, boolean_input
 types = [
     'AutoField', 'BigAutoField', 'BigIntegerField', 'BinaryField',
     'BooleanField', 'CharField', 'CommaSeparatedIntegerField',
@@ -43,7 +43,7 @@ def get_model_field():
     }
 
     if field_type in ['CharField', 'CommaSeparatedIntegerField', 'EmailField']:
-        ml = int_input('max_length = ', 255)
+        ml = string_input('max_length', 255)
         field_object['options'].append('max_length = ' + ml)
 
     # Datefield specific arguments
@@ -56,22 +56,22 @@ def get_model_field():
 
     # Decimalfield specific arguments
     if field_type == 'DecimalField':
-        decimal_places = int_input('decimal_places = ')
-        max_digits = int_input('max_digits = ')
+        decimal_places = string_input('decimal_places')
+        max_digits = string_input('max_digits')
         field_object['options'].append('decimal_places = ' + decimal_places)
         field_object['options'].append('max_digits = ' + max_digits)
 
     # Filefield specific arguments
     if field_type == 'FileField':
-        upload_to = string_input('upload_to = ', None)
+        upload_to = string_input('upload_to', None)
         if upload_to != None:
             field_object['options'].append('upload_to = ' + quote(upload_to))
 
-        storage = string_input('storage = ', None)
+        storage = string_input('storage', None)
         if storage != None:
             field_object['options'].append('storage = ' + quote(storage))
 
-        max_length = int_input('max_length = ', None)
+        max_length = string_input('max_length', None)
         if max_length != None:
             field_object['options'].append('max_length = ' + max_length)
 
@@ -80,52 +80,52 @@ def get_model_field():
         path = string_input('path = ')
         field_object['options'].append('path = ' + quote(path))
 
-        match = string_input("match. For example r'$^': ", None)
+        match = string_input("match. For example r'$^'", None)
         if match != None:
             field_object['options'].append('match = ' + match)
 
-        max_length = int_input('max_length = ', None)
+        max_length = string_input('max_length', None)
         if max_length != None:
             field_object['options'].append('max_length = ' + max_length)
 
-        recursive = boolean_input('recursive = ', 'n')
+        recursive = boolean_input('recursive', 'n')
         field_object['options'].append('recursive = ' + recursive)
 
-        allow_files = boolean_input('allow_files = ', 'y')
+        allow_files = boolean_input('allow_files', 'y')
         field_object['options'].append('allow_files = ' + allow_files)
 
-        allow_folders = boolean_input('allow_folders = ', 'n')
+        allow_folders = boolean_input('allow_folders', 'n')
         field_object['options'].append('allow_folders = ' + allow_folders)
 
     if field_type == 'ImageField':
-        height_field = int_input('height_field = ', None)
+        height_field = string_input('height_field', None)
         if height_field != None:
             field_object['options'].append('height_field = ' + height_field)
 
-        width_field = int_input('width_field = ', None)
+        width_field = string_input('width_field', None)
         if width_field != None:
             field_object['options'].append('width_field = ' + width_field)
 
     if field_type == 'SlugField':
-        max_length = int_input('max_length = ', 50)
+        max_length = string_input('max_length', 50)
         field_object['options'].append('max_length = ' + max_length)
 
     if field_type == 'URLField':
-        max_length = int_input('max_length = ', 200)
+        max_length = string_input('max_length', 200)
         field_object['options'].append('max_length = ' + max_length)
 
     foreign = False
     if field_type == 'ForeignKey':
         models = [model['title'] for model in cfg['models']]
         models.append('self')
-        other_model = options_input('Choose a foreign model: ', models)
+        other_model = options_input('Choose a foreign model', models)
         field_object['options'].append(quote(other_model))
 
         choices = [
             'CASCADE', 'PROTECT', 'SET_NULL',
             'SET_DEFAULT','SET()','DO_NOTHING'
         ]
-        on_delete = options_input('on_delete = ', choices, 'CASCADE')
+        on_delete = options_input('on_delete', choices, 'CASCADE')
         field_object['options'].append('on_delete = ' + quote(on_delete))
 
     # Build the string
