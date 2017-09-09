@@ -116,7 +116,7 @@ def get_model_field():
 
     foreign = False
     if field_type == 'ForeignKey':
-    models = cfg['models']
+    models = [model['title'] for model in cfg['models']]
     models.append('self')
     other_model = options_input('Choose a foreign model: ', models)
     field_object['options'].append(quote(other_model))

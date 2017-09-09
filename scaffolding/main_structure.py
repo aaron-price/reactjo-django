@@ -11,6 +11,11 @@ from helpers.ui import boolean_input
 def user_auth_structure():
     cfg = get_cfg()
     if cfg['need_users'] == 'True':
+        if not 'models' in cfg.keys():
+            cfg['models'] = []
+
+        cfg['models'].append({'title': 'UserProfile'})
+        set_cfg(cfg)
         f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
         f('$man/api/serializers.py', 'a', '$assets/serializers/user_profile.py')
         f('$man/api/views.py', 'a', '$assets/views/users.py')
