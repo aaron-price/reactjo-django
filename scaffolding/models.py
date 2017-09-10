@@ -28,7 +28,7 @@ def return_model():
         str_method = f('$assets/models/str_method.py', 'r').format(
             title = cfg['current_scaffold']['model']['str'],
         )
-        new_model + str_method
+        new_model = new_model + str_method
 
     return new_model
 
@@ -161,19 +161,22 @@ def get_model_field():
     # All done making fields.
     # Add the __str__ method
     else :
-        titles = []
-        for field in cfg['current_scaffold']['model']['fields']:
-            titles.append(field.replace('\n', '').replace('\t', '').split(' ')[0])
+        need_str = boolean_input('Would you like to add a __str__ method?', 'y')
+        if need_str:
+            titles = []
+            for field in cfg['current_scaffold']['model']['fields']:
+                titles.append(field.replace('\n', '').replace('\t', '').split(' ')[0])
 
-        str_field = options_input(
-            'Which field should be used for the __str__ method?',
-            titles,
-            titles[0]
-        )
+            str_field = options_input(
+                'Which field should be used for the __str__ method?',
+                titles,
+                titles[0]
+            )
+        else:
+            str_field = None
+
         cfg['current_scaffold']['model']['str'] = str_field
         set_cfg(cfg)
-
-        return cfg['current_scaffold']['model']['fields']
 
 def scaffold_model():
     cfg = get_cfg()
@@ -182,12 +185,22 @@ def scaffold_model():
     cfg['current_scaffold']['model']['fields'] = []
     set_cfg(cfg)
 
-    fields = []
     if boolean_input(f'Create a field for {title}? '):
-        fields = get_model_field()
+        if 'models' not in cfg:
+            cfg['models'] = []
+            set_cfg(cfg)
 
-    # Refresh config
-    cfg = get_cfg()
-    f('$api/models.py', 'a', return_model())
-    cfg['models'].append({'title': title, 'fields': fields})
-    set_cfg(cfg)
+        get_model_field()
+
+        # Refresh config
+        cfg = get_cfg()
+        fields = cfg['current_scaffold']['model']['fields']
+        title = cfg['current_scaffold']['model']['title']
+        str_method = cfg['current_scaffold']['model']['str']
+        f('$api/models.py', 'a', return_model())
+        cfg['models'].append({
+            'title': title,
+            'fields': fields,
+            'str': str(str_method),
+        })
+        set_cfg(cfg)
