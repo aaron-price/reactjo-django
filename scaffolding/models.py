@@ -171,6 +171,7 @@ def get_model_field():
             titles[0]
         )
         cfg['current_scaffold']['model']['str'] = str_field
+        print("CURRENT SCAFFOLD, CHECK 1 ", cfg['current_scaffold'])
         set_cfg(cfg)
 
         return cfg['current_scaffold']['model']['fields']
@@ -186,6 +187,8 @@ def scaffold_model():
     if boolean_input(f'Create a field for {title}? '):
         fields = get_model_field()
 
+    # Refresh config
+    cfg = get_cfg()
     f('$api/models.py', 'a', return_model())
     cfg['models'].append({'title': title, 'fields': fields})
     set_cfg(cfg)
