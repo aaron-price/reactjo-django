@@ -107,5 +107,22 @@ def build_settings(prev_path):
     	'localhost:3000'
     	'127.0.0.1:3000'
     )
+
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_TOOLBAR_CALLBACK': lambda x: True
+    }
     """)
     f(dev_settings_path, 'a', cors)
+
+    # Debug toolbar, dev only
+    data = {
+        'target': ['INSTALLED_APPS'],
+        'content': "\n\t'debug_toolbar',"
+    }
+    f(dev_settings_path, 'a', data)
+
+    data = {
+        'target': ['MIDDLEWARE'],
+        'content': "\n\t'debug_toolbar.middleware.DebugToolbarMiddleware',"
+    }
+    f(dev_settings_path, 'a', data)

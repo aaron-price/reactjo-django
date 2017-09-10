@@ -9,16 +9,17 @@ def parse_shortcuts(path):
     out_path = os.path.join(prj_path, OUTPUT_HOME)
 
     shortcuts = {
-        '$su': su_path,
-        '$rc': os.path.join(su_path, 'reactjorc'),
+        '$assets': os.path.join(su_path, 'reactjorc/extensions', RC_HOME, 'assets'),
+        '$api': os.path.join(out_path, 'backend/api'),
+        '$ext': os.path.join(su_path, 'reactjorc/extensions', RC_HOME),
+        '$extension': os.path.join(su_path, 'reactjorc/extensions', RC_HOME),
+        '$man': os.path.join(out_path, OUTPUT_HOME),
+        '$out': out_path,
+        '$output': out_path,
         '$project': prj_path,
         '$prj': prj_path,
-        '$output': os.path.join(prj_path, OUTPUT_HOME),
-        '$out': os.path.join(prj_path, OUTPUT_HOME),
-        '$extension': os.path.join(su_path, 'reactjorc/extensions', RC_HOME),
-        '$ext': os.path.join(su_path, 'reactjorc/extensions', RC_HOME),
-        '$assets': os.path.join(su_path, 'reactjorc/extensions', RC_HOME, 'assets'),
-        '$man': os.path.join(out_path, OUTPUT_HOME)
+        '$rc': os.path.join(su_path, 'reactjorc'),
+        '$su': su_path,
     }
     if 'shortcuts' not in cfg['paths'].keys():
         cfg['paths']['shortcuts'] = shortcuts

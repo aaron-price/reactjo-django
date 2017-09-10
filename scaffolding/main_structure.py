@@ -10,7 +10,9 @@ from helpers.ui import boolean_input
 
 def user_auth_structure():
     cfg = get_cfg()
+    cfg['models'] = []
     if cfg['need_users'] == 'True':
+        cfg['models'].append({'title': 'UserProfile'})
         f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
         f('$man/api/serializers.py', 'a', '$assets/serializers/user_profile.py')
         f('$man/api/views.py', 'a', '$assets/views/users.py')
@@ -30,6 +32,7 @@ def user_auth_structure():
         end = old_urls[route_start:]
         f('$man/api/urls.py', 'w', begin + mid + end)
         wl('Added stuff for Users')
+    set_cfg(cfg)
 
 def build_structure():
     # Pip install require
@@ -38,14 +41,14 @@ def build_structure():
     mkdir(f('$out', '$'))
     f('$out/requirements.txt', 'w', '$assets/requirements.txt')
     os.chdir(f('$out', '$'))
-    subprocess.run(['pip3', 'install', '-r', 'requirements.txt'])
+    subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
     wl('Installed pip packages', prev_path)
 
     # Start django project
     subprocess.run(['django-admin', 'startproject', 'backend'])
     wl('Created Django project', prev_path)
     os.chdir('backend')
-    subprocess.run(['python3', 'manage.py', 'startapp', 'api'])
+    subprocess.run(['python', 'manage.py', 'startapp', 'api'])
     wl('Create api app', prev_path)
 
     build_settings(prev_path)
@@ -65,8 +68,8 @@ def build_structure():
 
     # Migrations
     os.chdir(f('$man', '$'))
-    subprocess.run(['python3', 'manage.py', 'makemigrations'])
-    subprocess.run(['python3', 'manage.py', 'migrate'])
+    subprocess.run(['python', 'manage.py', 'makemigrations'])
+    subprocess.run(['python', 'manage.py', 'migrate'])
     os.chdir(prev_path)
     wl('Ran some database migrations')
 
@@ -74,5 +77,5 @@ def build_structure():
     need_su = boolean_input('Would you like to create a superuser now?', 'y')
     if need_su:
         os.chdir(f('$man', '$'))
-        subprocess.run(['python3', 'manage.py', 'createsuperuser'])
+        subprocess.run(['python', 'manage.py', 'createsuperuser'])
         os.chdir(prev_path)

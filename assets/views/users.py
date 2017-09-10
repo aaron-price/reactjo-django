@@ -7,11 +7,6 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'email',)
 
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.authtoken.models import Token
-from rest_framework.response import Response
-
-
 class LoginViewSet(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super(LoginViewSet, self).post(request, *args, **kwargs)
