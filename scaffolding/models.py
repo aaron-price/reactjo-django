@@ -21,14 +21,14 @@ def return_model():
 
     new_model = f('$assets/models/new.py', 'r').format(
         title = cfg['current_scaffold']['model']['title'],
-        fields = fields
+        fields = fields,
     )
 
     if 'str' in cfg['current_scaffold']['model']:
         str_method = f('$assets/models/str_method.py', 'r').format(
-            title = cfg['current_scaffold']['model']['str']
+            title = cfg['current_scaffold']['model']['str'],
         )
-        new_model + '\n    ' + str_method
+        new_model + str_method
 
     return new_model
 
