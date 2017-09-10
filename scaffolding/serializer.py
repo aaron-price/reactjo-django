@@ -11,10 +11,7 @@ def scaffold_serializer():
     for i, field in enumerate(cfg['current_scaffold']['model']['fields']):
         # Get just the title
         title = field.replace('\n', '').replace('\t', '').split(' ')[0]
-        if i == 0:
-            fields += quote(title)
-        else:
-            fields += ', ' + quote(title)
+        fields += quote(title) + ', '
 
     new_serializer = f('$assets/serializers/new.py', 'r').format(
         title = cfg['current_scaffold']['model']['title'],

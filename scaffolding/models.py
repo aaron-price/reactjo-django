@@ -23,6 +23,13 @@ def return_model():
         title = cfg['current_scaffold']['model']['title'],
         fields = fields
     )
+
+    if 'str' in cfg['current_scaffold']['model']:
+        str_method = f('$assets/models/str_method.py', 'r').format(
+            title = cfg['current_scaffold']['model']['str']
+        )
+        new_model + '\n    ' + str_method
+
     return new_model
 
 
@@ -151,7 +158,22 @@ def get_model_field():
     if another_field:
         get_model_field()
 
-    return cfg['current_scaffold']['model']['fields']
+    # All done making fields.
+    # Add the __str__ method
+    else :
+        titles = []
+        for field in cfg['current_scaffold']['model']['fields']:
+            titles.append(field.replace('\n', '').replace('\t', '').split(' ')[0])
+
+        str_field = options_input(
+            'Which field should be used for the __str__ method?',
+            titles,
+            titles[0]
+        )
+        cfg['current_scaffold']['model']['str'] = str_field
+        set_cfg(cfg)
+
+        return cfg['current_scaffold']['model']['fields']
 
 def scaffold_model():
     cfg = get_cfg()
