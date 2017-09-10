@@ -171,7 +171,6 @@ def get_model_field():
             titles[0]
         )
         cfg['current_scaffold']['model']['str'] = str_field
-        print("CURRENT SCAFFOLD, CHECK 1 ", cfg['current_scaffold'])
         set_cfg(cfg)
 
         return cfg['current_scaffold']['model']['fields']
