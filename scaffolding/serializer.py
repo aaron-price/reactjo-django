@@ -11,7 +11,7 @@ def scaffold_serializer():
         cfg = get_cfg()
         fields = ''
         for i, field in enumerate(cfg['current_scaffold']['model']['fields']):
-            fields += quote(field.title) + ', '
+            fields += quote(field['title']) + ', '
 
         new_serializer = f('$assets/serializers/new.py', 'r').format(
             title = cfg['current_scaffold']['model']['title'],
