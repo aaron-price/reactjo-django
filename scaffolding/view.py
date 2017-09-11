@@ -10,3 +10,7 @@ def scaffold_view():
             title = cfg['current_scaffold']['model']['title'],
         )
         f('$api/views.py', 'a', new_view)
+        print('Created this view:')
+        print(' ')
+        print(new_view)
+        print(' ')
