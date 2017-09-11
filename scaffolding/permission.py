@@ -1,7 +1,7 @@
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.worklist import worklist as wl
 from helpers.file_manager import file_manager as f
-from helpers.ui import boolean_input, option_input
+from helpers.ui import boolean_input, options_input
 from inflection import pluralize
 
 def scaffold_permission():
@@ -11,23 +11,23 @@ def scaffold_permission():
         user_types = [
             'Admin', 'Authenticated', 'Anonymous', 'Anybody', 'Nobody'
         ]
-        create_type = option_input(
+        create_type = options_input(
             'Who can create ' + pluralize(title.lower()) + '?',
             user_types, 'Authenticated')
 
-        list_type = option_input(
+        list_type = options_input(
             'Who can view a list of all ' + pluralize(title.lower()) + '?',
             user_types, 'Anybody')
 
-        detail_type = option_input(
+        detail_type = options_input(
             'Who can view the details about a ' + title.lower() + '?',
             user_types, 'Anybody')
 
-        update_type = option_input(
+        update_type = options_input(
             'Who can update an existing ' + title.lower() + '?',
             user_types, 'Authenticated')
 
-        delete_type = option_input(
+        delete_type = options_input(
             'Who can delete a ' + title.lower() + '?',
             user_types, 'Authenticated')
 
