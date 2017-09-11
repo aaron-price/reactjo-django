@@ -13,23 +13,23 @@ def scaffold_permission():
         ]
         create_type = option_input(
             'Who can create ' + pluralize(title.lower()) + '?',
-            , user_types, 'Authenticated')
+            user_types, 'Authenticated')
 
         list_type = option_input(
             'Who can view a list of all ' + pluralize(title.lower()) + '?',
-            , user_types, 'Anybody')
+            user_types, 'Anybody')
 
         detail_type = option_input(
             'Who can view the details about a ' + title.lower() + '?',
-            , user_types, 'Anybody')
+            user_types, 'Anybody')
 
         update_type = option_input(
             'Who can update an existing ' + title.lower() + '?',
-            , user_types, 'Authenticated')
+            user_types, 'Authenticated')
 
         delete_type = option_input(
             'Who can delete a ' + title.lower() + '?',
-            , user_types, 'Authenticated')
+            user_types, 'Authenticated')
 
         cfg['current_scaffold']['permissions'] = {
             'create': create_type,
