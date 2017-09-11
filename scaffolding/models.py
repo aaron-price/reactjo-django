@@ -13,28 +13,29 @@ types = [
 ]
 lower_types = [t.lower() for t in types]
 
+# Forces quotes around an input
+def quote(string):
+	return "'{}'".format(string)
+
+# Returns a string showing the model being created so far.
 def return_model():
     cfg = get_cfg()
     fields = ''
     for field in cfg['current_scaffold']['model']['fields']:
-        fields += field
+        fields += field['string']
 
     new_model = f('$assets/models/new.py', 'r').format(
         title = cfg['current_scaffold']['model']['title'],
         fields = fields,
     )
 
-    if 'str' in cfg['current_scaffold']['model']:
+    if '__str__' in cfg['current_scaffold']['model']:
         str_method = f('$assets/models/str_method.py', 'r').format(
-            title = cfg['current_scaffold']['model']['str'],
+            title = cfg['current_scaffold']['model']['__str__'],
         )
         new_model = new_model + str_method
 
     return new_model
-
-
-def quote(string):
-	return "'{}'".format(string)
 
 def get_model_field():
     cfg = get_cfg()
@@ -144,9 +145,12 @@ def get_model_field():
             foptions += f', {o}'
         else:
             foptions = o
-    cfg['current_scaffold']['model']['fields'].append(
-        f'{ftitle} = models.{ftype}({foptions})\n    '
-    )
+    cfg['current_scaffold']['model']['fields'].append({
+        'title': ftitle,
+        'type': ftype,
+        'options': field_object['options'],
+        'string': f'{ftitle} = models.{ftype}({foptions})\n    '
+    })
     set_cfg(cfg)
     print('========================')
     print('Your model so far:')
@@ -163,9 +167,7 @@ def get_model_field():
     else :
         need_str = boolean_input('Would you like to add a __str__ method?', 'y')
         if need_str:
-            titles = []
-            for field in cfg['current_scaffold']['model']['fields']:
-                titles.append(field.replace('\n', '').replace('\t', '').split(' ')[0])
+            titles = [field['title'] for field in cfg['current_scaffold']['model']['fields']]
 
             str_field = options_input(
                 'Which field should be used for the __str__ method?',
@@ -175,7 +177,7 @@ def get_model_field():
         else:
             str_field = None
 
-        cfg['current_scaffold']['model']['str'] = str_field
+        cfg['current_scaffold']['model']['__str__'] = str_field
         set_cfg(cfg)
 
 def scaffold_model():
@@ -197,10 +199,14 @@ def scaffold_model():
         fields = cfg['current_scaffold']['model']['fields']
         title = cfg['current_scaffold']['model']['title']
         str_method = cfg['current_scaffold']['model']['str']
+
+        # Put the model in models.py
         f('$api/models.py', 'a', return_model())
+
+        # Put the model in config.json
         cfg['models'].append({
             'title': title,
             'fields': fields,
-            'str': str(str_method),
+            '__str__': str(str_method),
         })
         set_cfg(cfg)

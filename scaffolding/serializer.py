@@ -8,12 +8,10 @@ def quote(string):
 
 def scaffold_serializer():
     if boolean_input('Need a serializer?'):
-        cfg= get_cfg()
+        cfg = get_cfg()
         fields = ''
         for i, field in enumerate(cfg['current_scaffold']['model']['fields']):
-            # Get just the title
-            title = field.replace('\n', '').replace('\t', '').split(' ')[0]
-            fields += quote(title) + ', '
+            fields += quote(field.title) + ', '
 
         new_serializer = f('$assets/serializers/new.py', 'r').format(
             title = cfg['current_scaffold']['model']['title'],
@@ -21,3 +19,7 @@ def scaffold_serializer():
         )
 
         f('$api/serializers.py', 'a', new_serializer)
+        print('Created this in serializers.py:')
+        print(' ')
+        print(new_serializer)
+        print(' ')
