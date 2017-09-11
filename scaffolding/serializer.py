@@ -9,13 +9,13 @@ def quote(string):
 def scaffold_serializer():
     if boolean_input('Need a serializer?'):
         cfg = get_cfg()
-        fields = ''
-        for i, field in enumerate(cfg['current_scaffold']['model']['fields']):
-            fields += quote(field['title']) + ', '
+        fields_arr = cfg['current_scaffold']['model']['fields']
+        titles = [field['title'] for field in fields_arr]
+        fields_str = ', '.join(titles)
 
         new_serializer = f('$assets/serializers/new.py', 'r').format(
             title = cfg['current_scaffold']['model']['title'],
-            fields = fields
+            fields = fields_str
         )
 
         f('$api/serializers.py', 'a', new_serializer)

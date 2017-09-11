@@ -6,7 +6,6 @@ from scaffolding.models import scaffold_model
 from scaffolding.view import scaffold_view
 from scaffolding.serializer import scaffold_serializer
 from scaffolding.permission import scaffold_permission
-from scaffolding.url import scaffold_url
 from scaffolding.admin import scaffold_admin
 from helpers.file_manager import file_manager as f
 
@@ -25,8 +24,7 @@ def scaffold():
 		subprocess.run(['python', 'manage.py', 'migrate'])
 		os.chdir(prev_path)
 
-	scaffold_view()
-	scaffold_serializer()
-	scaffold_permission()
-	scaffold_url()
-	scaffold_admin()
+		scaffold_permission()
+		scaffold_view()
+		scaffold_serializer()
+		scaffold_admin()
