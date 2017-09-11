@@ -17,3 +17,7 @@ def scaffold_url():
             'content': '# Register new routes below\n' + route
         }
         f('$api/urls.py', 'w', data)
+        print('Created this route:')
+        print(' ')
+        print(route)
+        print(' ')
