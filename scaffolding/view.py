@@ -15,7 +15,7 @@ def scaffold_view():
         #     permissions_string = ''
 
         # Temporarily bypassing permissions until the rest of the system works
-        permissions_string = ''
+        permissions_string = 'permission_classes = [AllowAny]'
 
         new_view = f('$assets/views/new.py', 'r').format(
             title = cfg['current_scaffold']['model']['title'],
