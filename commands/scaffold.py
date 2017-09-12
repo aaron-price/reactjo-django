@@ -24,7 +24,7 @@ def scaffold():
 		subprocess.run(['python', 'manage.py', 'migrate'])
 		os.chdir(prev_path)
 
-		scaffold_permission()
+		# scaffold_permission()
 		scaffold_view()
 		scaffold_serializer()
 		scaffold_admin()

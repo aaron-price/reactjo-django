@@ -9,7 +9,7 @@ def scaffold_permission():
         cfg = get_cfg()
         title = cfg['current_scaffold']['model']['title']
         user_types = [
-            'Admin', 'Authenticated', 'Anonymous', 'Anybody', 'Nobody'
+            'Superuser', 'Staff', 'Owner', 'Authenticated', 'Anonymous', 'Anybody', 'Nobody'
         ]
         create_type = options_input(
             'Who can create ' + pluralize(title.lower()) + '?',
@@ -39,10 +39,23 @@ def scaffold_permission():
             'delete': delete_type
         }
 
+        allowed = {
+            'Superuser': 'is_superuser',
+            'Staff': 'is_staff',
+            'Owner': 'is_owner()',
+            'Authenticated': 'is_authenticated',
+            'Anonymous': 'is_anonymous',
+            'Anybody': 'return_true',
+            'Nobody': 'return_false'
+        }
+
 
         new_permission = f('$assets/permissions/new.py', 'r').format(
             title = title,
-            action = 'Create'
+            get_allowed = allowed[list_type],
+            post_allowed = allowed[create_type],
+            put_allowed = allowed[update_type],
+            delete_allowed = allowed[delete_type]
         )
 
         f('$api/permissions.py', 'a', new_permission)
