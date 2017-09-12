@@ -10,7 +10,7 @@ def scaffold_serializer():
     if boolean_input('Need a serializer?'):
         cfg = get_cfg()
         fields_arr = cfg['current_scaffold']['model']['fields']
-        titles = [field['title'] for field in fields_arr]
+        titles = [quote(field['title']) for field in fields_arr]
         fields_str = ', '.join(titles)
 
         new_serializer = f('$assets/serializers/new.py', 'r').format(
