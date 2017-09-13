@@ -198,7 +198,7 @@ def scaffold_model():
         cfg = get_cfg()
         fields = cfg['current_scaffold']['model']['fields']
         title = cfg['current_scaffold']['model']['title']
-        str_method = cfg['current_scaffold']['model']['str']
+        str_method = cfg['current_scaffold']['model']['__str__']
 
         # Put the model in models.py
         f('$api/models.py', 'a', return_model())

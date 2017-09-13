@@ -1,0 +1,2 @@
+django-guardian==1.4.9
+inflection==0.3.1
