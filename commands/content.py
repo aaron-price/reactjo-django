@@ -9,7 +9,7 @@ from scaffolding.permission import scaffold_permission
 from scaffolding.admin import scaffold_admin
 from helpers.file_manager import file_manager as f
 
-def scaffold():
+def content():
 	need_model = boolean_input('Do you need a new model?', 'y')
 	cfg = get_cfg()
 
