@@ -9,6 +9,3 @@ if cmd in ['n', 'new']:
 	new()
 if cmd in ['b', 'build']:
 	scaffold()
-if cmd in ['s', 'server', 'serve']:
-	os.chdir(f('$man', '$'))
-	subprocess.Popen(['python', 'manage.py', 'runserver'])
