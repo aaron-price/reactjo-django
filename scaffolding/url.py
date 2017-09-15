@@ -4,7 +4,7 @@ from helpers.file_manager import file_manager as f
 from helpers.ui import boolean_input
 
 def scaffold_url():
-    if boolean_input('Need a url route?'):
+    if boolean_input('Need a url route?', 'y'):
         cfg = get_cfg()
         title = cfg['current_scaffold']['model']['title']
 

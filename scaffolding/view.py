@@ -5,7 +5,7 @@ from helpers.ui import boolean_input
 from scaffolding.url import scaffold_url
 
 def scaffold_view():
-    if boolean_input('Need a view?'):
+    if boolean_input('Need a view?', 'y'):
         cfg = get_cfg()
         # if 'permissions' in cfg['current_scaffold'].keys():
         #     string = 'permission_classes = ('
