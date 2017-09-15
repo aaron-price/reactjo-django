@@ -7,12 +7,12 @@ def quote(string):
     return f"'{string}'"
 
 def scaffold_serializer():
-    if boolean_input('Need a serializer?'):
+    if boolean_input('Need a serializer?', 'y'):
         cfg = get_cfg()
         fields_arr = cfg['current_scaffold']['model']['fields']
         titles = [quote(field['title']) for field in fields_arr]
         fields_str = ', '.join(titles)
-        fields_str = 'pk, ' + fields_str
+        fields_str = "'pk', " + fields_str
 
         new_serializer = f('$assets/serializers/new.py', 'r').format(
             title = cfg['current_scaffold']['model']['title'],
