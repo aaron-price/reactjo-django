@@ -7,8 +7,8 @@ from helpers.file_manager import file_manager as f
 cmd = sys.argv[1]
 if cmd in ['n', 'new']:
 	new()
-if cmd in ['s', 'scaffold']:
+if cmd in ['b', 'build']:
 	scaffold()
-if cmd in ['server', 'serve']:
+if cmd in ['s', 'server', 'serve']:
 	os.chdir(f('$man', '$'))
 	subprocess.Popen(['python', 'manage.py', 'runserver'])
