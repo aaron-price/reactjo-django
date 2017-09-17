@@ -27,8 +27,8 @@ def content():
 		os.chdir(prev_path)
 		wl('Ran migrations')
 
-		# scaffold_permission()
+		scaffold_permission()
 		scaffold_view()
 		scaffold_serializer()
 		scaffold_admin()
-		# scaffold_url() is called inside scaffold_view()
+		# scaffold_url() is called inside scaffold_view(), not here

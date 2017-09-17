@@ -1,14 +1,17 @@
-class {action}Permissions(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        user_type = request.user
-        is_owner = obj.id == request.user.id
-
-        if request.method == 'GET':
-            return request.user.get_allowed
+class {Model}Permissions(permissions.BasePermission):
+    message = "You do not have permission."
+    def has_permission(self, request, view):
         if request.method == 'POST':
-            return user_type.post_allowed
+            return check_allowed([{post_users}], request, obj = None)
+        elif request.method == 'GET':
+            return check_allowed([{get_users}], request, obj = None)
+        else:
+            return True
+
+    def has_object_permission(self, request, view, obj):
         if request.method == 'PUT':
-            return user_type.put_allowed
-        if request.method == 'DELETE':
-            return user_type.delete_allowed
-        return False
+            return check_allowed([{put_users}], request, obj)
+        elif request.method == 'DELETE':
+            return check_allowed([{delete_users}], request, obj)
+        else:
+            return False

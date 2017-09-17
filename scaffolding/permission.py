@@ -6,57 +6,41 @@ from helpers.file_manager import file_manager as f
 from helpers.ui import boolean_input, options_input
 
 def scaffold_permission():
-    if boolean_input('Add permissions?', 'y'):
+    if boolean_input('Customize permissions?', 'y'):
         cfg = get_cfg()
         title = cfg['current_scaffold']['model']['title']
         user_types = [
-            'Superuser', 'Staff', 'Owner', 'Authenticated', 'Anonymous', 'Anybody', 'Nobody'
+            'Superuser', 'Staff', 'Owner', 'Authenticated', 'Anonymous', 'Active', 'Anybody'
         ]
         create_type = options_input(
             'Who can create ' + pluralize(title.lower()) + '?',
             user_types, 'Authenticated')
 
-        list_type = options_input(
-            'Who can view a list of all ' + pluralize(title.lower()) + '?',
-            user_types, 'Anybody')
-
-        detail_type = options_input(
-            'Who can view the details about a ' + title.lower() + '?',
-            user_types, 'Anybody')
+        get_type = options_input(
+            'Who can view ' + pluralize(title.lower()) + '?',
+            user_types, 'Active')
 
         update_type = options_input(
             'Who can update an existing ' + title.lower() + '?',
-            user_types, 'Authenticated')
+            user_types, 'Owner')
 
         delete_type = options_input(
-            'Who can delete a ' + title.lower() + '?',
-            user_types, 'Authenticated')
+            'Who can delete an existing ' + title.lower() + '?',
+            user_types, 'Owner')
 
         cfg['current_scaffold']['permissions'] = {
-            'create': create_type,
-            'list': list_type,
-            'detail': detail_type,
-            'update': update_type,
+            'post': create_type,
+            'get': get_type,
+            'put': update_type,
             'delete': delete_type
         }
 
-        allowed = {
-            'Superuser': 'is_superuser',
-            'Staff': 'is_staff',
-            'Owner': 'is_owner()',
-            'Authenticated': 'is_authenticated',
-            'Anonymous': 'is_anonymous',
-            'Anybody': 'return_true',
-            'Nobody': 'return_false'
-        }
-
-
         new_permission = f('$assets/permissions/new.py', 'r').format(
-            title = title,
-            get_allowed = allowed[list_type],
-            post_allowed = allowed[create_type],
-            put_allowed = allowed[update_type],
-            delete_allowed = allowed[delete_type]
+            Model = title,
+            post_users = create_type,
+            get_users = get_type,
+            put_users = update_type,
+            delete_users = delete_type
         )
 
         f('$api/permissions.py', 'a', new_permission)

@@ -202,7 +202,7 @@ def scaffold_model():
 
     # Put the model in models.py
     f('$api/models.py', 'a', return_model())
-    wl('Created a new model')
+    wl('Created the ' + title + ' model')
 
     # Put the model in config.json
     fields = cfg['current_scaffold']['model']['fields']
