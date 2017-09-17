@@ -8,6 +8,8 @@ from scaffolding.serializer import scaffold_serializer
 from scaffolding.permission import scaffold_permission
 from scaffolding.admin import scaffold_admin
 from helpers.file_manager import file_manager as f
+from helpers.worklist import worklist as wl
+
 
 def content():
 	need_model = boolean_input('Do you need a new model?', 'y')
@@ -23,8 +25,10 @@ def content():
 		subprocess.run(['python', 'manage.py', 'makemigrations'])
 		subprocess.run(['python', 'manage.py', 'migrate'])
 		os.chdir(prev_path)
+		wl('Ran migrations')
 
 		# scaffold_permission()
 		scaffold_view()
 		scaffold_serializer()
 		scaffold_admin()
+		# scaffold_url() is called inside scaffold_view()

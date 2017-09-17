@@ -2,6 +2,7 @@ from helpers.config_manager import get_cfg, set_cfg
 from helpers.worklist import worklist as wl
 from helpers.file_manager import file_manager as f
 from helpers.ui import boolean_input
+from helpers.worklist import worklist as wl
 
 def scaffold_url():
     if boolean_input('Need a url route?', 'y'):
@@ -17,7 +18,4 @@ def scaffold_url():
             'content': '# Register new routes below\n' + route
         }
         f('$api/urls.py', 'w', data)
-        print('Created this route:')
-        print(' ')
-        print(route)
-        print(' ')
+        wl('Created url route')

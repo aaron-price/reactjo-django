@@ -2,6 +2,7 @@ from helpers.config_manager import get_cfg, set_cfg
 from helpers.worklist import worklist as wl
 from helpers.file_manager import file_manager as f
 from helpers.ui import boolean_input
+from helpers.worklist import worklist as wl
 
 def quote(string):
     return f"'{string}'"
@@ -20,7 +21,4 @@ def scaffold_serializer():
         )
 
         f('$api/serializers.py', 'a', new_serializer)
-        print('Created this in serializers.py:')
-        print(' ')
-        print(new_serializer)
-        print(' ')
+        wl('Created new serializer')

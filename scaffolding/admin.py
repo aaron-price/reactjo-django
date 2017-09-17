@@ -8,7 +8,4 @@ def scaffold_admin():
         title = cfg['current_scaffold']['model']['title']
         new_admin = f('$assets/admin/new.py', 'r').format(title=title)
         f('$api/admin.py', 'a', new_admin)
-        print('Added this to admin.py:')
-        print('')
-        print(new_admin)
-        print('')
+        wl('Added admin entry')
