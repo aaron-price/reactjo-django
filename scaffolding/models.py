@@ -182,31 +182,35 @@ def get_model_field():
 
 def scaffold_model():
     cfg = get_cfg()
+    # Add title
     title = string_input('What will you call your model? ')
     cfg['current_scaffold']['model']['title'] = title
     cfg['current_scaffold']['model']['fields'] = []
     set_cfg(cfg)
 
-    if boolean_input(f'Create a field for {title}? '):
-        if 'models' not in cfg:
-            cfg['models'] = []
-            set_cfg(cfg)
+    # Should never be necessary, but just in case.
+    if 'models' not in cfg:
+        cfg['models'] = []
+        set_cfg(cfg)
 
+    # Add fields
+    if boolean_input(f'Create a field for {title}? '):
         get_model_field()
 
-        # Refresh config
-        cfg = get_cfg()
-        fields = cfg['current_scaffold']['model']['fields']
-        title = cfg['current_scaffold']['model']['title']
-        str_method = cfg['current_scaffold']['model']['__str__']
+    # Refresh config
+    cfg = get_cfg()
 
-        # Put the model in models.py
-        f('$api/models.py', 'a', return_model())
+    # Put the model in models.py
+    f('$api/models.py', 'a', return_model())
+    wl('Created a new model')
 
-        # Put the model in config.json
-        cfg['models'].append({
-            'title': title,
-            'fields': fields,
-            '__str__': str(str_method),
-        })
-        set_cfg(cfg)
+    # Put the model in config.json
+    fields = cfg['current_scaffold']['model']['fields']
+    title = cfg['current_scaffold']['model']['title']
+    str_method = cfg['current_scaffold']['model']['__str__']
+    cfg['models'].append({
+        'title': title,
+        'fields': fields,
+        '__str__': str(str_method),
+    })
+    set_cfg(cfg)

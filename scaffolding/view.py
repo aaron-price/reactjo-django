@@ -3,6 +3,7 @@ from helpers.worklist import worklist as wl
 from helpers.file_manager import file_manager as f
 from helpers.ui import boolean_input
 from scaffolding.url import scaffold_url
+from helpers.worklist import worklist as wl
 
 def scaffold_view():
     if boolean_input('Need a view?', 'y'):
@@ -22,10 +23,7 @@ def scaffold_view():
             permissions = permissions_string,
         )
         f('$api/views.py', 'a', new_view)
-        print('Created this view:')
-        print(' ')
-        print(new_view)
-        print(' ')
+        wl('Created a view')
 
         # Urls only make sense if there is a view. Putting it here.
         scaffold_url()

@@ -1,8 +1,10 @@
+from inflection import pluralize
+
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.worklist import worklist as wl
 from helpers.file_manager import file_manager as f
 from helpers.ui import boolean_input, options_input
-from inflection import pluralize
+from helpers.worklist import worklist as wl
 
 def scaffold_permission():
     if boolean_input('Add permissions?', 'y'):
@@ -59,3 +61,4 @@ def scaffold_permission():
         )
 
         f('$api/permissions.py', 'a', new_permission)
+        wl('Created permission')
