@@ -3,7 +3,6 @@ from helpers.worklist import worklist as wl
 from helpers.file_manager import file_manager as f
 from helpers.ui import boolean_input
 from scaffolding.url import scaffold_url
-from helpers.worklist import worklist as wl
 
 def scaffold_view():
     if boolean_input('Need a view?', 'y'):

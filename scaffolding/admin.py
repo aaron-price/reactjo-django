@@ -1,6 +1,7 @@
 from helpers.file_manager import file_manager as f
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.ui import boolean_input
+from helpers.worklist import worklist as wl
 
 def scaffold_admin():
     if boolean_input('Add an admin field?', 'y'):
