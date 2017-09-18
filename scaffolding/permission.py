@@ -13,12 +13,17 @@ def scaffold_permission():
         cfg = get_cfg()
         title = cfg['current_scaffold']['model']['title']
         user_types = [
-            'Superuser', 'Staff', 'Authenticated', 'Anonymous', 'Active', 'Anyone', 'Nobody'
+            'Superuser',
+            'Staff',
+            'Authenticated',
+            'Anonymous',
+            'Active',
+            'Anyone',
+            'Nobody'
         ]
+        user_types_with_obj = user_types
         if cfg['current_scaffold']['need_owner'] == 'True':
-            user_types_with_obj = user_types.append('Owner')
-        else:
-            user_types_with_obj = user_types
+            user_types_with_obj = user_types_with_obj.append('Owner')
 
         post_users = options_input(
             'Who can create ' + pluralize(title.lower()) + '?',
