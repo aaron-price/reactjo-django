@@ -12,38 +12,41 @@ def scaffold_permission():
     if boolean_input('Customize permissions?', 'y'):
         cfg = get_cfg()
         title = cfg['current_scaffold']['model']['title']
-        user_types = [
+        all_types = [
             'Superuser',
             'Staff',
             'Authenticated',
             'Anonymous',
             'Active',
             'Anyone',
-            'Nobody'
+            'Nobody',
+            'Owner'
         ]
-        user_types_with_obj = user_types
+        without_owner = all_types[:-1]
+        with_owner = all_types[:-1]
+
         if cfg['current_scaffold']['need_owner'] == 'True':
-            user_types_with_obj = user_types_with_obj.append('Owner')
+            with_owner = all_types
 
         post_users = options_input(
             'Who can create ' + pluralize(title.lower()) + '?',
-            user_types, 'Authenticated')
+            without_owner, 'Authenticated')
 
         list_users = options_input(
             'Who can view the list of all ' + pluralize(title.lower()) + '?',
-            user_types, 'Anyone')
+            without_owner, 'Anyone')
 
         details_users = options_input(
             'Who can view the details about a ' + title.lower() + '?',
-            user_types_with_obj, 'Anyone')
+            with_owner, 'Anyone')
 
         update_users = options_input(
             'Who can update an existing ' + title.lower() + '?',
-            user_types_with_obj, 'Owner')
+            with_owner, 'Owner')
 
         delete_users = options_input(
             'Who can delete an existing ' + title.lower() + '?',
-            user_types_with_obj, 'Owner')
+            with_owner, 'Owner')
 
         cfg['current_scaffold']['permissions'] = {
             'post': post_users,
