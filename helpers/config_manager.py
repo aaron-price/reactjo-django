@@ -1,6 +1,7 @@
 import subprocess
 import os
 import json
+from textwrap import dedent
 
 checked = []
 
@@ -35,15 +36,15 @@ def get_cfg():
     try:
         return json_read(find_config_path())
     except:
-        print("""
+        print(dedent("""
             Sorry, couldn't find the config.json file. cd to that directory,
             or a child directory. If there really is no config.json, you
             probably need to create a project. Try running:
                         ----------------------
-                            reactjo init
+                            reactjo rc
                         ----------------------
             Paths checked for a reactjorc/config.json:
-        """)
+        """))
         for path in checked:
             print(path)
 
