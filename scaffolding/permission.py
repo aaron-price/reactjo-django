@@ -33,11 +33,11 @@ def scaffold_permission():
             user_types, 'Owner')
 
         cfg['current_scaffold']['permissions'] = {
-            'post': create_type,
-            'list': list_type,
-            'details': details_type,
-            'put': update_type,
-            'delete': delete_type
+            'post': post_users,
+            'list': list_users,
+            'details': details_users,
+            'put': update_users,
+            'delete': delete_users
         }
 
         new_permission = f('$assets/permissions/new.py', 'r').format(

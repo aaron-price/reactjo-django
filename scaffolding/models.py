@@ -193,7 +193,16 @@ def scaffold_model():
         cfg['models'] = []
         set_cfg(cfg)
 
-    # Add fields
+    # Add owner field
+    if boolean_input('Will instances of this model be owned by a user?'):
+        cfg['current_scaffold']['model']['fields'].append({
+            'title': 'owner',
+            'type': 'ForeignKey',
+            'options': ['UserProfile', 'on_delete = models.CASCADE'],
+            'string': f"owner = models.ForeignKey('UserProfile', on_delete = models.CASCADE)\n    "
+        })
+
+    # Add other fields
     if boolean_input(f'Create a field for {title}? '):
         get_model_field()
 
