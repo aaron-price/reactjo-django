@@ -5,6 +5,9 @@ from helpers.worklist import worklist as wl
 from helpers.file_manager import file_manager as f
 from helpers.ui import boolean_input, options_input
 
+def quote(string):
+    return "'" + string + "'"
+
 def scaffold_permission():
     if boolean_input('Customize permissions?', 'y'):
         cfg = get_cfg()
@@ -43,11 +46,11 @@ def scaffold_permission():
 
         new_permission = f('$assets/permissions/new.py', 'r').format(
             Model = title,
-            post_users = post_users,
-            list_users = list_users,
-            details_users = details_users,
-            update_users = update_users,
-            delete_users = delete_users
+            post_users = quote(post_users),
+            list_users = quote(list_users),
+            details_users = quote(details_users),
+            update_users = quote(update_users),
+            delete_users = quote(delete_users)
         )
 
         f('$api/permissions.py', 'a', new_permission)

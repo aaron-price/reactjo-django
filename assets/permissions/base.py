@@ -18,7 +18,7 @@ def isStaff(request):
 def isSuperuser(request):
     return request.user.is_superuser
 
-def check_allowed(allowed_users, request, obj):
+def check_allowed(allowed_users, request, obj = None):
     # Return false if any of the checks don't pass.
     for user in allowed_users:
         if user == 'active' and not isActive(request):
