@@ -18,11 +18,11 @@ def scaffold_permission():
 
         list_users = options_input(
             'Who can view the list of all ' + pluralize(title.lower()) + '?',
-            user_types, 'Active')
+            user_types, 'Anyone')
 
         details_users = options_input(
             'Who can view the details about a ' + title.lower() + '?',
-            user_types, 'Active')
+            user_types, 'Anyone')
 
         update_users = options_input(
             'Who can update an existing ' + title.lower() + '?',
