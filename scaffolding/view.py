@@ -9,8 +9,7 @@ def scaffold_view():
         cfg = get_cfg()
 
         new_view = f('$assets/views/new.py', 'r').format(
-            title = cfg['current_scaffold']['model']['title'],
-            permissions = permissions_string,
+            title = cfg['current_scaffold']['model']['title']
         )
         f('$api/views.py', 'a', new_view)
         wl('Created a view')
