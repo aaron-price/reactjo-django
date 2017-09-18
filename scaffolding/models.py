@@ -210,7 +210,7 @@ def scaffold_model():
     set_cfg(cfg)
 
     # Add other fields
-    if boolean_input(f'Create a field for {title}? '):
+    if boolean_input(f'Create a field for {title}? ', 'y'):
         get_model_field()
 
     # Refresh config
