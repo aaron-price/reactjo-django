@@ -24,7 +24,7 @@ def scaffold_permission():
             'Who can view the details about a ' + title.lower() + '?',
             user_types, 'Active')
 
-        put_users = options_input(
+        update_users = options_input(
             'Who can update an existing ' + title.lower() + '?',
             user_types, 'Owner')
 
@@ -36,7 +36,7 @@ def scaffold_permission():
             'post': post_users,
             'list': list_users,
             'details': details_users,
-            'put': update_users,
+            'update': update_users,
             'delete': delete_users
         }
 
@@ -45,7 +45,7 @@ def scaffold_permission():
             post_users = post_users,
             list_users = list_users,
             details_users = details_users,
-            put_users = put_users,
+            update_users = update_users,
             delete_users = delete_users
         )
 
