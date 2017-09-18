@@ -16,7 +16,7 @@ def scaffold_permission():
             'Superuser', 'Staff', 'Authenticated', 'Anonymous', 'Active', 'Anyone', 'Nobody'
         ]
         if cfg['current_scaffold']['need_owner'] == 'True':
-            user_types_with_obj = user_types.push('Owner')
+            user_types_with_obj = user_types.append('Owner')
         else:
             user_types_with_obj = user_types
 
