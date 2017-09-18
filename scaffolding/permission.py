@@ -39,6 +39,7 @@ def scaffold_permission():
             'update': update_users,
             'delete': delete_users
         }
+        set_cfg(cfg)
 
         new_permission = f('$assets/permissions/new.py', 'r').format(
             Model = title,

@@ -201,6 +201,7 @@ def scaffold_model():
             'options': ['UserProfile', 'on_delete = models.CASCADE'],
             'string': f"owner = models.ForeignKey('UserProfile', on_delete = models.CASCADE)\n    "
         })
+        set_cfg(cfg)
 
     # Add other fields
     if boolean_input(f'Create a field for {title}? '):

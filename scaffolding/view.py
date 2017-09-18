@@ -7,15 +7,6 @@ from scaffolding.url import scaffold_url
 def scaffold_view():
     if boolean_input('Need a view?', 'y'):
         cfg = get_cfg()
-        # if 'permissions' in cfg['current_scaffold'].keys():
-        #     string = 'permission_classes = ('
-        #     string += ', '.join(cfg['current_scaffold']['permissions']) + ','
-        #     string += ')'
-        # else:
-        #     permissions_string = ''
-
-        # Temporarily bypassing permissions until the rest of the system works
-        permissions_string = 'permission_classes = [AllowAny]'
 
         new_view = f('$assets/views/new.py', 'r').format(
             title = cfg['current_scaffold']['model']['title'],
