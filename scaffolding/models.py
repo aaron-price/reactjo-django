@@ -186,7 +186,7 @@ def get_model_field():
 def scaffold_model():
     cfg = get_cfg()
     # Add title
-    title = string_input('What will you call your model? ')
+    title = string_input('What will you call your model? ').capitalize()
     cfg['current_scaffold']['model']['title'] = title
     cfg['current_scaffold']['model']['fields'] = []
     set_cfg(cfg)
