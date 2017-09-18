@@ -24,9 +24,13 @@ def scaffold_permission():
         ]
         without_owner = all_types[:-1]
         with_owner = all_types[:-1]
+        default_update = 'Staff'
+        default_delete = 'Staff'
 
         if cfg['current_scaffold']['need_owner'] == 'True':
             with_owner = all_types
+            default_update = 'Owner'
+            default_delete = 'Owner'
 
         post_users = options_input(
             'Who can create ' + pluralize(title.lower()) + '?',
@@ -64,6 +68,35 @@ def scaffold_permission():
             details_users = quote(details_users),
             update_users = quote(update_users),
             delete_users = quote(delete_users)
+        )
+
+        f('$api/permissions.py', 'a', new_permission)
+        wl('Created permission')
+    else:
+        cfg = get_cfg()
+        title = cfg['current_scaffold']['model']['title']
+        default_update = 'Staff'
+        default_delete = 'Staff'
+        if cfg['current_scaffold']['need_owner'] == 'True':
+            default_update = 'Owner'
+            default_delete = 'Owner'
+
+        cfg['current_scaffold']['permissions'] = {
+            'post': 'Authenticated',
+            'list': 'Anyone',
+            'details': 'Anyone',
+            'update': default_update,
+            'delete': default_delete
+        }
+        set_cfg(cfg)
+
+        new_permission = f('$assets/permissions/new.py', 'r').format(
+            Model = title,
+            post_users = quote('Authenticated'),
+            list_users = quote('Anyone'),
+            details_users = quote('Anyone'),
+            update_users = quote(default_update),
+            delete_users = quote(default_delete)
         )
 
         f('$api/permissions.py', 'a', new_permission)
