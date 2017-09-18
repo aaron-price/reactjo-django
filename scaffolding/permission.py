@@ -10,37 +10,43 @@ def scaffold_permission():
         cfg = get_cfg()
         title = cfg['current_scaffold']['model']['title']
         user_types = [
-            'Superuser', 'Staff', 'Owner', 'Authenticated', 'Anonymous', 'Active', 'Anybody'
+            'Superuser', 'Staff', 'Owner', 'Authenticated', 'Anonymous', 'Active', 'Anyone', 'Nobody'
         ]
-        create_type = options_input(
+        post_users = options_input(
             'Who can create ' + pluralize(title.lower()) + '?',
             user_types, 'Authenticated')
 
-        get_type = options_input(
-            'Who can view ' + pluralize(title.lower()) + '?',
+        list_users = options_input(
+            'Who can view the list of all ' + pluralize(title.lower()) + '?',
             user_types, 'Active')
 
-        update_type = options_input(
+        details_users = options_input(
+            'Who can view the details about a ' + title.lower() + '?',
+            user_types, 'Active')
+
+        put_users = options_input(
             'Who can update an existing ' + title.lower() + '?',
             user_types, 'Owner')
 
-        delete_type = options_input(
+        delete_users = options_input(
             'Who can delete an existing ' + title.lower() + '?',
             user_types, 'Owner')
 
         cfg['current_scaffold']['permissions'] = {
             'post': create_type,
-            'get': get_type,
+            'list': list_type,
+            'details': details_type,
             'put': update_type,
             'delete': delete_type
         }
 
         new_permission = f('$assets/permissions/new.py', 'r').format(
             Model = title,
-            post_users = create_type,
-            get_users = get_type,
-            put_users = update_type,
-            delete_users = delete_type
+            post_users = post_users,
+            list_users = list_users,
+            details_users = details_users,
+            put_users = put_users,
+            delete_users = delete_users
         )
 
         f('$api/permissions.py', 'a', new_permission)
