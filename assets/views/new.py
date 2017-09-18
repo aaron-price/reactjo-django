@@ -1,4 +1,4 @@
-from permissions import {title}Permissions
+from .permissions import {title}Permissions
 
 class {title}ViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.{title}Serializer
