@@ -206,6 +206,7 @@ def scaffold_model():
     set_cfg(cfg)
 
     # Add other fields
+    print(' ')
     print('Let\'s create at least one model field now.')
     get_model_field()
 
