@@ -11,9 +11,13 @@ class LoginViewSet(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super(LoginViewSet, self).post(request, *args, **kwargs)
         token = Token.objects.get(key=response.data['token'])
+        user = models.UserProfile.objects.filter(id=token.user_id).first()
 
         return Response({
             'token': token.key,
             'id': token.user_id,
-            "name": request.data.get('username')
+            "name": request.data.get('username'),
+            'is_staff': user.is_staff,
+            'is_superuser': user.is_superuser,
+            'is_active': user.is_active,
         })
