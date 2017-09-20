@@ -41,6 +41,7 @@ def build_structure():
     wl('Prepped the api files')
 
     # Users
+    cfg = get_cfg()
     if cfg['need_users'] == 'True':
         scaffold_users()
 
