@@ -65,9 +65,8 @@ def user_model_file():
     # quoted_list = ['"email"', '"etc"']
     quoted_list = quoted_list[1:]
     # assignment_list = [email=email, name=name]
-    assignment_list = []
-    for title in fields:
-        assignment_list.append(f'{title}={title}')
+    assignment_list = [f'{title}={title}' for title in custom_list]
+
     field_strings = [field['string'] for field in fields]
 
     model = f('$assets/models/UserProfile.py', 'r').replace(
