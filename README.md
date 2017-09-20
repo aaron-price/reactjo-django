@@ -3,7 +3,7 @@ This is a default extension for reactjo, so just install reactjo.
 
 ```bash
 pip install reactjo
-reactjo init
+reactjo rc
 ```
 
 # Usage

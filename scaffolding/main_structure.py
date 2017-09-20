@@ -56,10 +56,10 @@ def build_structure():
     f('$man/backend/urls.py', 'w', '$assets/urls/root_urls.py')
     wl('Add /api and /api-auth to root urls')
 
-    # App files
+    # Api files
     f('$man/api/models.py', 'w', '$assets/models/imports.py')
     f('$man/api/serializers.py', 'w', '$assets/serializers/imports.py')
-    f('$man/api/permissions.py', 'w', '$assets/permissions/imports.py')
+    f('$man/api/permissions.py', 'w', '$assets/permissions/base.py')
     f('$man/api/views.py', 'w', '$assets/views/imports.py')
     f('$man/api/urls.py', 'w', '$assets/urls/app_urls_without_users.py')
     f('$man/api/admin.py', 'w', '$assets/admin/imports.py')

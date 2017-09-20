@@ -165,17 +165,16 @@ def get_model_field():
     # All done making fields.
     # Add the __str__ method
     else :
-        need_str = boolean_input('Would you like to add a __str__ method?', 'y')
-        if need_str:
-            titles = [field['title'] for field in cfg['current_scaffold']['model']['fields']]
+        titles = [field['title'] for field in cfg['current_scaffold']['model']['fields']]
+        default_title = titles[0]
+        if cfg['current_scaffold']['need_owner'] == 'True':
+            default_title = titles[1]
 
-            str_field = options_input(
-                'Which field should be used for the __str__ method?',
-                titles,
-                titles[0]
-            )
-        else:
-            str_field = None
+        str_field = options_input(
+            'Which field should be used for the __str__ method?',
+            titles,
+            default_title
+        )
 
         cfg['current_scaffold']['model']['__str__'] = str_field
         set_cfg(cfg)
@@ -183,7 +182,7 @@ def get_model_field():
 def scaffold_model():
     cfg = get_cfg()
     # Add title
-    title = string_input('What will you call your model? ')
+    title = string_input('What will you call your model? ').capitalize()
     cfg['current_scaffold']['model']['title'] = title
     cfg['current_scaffold']['model']['fields'] = []
     set_cfg(cfg)
@@ -193,16 +192,30 @@ def scaffold_model():
         cfg['models'] = []
         set_cfg(cfg)
 
-    # Add fields
-    if boolean_input(f'Create a field for {title}? '):
-        get_model_field()
+    # Add owner field
+    if boolean_input('Will users own instances of this model?'):
+        cfg['current_scaffold']['model']['fields'].append({
+            'title': 'owner',
+            'type': 'ForeignKey',
+            'options': ['UserProfile', 'on_delete = models.CASCADE'],
+            'string': f"owner = models.ForeignKey('UserProfile', on_delete = models.CASCADE)\n    "
+        })
+        cfg['current_scaffold']['need_owner'] = 'True'
+    else:
+        cfg['current_scaffold']['need_owner'] = 'False'
+    set_cfg(cfg)
+
+    # Add other fields
+    print(' ')
+    print('Let\'s create at least one model field now.')
+    get_model_field()
 
     # Refresh config
     cfg = get_cfg()
 
     # Put the model in models.py
     f('$api/models.py', 'a', return_model())
-    wl('Created a new model')
+    wl('Created the ' + title + ' model')
 
     # Put the model in config.json
     fields = cfg['current_scaffold']['model']['fields']
