@@ -5,6 +5,7 @@ import os, subprocess
 from helpers.extension_constants import OUTPUT_HOME
 from textwrap import dedent
 from scaffolding.settings import build_settings
+from scaffolding.users import scaffold_users
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.ui import boolean_input
 
@@ -12,7 +13,9 @@ def user_auth_structure():
     cfg = get_cfg()
     cfg['models'] = []
     if cfg['need_users'] == 'True':
-        cfg['models'].append({'title': 'UserProfile'})
+        scaffold_users()
+        cfg['models'].append(cfg['current_scaffold']['model'])
+        set_cfg(cfg)
         f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
         f('$man/api/serializers.py', 'a', '$assets/serializers/user_profile.py')
         f('$man/api/views.py', 'a', '$assets/views/users.py')
