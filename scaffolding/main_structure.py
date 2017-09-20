@@ -70,11 +70,12 @@ def build_structure():
     user_auth_structure()
 
     # Migrations
-    os.chdir(f('$man', '$'))
-    subprocess.run(['python', 'manage.py', 'makemigrations'])
-    subprocess.run(['python', 'manage.py', 'migrate'])
-    os.chdir(prev_path)
-    wl('Ran some database migrations')
+    if boolean_input('Run DB migrations now?', 'y'):
+        os.chdir(f('$man', '$'))
+        subprocess.run(['python', 'manage.py', 'makemigrations'])
+        subprocess.run(['python', 'manage.py', 'migrate'])
+        os.chdir(prev_path)
+        wl('Ran some database migrations')
 
     # Superusers
     need_su = boolean_input('Would you like to create a superuser now?', 'y')
