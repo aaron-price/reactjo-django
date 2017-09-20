@@ -77,7 +77,7 @@ def user_model_file():
     model = f('$assets/models/UserProfile.py', 'r').replace(
         'title_list', ', '.join(title_list)).replace(
         'required_list', ', '.join(required_list)).replace(
-        'field_strings', '    '.join(field_strings)).replace(
+        'field_strings', ''.join(field_strings)).replace(
         'assignment_list', ', '.join(assignment_list))
 
     f('$man/api/models.py', 'a', model)
@@ -116,6 +116,7 @@ def scaffold_users():
     scaffold_config()
     user_model_file()
     user_serializers()
+    user_routes()
 
     f('$man/api/views.py', 'a', '$assets/views/users.py')
     f('$man/api/admin.py', 'a', '$assets/admin/users.py')
