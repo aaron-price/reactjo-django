@@ -1,4 +1,4 @@
-title_listfrom helpers.config_manager import get_cfg, set_cfg
+from helpers.config_manager import get_cfg, set_cfg
 from helpers.ui import boolean_input
 from scaffolding.models import get_model_field, return_model
 from scaffolding.permission import scaffold_permission
