@@ -37,11 +37,7 @@ def scaffold_config():
     if boolean_input('Add some fields to the user model?'):
         get_model_field()
 
-    if boolean_input('Customize permissions for users?'):
-        scaffold_permission()
-
-    cfg['current_scaffold']['permissions'] = permissions
-    set_cfg(cfg)
+    scaffold_permission()
 
 def scaffold_files():
     cfg = get_cfg()
