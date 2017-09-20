@@ -87,7 +87,7 @@ def user_serializers():
 
     # validated_list = [ name=validated_data['name'], etc ]
     validated_list = [
-        "\n            {t}=validated_data['{t}']," for t in titles
+        f"\n            {t}=validated_data['{t}']," for t in titles
     ]
     serializer = serializer.replace(
         'fields_list', ''.join(fields_list)).replace(
