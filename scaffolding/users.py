@@ -58,21 +58,23 @@ def scaffold_config():
 def user_model_file():
     cfg = get_cfg()
     fields = cfg['current_scaffold']['model']['fields']
+
     # custom_list = ["name", "email", "etc"]
     custom_list = [field['title'] for field in fields]
+
     # quoted_list = ['"name"', '"email"', '"etc"']
     quoted_list = [quote(title) for title in custom_list]
     # quoted_list = ['"email"', '"etc"']
-    quoted_list = quoted_list[1:]
+    required_list = quoted_list.remove('"name"')
+
     # assignment_list = [email=email, name=name]
     assignment_list = [f'{title}={title}' for title in custom_list]
 
     field_strings = [field['string'] for field in fields]
-
     model = f('$assets/models/UserProfile.py', 'r').replace(
         'custom_list', ', '.join(custom_list)).replace(
-        'quoted_list', ', '.join(quoted_list)).replace(
-        'field_strings', '\n    '.join(field_strings)).replace(
+        'required_list', ', '.join(required_list)).replace(
+        'field_strings', '    '.join(field_strings)).replace(
         'assignment_list', ', '.join(assignment_list))
 
     f('$man/api/models.py', 'a', model)

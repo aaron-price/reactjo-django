@@ -29,7 +29,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     objects = UserProfileManager()
 
     USERNAME_FIELD = 'name'
-    REQUIRED_FIELDS = [quoted_list]
+    REQUIRED_FIELDS = [required_list]
 
     def get_short_name(self):
         return self.name
