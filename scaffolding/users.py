@@ -71,8 +71,8 @@ def user_model_file():
     model = f('$assets/models/UserProfile.py', 'r').replace(
         'custom_list', ','.join(custom_list)).replace(
         'quoted_list', ','.join(quoted_list)).replace(
-        'field_strings', field_strings).replace(
-        'assignment_list', assignment_list)
+        'field_strings', '\n    '.join(field_strings)).replace(
+        'assignment_list', ', '.join(assignment_list))
 
     f('$man/api/models.py', 'a', model)
     wl('Added UserProfile model')
