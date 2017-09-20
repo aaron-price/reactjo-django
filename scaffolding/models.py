@@ -165,19 +165,22 @@ def get_model_field():
     # All done making fields.
     # Add the __str__ method
     else :
-        titles = [field['title'] for field in cfg['current_scaffold']['model']['fields']]
-        default_title = titles[0]
-        if cfg['current_scaffold']['need_owner'] == 'True':
-            default_title = titles[1]
+        user = cfg['current_scaffold']['model']['title'] == 'UserProfile'
+        if not user:
+            current_fields = cfg['current_scaffold']['model']['fields']
+            titles = [field['title'] for field in current_fields]
+            default_title = titles[0]
+            if cfg['current_scaffold']['need_owner'] == 'True':
+                default_title = titles[1]
 
-        str_field = options_input(
-            'Which field should be used for the __str__ method?',
-            titles,
-            default_title
-        )
+            str_field = options_input(
+                'Which field should be used for the __str__ method?',
+                titles,
+                default_title
+            )
 
-        cfg['current_scaffold']['model']['__str__'] = str_field
-        set_cfg(cfg)
+            cfg['current_scaffold']['model']['__str__'] = str_field
+            set_cfg(cfg)
 
 def scaffold_model():
     cfg = get_cfg()

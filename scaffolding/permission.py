@@ -9,9 +9,11 @@ def quote(string):
     return "'" + string + "'"
 
 def scaffold_permission():
-    if boolean_input('Customize permissions?', 'y'):
-        cfg = get_cfg()
-        title = cfg['current_scaffold']['model']['title']
+    cfg = get_cfg()
+    title = cfg['current_scaffold']['model']['title']
+    model = 'User' if title == 'UserProfile' else title
+
+    if boolean_input('Customize permissions for ' + model + '?', 'y'):
         all_types = [
             'Superuser',
             'Staff',
@@ -32,9 +34,11 @@ def scaffold_permission():
             default_update = 'Owner'
             default_delete = 'Owner'
 
+        is_user = title == 'UserProfile'
+        default_post = 'Anonymous' if is_user else 'Authenticated'
         post_users = options_input(
             'Who can create ' + pluralize(title.lower()) + '?',
-            without_owner, 'Authenticated')
+            without_owner, default_post)
 
         list_users = options_input(
             'Who can view the list of all ' + pluralize(title.lower()) + '?',
@@ -61,8 +65,9 @@ def scaffold_permission():
         }
         set_cfg(cfg)
 
+
         new_permission = f('$assets/permissions/new.py', 'r').format(
-            Model = title,
+            Model = model,
             post_users = quote(post_users),
             list_users = quote(list_users),
             details_users = quote(details_users),
@@ -73,16 +78,15 @@ def scaffold_permission():
         f('$api/permissions.py', 'a', new_permission)
         wl('Created permission')
     else:
-        cfg = get_cfg()
-        title = cfg['current_scaffold']['model']['title']
         default_update = 'Staff'
         default_delete = 'Staff'
         if cfg['current_scaffold']['need_owner'] == 'True':
             default_update = 'Owner'
             default_delete = 'Owner'
+        default_post = 'Anonymous' if model == 'User' else 'Authenticated'
 
         cfg['current_scaffold']['permissions'] = {
-            'post': 'Authenticated',
+            'post': default_post,
             'list': 'Anyone',
             'details': 'Anyone',
             'update': default_update,
@@ -91,8 +95,8 @@ def scaffold_permission():
         set_cfg(cfg)
 
         new_permission = f('$assets/permissions/new.py', 'r').format(
-            Model = title,
-            post_users = quote('Authenticated'),
+            Model = model,
+            post_users = quote(default_post),
             list_users = quote('Anyone'),
             details_users = quote('Anyone'),
             update_users = quote(default_update),
