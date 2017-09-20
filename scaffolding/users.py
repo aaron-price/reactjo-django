@@ -1,4 +1,4 @@
-from helpers.config_manager import get_cfg, set_cfg
+title_listfrom helpers.config_manager import get_cfg, set_cfg
 from helpers.ui import boolean_input
 from scaffolding.models import get_model_field, return_model
 from scaffolding.permission import scaffold_permission
@@ -59,20 +59,22 @@ def user_model_file():
     cfg = get_cfg()
     fields = cfg['current_scaffold']['model']['fields']
 
-    # custom_list = ["name", "email", "etc"]
-    custom_list = [field['title'] for field in fields]
+    # title_list = ["name", "email", "etc"]
+    title_list = [field['title'] for field in fields]
 
     # quoted_list = ['"name"', '"email"', '"etc"']
-    quoted_list = [quote(title) for title in custom_list]
-    # quoted_list = ['"email"', '"etc"']
-    required_list = quoted_list.remove('"name"')
+    quoted_list = [quote(title) for title in title_list]
+
+    # required_list = ['"email"', '"etc"']
+    required_list = [quote(title) for title in title_list]
+    required_list.remove('name')
 
     # assignment_list = [email=email, name=name]
-    assignment_list = [f'{title}={title}' for title in custom_list]
+    assignment_list = [f'{title}={title}' for title in title_list]
 
     field_strings = [field['string'] for field in fields]
     model = f('$assets/models/UserProfile.py', 'r').replace(
-        'custom_list', ', '.join(custom_list)).replace(
+        'title_list', ', '.join(title_list)).replace(
         'required_list', ', '.join(required_list)).replace(
         'field_strings', '    '.join(field_strings)).replace(
         'assignment_list', ', '.join(assignment_list))

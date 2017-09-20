@@ -1,5 +1,5 @@
 class UserProfileManager(BaseUserManager):
-    def create_user(self, custom_list, password=None):
+    def create_user(self, title_list, password=None):
         if not email:
             raise ValueError('Users must have an email address.')
 
@@ -11,8 +11,8 @@ class UserProfileManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, custom_list, password):
-        user = self.create_user(custom_list, password)
+    def create_superuser(self, title_list, password):
+        user = self.create_user(title_list, password)
         user.is_superuser = True
         user.is_staff = True
 
