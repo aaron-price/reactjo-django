@@ -4,8 +4,6 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = models.UserProfile.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnProfile,)
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('name', 'email',)
 
 class LoginViewSet(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -16,7 +14,7 @@ class LoginViewSet(ObtainAuthToken):
         return Response({
             'token': token.key,
             'id': token.user_id,
-            "name": request.data.get('username'),
+            'name': request.data.get('username'),
             'is_staff': user.is_staff,
             'is_superuser': user.is_superuser,
             'is_active': user.is_active,
