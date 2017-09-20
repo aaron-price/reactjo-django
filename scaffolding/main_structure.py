@@ -9,35 +9,6 @@ from scaffolding.users import scaffold_users
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.ui import boolean_input
 
-def user_auth_structure():
-    cfg = get_cfg()
-    cfg['models'] = []
-    if cfg['need_users'] == 'True':
-        scaffold_users()
-        cfg = get_cfg()
-        cfg['models'].append(cfg['current_scaffold']['model'])
-        set_cfg(cfg)
-        f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
-        f('$man/api/serializers.py', 'a', '$assets/serializers/user_profile.py')
-        f('$man/api/views.py', 'a', '$assets/views/users.py')
-        f('$man/api/permissions.py', 'a', '$assets/permissions/post_own_content.py')
-        f('$man/api/permissions.py', 'a', '$assets/permissions/update_own_profile.py')
-        f('$man/api/admin.py', 'a', '$assets/admin/users.py')
-        f('$man/api/urls.py', 'w', '$assets/urls/app_urls_with_users.py')
-
-        # Puts the user routes below the router, but above urlpatterns
-        route_flag = '# Register new routes below'
-        route_start = f(
-            '$man/api/urls.py',
-            'r').find(route_flag) + len(route_flag) + 1
-        old_urls = f('$man/api/urls.py', 'r')
-        begin = old_urls[:route_start]
-        mid = f('$assets/urls/user_urls.py', 'r')
-        end = old_urls[route_start:]
-        f('$man/api/urls.py', 'w', begin + mid + end)
-        wl('Added stuff for Users')
-    set_cfg(cfg)
-
 def build_structure():
     # Pip install require
     prev_path = os.getcwd()
@@ -68,7 +39,10 @@ def build_structure():
     f('$man/api/urls.py', 'w', '$assets/urls/app_urls_without_users.py')
     f('$man/api/admin.py', 'w', '$assets/admin/imports.py')
     wl('Prepped the api files')
-    user_auth_structure()
+
+    # Users
+    if cfg['need_users'] == 'True':
+        scaffold_users()
 
     # Migrations
     if boolean_input('Run DB migrations now?', 'y'):

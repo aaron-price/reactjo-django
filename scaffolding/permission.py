@@ -12,6 +12,7 @@ def scaffold_permission():
     cfg = get_cfg()
     title = cfg['current_scaffold']['model']['title']
     model = 'User' if title == 'UserProfile' else title
+    quotes = "'"
 
     if boolean_input('Customize permissions for ' + model + '?', 'y'):
         all_types = [
@@ -68,11 +69,11 @@ def scaffold_permission():
 
         new_permission = f('$assets/permissions/new.py', 'r').format(
             Model = model,
-            post_users = quote(post_users),
-            list_users = quote(list_users),
-            details_users = quote(details_users),
-            update_users = quote(update_users),
-            delete_users = quote(delete_users)
+            post_users = post_users,
+            list_users = list_users,
+            details_users = details_users,
+            update_users = update_users,
+            delete_users = delete_users,
         )
 
         f('$api/permissions.py', 'a', new_permission)
@@ -96,11 +97,11 @@ def scaffold_permission():
 
         new_permission = f('$assets/permissions/new.py', 'r').format(
             Model = model,
-            post_users = quote(default_post),
-            list_users = quote('Anyone'),
-            details_users = quote('Anyone'),
-            update_users = quote(default_update),
-            delete_users = quote(default_delete)
+            post_users = default_post,
+            list_users = 'Anyone',
+            details_users = 'Anyone',
+            update_users = default_update,
+            delete_users = default_delete,
         )
 
         f('$api/permissions.py', 'a', new_permission)

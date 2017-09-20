@@ -2,9 +2,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserProfile
         fields = (
-            'id',
-            'email',
-            'name',
+            'id'fields_list,
             'password',
             'is_staff',
             'is_superuser',
@@ -13,9 +11,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = models.UserProfile(
-            email=validated_data['email'],
-            name=validated_data['name']
+        user = models.UserProfile(validated_list
         )
         user.set_password(validated_data['password'])
         user.save()
