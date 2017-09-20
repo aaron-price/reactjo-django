@@ -3,9 +3,16 @@ from helpers.ui import boolean_input
 from scaffolding.models import get_model_field, return_model
 from scaffolding.permission import scaffold_permission
 from helpers.file_manager import file_manager as f
+from helpers.worklist import worklist as wl
 
 def quote(string):
     return "'" + string + "'"
+
+def user_permission():
+    scaffold_permission()
+    f('$man/api/permissions.py', 'a', '$assets/permissions/post_own_content.py')
+    f('$man/api/permissions.py', 'a', '$assets/permissions/update_own_profile.py')
+    wl('Added user permissions')
 
 def scaffold_config():
     cfg = get_cfg()
@@ -41,7 +48,7 @@ def scaffold_config():
     if boolean_input('Add some fields to the user model?'):
         get_model_field()
 
-    scaffold_permission()
+    user_permission()
 
     # Push current_scaffold to models
     cfg = get_cfg()
@@ -68,6 +75,7 @@ def user_model_file():
         'assignment_list', assignment_list)
 
     f('$man/api/models.py', 'a', model)
+    wl('Added UserProfile model')
 
 def user_serializers():
     serializer = f('$assets/serializers/user_profile.py', 'r')
@@ -84,6 +92,19 @@ def user_serializers():
         'fields_list', ''.join(fields_list)).replace(
         'validated_list', ''.join(validated_list))
     f('$man/api/serializers.py', 'a', serializer)
+    wl('Added user serializer')
+
+def user_routes():
+    # Puts the user routes below the router, but above urlpatterns
+    route_flag = '# Register new routes below'
+    route_start = f('$man/api/urls.py','r').find(route_flag)+len(route_flag)+1
+    old_urls = f('$man/api/urls.py', 'r')
+    begin = old_urls[:route_start]
+    mid = f('$assets/urls/user_urls.py', 'r')
+    end = old_urls[route_start:]
+    f('$man/api/urls.py', 'w', begin + mid + end)
+    f('$man/api/urls.py', 'w', '$assets/urls/app_urls_with_users.py')
+    wl('Added user routes')
 
 def scaffold_users():
     scaffold_config()
@@ -91,19 +112,4 @@ def scaffold_users():
     user_serializers()
 
     f('$man/api/views.py', 'a', '$assets/views/users.py')
-    f('$man/api/permissions.py', 'a', '$assets/permissions/post_own_content.py')
-    f('$man/api/permissions.py', 'a', '$assets/permissions/update_own_profile.py')
     f('$man/api/admin.py', 'a', '$assets/admin/users.py')
-    f('$man/api/urls.py', 'w', '$assets/urls/app_urls_with_users.py')
-
-    # Puts the user routes below the router, but above urlpatterns
-    route_flag = '# Register new routes below'
-    route_start = f(
-        '$man/api/urls.py',
-        'r').find(route_flag) + len(route_flag) + 1
-    old_urls = f('$man/api/urls.py', 'r')
-    begin = old_urls[:route_start]
-    mid = f('$assets/urls/user_urls.py', 'r')
-    end = old_urls[route_start:]
-    f('$man/api/urls.py', 'w', begin + mid + end)
-    wl('Added stuff for Users')
