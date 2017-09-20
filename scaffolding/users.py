@@ -63,13 +63,14 @@ def user_model_file():
     title_list = [field['title'] for field in fields]
 
     # quoted_list = ['"name"', '"email"', '"etc"']
-    quoted_list = [quote(title) for title in title_list]
+    quoted_list = [quote(field['title']) for field in fields]
 
     # required_list = ['"email"', '"etc"']
-    required_list = [quote(title) for title in title_list]
+    required_list = [field['title'] for field in fields]
     required_list.remove('name')
+    required_list = [quote(field) for field in required_list]
 
-    # assignment_list = [email=email, name=name]
+    # assignment_list = ["email=email", "name=name"]
     assignment_list = [f'{title}={title}' for title in title_list]
 
     field_strings = [field['string'] for field in fields]
