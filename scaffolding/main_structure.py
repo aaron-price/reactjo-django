@@ -77,9 +77,9 @@ def build_structure():
         os.chdir(prev_path)
         wl('Ran some database migrations')
 
-    # Superusers
-    need_su = boolean_input('Would you like to create a superuser now?', 'y')
-    if need_su:
-        os.chdir(f('$man', '$'))
-        subprocess.run(['python', 'manage.py', 'createsuperuser'])
-        os.chdir(prev_path)
+        # Superusers
+        need_su = boolean_input('Would you like to create a superuser now?', 'y')
+        if need_su:
+            os.chdir(f('$man', '$'))
+            subprocess.run(['python', 'manage.py', 'createsuperuser'])
+            os.chdir(prev_path)
