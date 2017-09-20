@@ -14,6 +14,7 @@ def user_auth_structure():
     cfg['models'] = []
     if cfg['need_users'] == 'True':
         scaffold_users()
+        cfg = get_cfg()
         cfg['models'].append(cfg['current_scaffold']['model'])
         set_cfg(cfg)
         f('$man/api/models.py', 'a', '$assets/models/UserProfile.py')
