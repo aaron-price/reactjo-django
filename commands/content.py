@@ -32,3 +32,6 @@ def content():
 		scaffold_serializer()
 		scaffold_admin()
 		# scaffold_url() is called inside scaffold_view(), not here
+	else:
+		cfg['current_scaffold'] = {}
+		set_cfg(cfg)
