@@ -20,11 +20,11 @@ def scaffold_permission():
         'Nobody',
         'Owner'
     ]
-    ownerless = all_types
-    ownerless = ownerless.remove('Owner')
+    ownerless = all_types[:-1]
     custom = boolean_input('Customize permissions for ' + model + '?', 'y')
     auth = cfg['need_users'] == 'True'
     owner = cfg['current_scaffold']['need_owner'] == 'True'
+    is_user = model == 'User'
 
     # Adjust data
     if not auth:
@@ -42,7 +42,7 @@ def scaffold_permission():
     details_options = all_types
     details_q = 'Who can view the details of a ' + model.lower() + '?'
 
-    post_answer = 'Authenticated'
+    post_answer = 'Anonymous' if is_user else 'Authenticated'
     post_options = ownerless
     post_q = 'Who can create a ' + model.lower() + '?'
 
@@ -56,11 +56,11 @@ def scaffold_permission():
 
     # Ask questions if necessary
     if custom:
-        list_answer = options_input(list_q, ownerless, list_answer)
-        details_answer = options_input(details_q, ownerless, details_answer)
-        post_answer = options_input(post_q, ownerless, post_answer)
-        update_answer = options_input(update_q, ownerless, update_answer)
-        delete_answer = options_input(delete_q, ownerless, delete_answer)
+        list_answer = options_input(list_q, list_options, list_answer)
+        details_answer = options_input(details_q, details_options, details_answer)
+        post_answer = options_input(post_q, post_options, post_answer)
+        update_answer = options_input(update_q, update_options, update_answer)
+        delete_answer = options_input(delete_q, delete_options, delete_answer)
 
     # Update config
     cfg['current_scaffold']['permissions'] = {
