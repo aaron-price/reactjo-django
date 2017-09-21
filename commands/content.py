@@ -12,26 +12,20 @@ from helpers.worklist import worklist as wl
 
 
 def content():
-	need_model = boolean_input('Do you need a new model?', 'y')
 	cfg = get_cfg()
+	cfg['current_scaffold'] = {'model': {}}
+	set_cfg(cfg)
 
-	if need_model:
-		cfg['current_scaffold'] = {'model': {}}
-		set_cfg(cfg)
+	scaffold_model()
+	prev_path = os.getcwd()
+	os.chdir(f('$man', '$'))
+	subprocess.run(['python', 'manage.py', 'makemigrations'])
+	subprocess.run(['python', 'manage.py', 'migrate'])
+	os.chdir(prev_path)
+	wl('Ran migrations')
 
-		scaffold_model()
-		prev_path = os.getcwd()
-		os.chdir(f('$man', '$'))
-		subprocess.run(['python', 'manage.py', 'makemigrations'])
-		subprocess.run(['python', 'manage.py', 'migrate'])
-		os.chdir(prev_path)
-		wl('Ran migrations')
-
-		scaffold_permission()
-		scaffold_view()
-		scaffold_serializer()
-		scaffold_admin()
-		# scaffold_url() is called inside scaffold_view(), not here
-	else:
-		cfg['current_scaffold'] = {}
-		set_cfg(cfg)
+	scaffold_permission()
+	scaffold_view()
+	scaffold_serializer()
+	scaffold_admin()
+	# scaffold_url() is called inside scaffold_view(), not here

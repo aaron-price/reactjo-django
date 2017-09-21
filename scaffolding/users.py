@@ -21,15 +21,6 @@ def scaffold_config():
         "title": 'UserProfile',
         "fields": [
             {
-                "title": "email",
-                "type": "EmailField",
-                "options": [
-                    "max_length = 255",
-                    "unique = True"
-                ],
-                "string": "email = models.EmailField(max_length=255, unique=True)\n    "
-            },
-            {
                 "title": "name",
                 "type": "CharField",
                 "options": [
@@ -37,6 +28,15 @@ def scaffold_config():
                     "unique = True"
                 ],
                 "string": "name = models.CharField(max_length=255, unique=True)\n    "
+            },
+            {
+                "title": "email",
+                "type": "EmailField",
+                "options": [
+                    "max_length = 255",
+                    "unique = True"
+                ],
+                "string": "email = models.EmailField(max_length=255, unique=True)\n    "
             }
         ]
     }
