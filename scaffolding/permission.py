@@ -7,98 +7,79 @@ from helpers.ui import boolean_input, options_input
 
 def scaffold_permission():
     cfg = get_cfg()
+    # Get data
     title = cfg['current_scaffold']['model']['title']
     model = 'User' if title == 'UserProfile' else title
+    all_types = [
+        'Superuser',
+        'Staff',
+        'Authenticated',
+        'Anonymous',
+        'Active',
+        'Anyone',
+        'Nobody',
+        'Owner'
+    ]
+    ownerless = all_types
+    ownerless = ownerless.remove('Owner')
+    custom = boolean_input('Customize permissions for ' + model + '?', 'y')
+    auth = cfg['need_users'] == 'True'
+    owner = cfg['current_scaffold']['need_owner'] == 'True'
 
-    if boolean_input('Customize permissions for ' + model + '?', 'y'):
-        all_types = [
-            'Superuser',
-            'Staff',
-            'Authenticated',
-            'Anonymous',
-            'Active',
-            'Anyone',
-            'Nobody',
-            'Owner'
-        ]
-        without_owner = all_types[:-1]
-        with_owner = all_types[:-1]
-        default_update = 'Staff'
-        default_delete = 'Staff'
+    # Adjust data
+    if not auth:
+        all_types.remove('Authenticated')
+        all_types.remove('Staff')
+    if not owner:
+        all_types.remove('Owner')
 
-        if cfg['current_scaffold']['need_owner'] == 'True':
-            with_owner = all_types
-            default_update = 'Owner'
-            default_delete = 'Owner'
+    # Build the questions
+    list_answer = 'Anyone'
+    list_options = ownerless
+    list_q = 'Who can view the list of all ' + pluralize(model.lower()) + '?'
 
-        is_user = title == 'UserProfile'
-        default_post = 'Anonymous' if is_user else 'Authenticated'
-        post_users = options_input(
-            'Who can create ' + pluralize(title.lower()) + '?',
-            without_owner, default_post)
+    details_answer = 'Anyone'
+    details_options = all_types
+    details_q = 'Who can view the details of a ' + model.lower() + '?'
 
-        list_users = options_input(
-            'Who can view the list of all ' + pluralize(title.lower()) + '?',
-            without_owner, 'Anyone')
+    post_answer = 'Authenticated'
+    post_options = ownerless
+    post_q = 'Who can create a ' + model.lower() + '?'
 
-        details_users = options_input(
-            'Who can view the details about a ' + title.lower() + '?',
-            with_owner, 'Anyone')
+    update_answer = 'Owner'
+    update_options = all_types
+    update_q = 'Who can update an existing ' + model.lower() + '?'
 
-        update_users = options_input(
-            'Who can update an existing ' + title.lower() + '?',
-            with_owner, 'Owner')
+    delete_answer = 'Owner'
+    delete_options = all_types
+    delete_q = 'Who can delete an existing ' + model.lower() + '?'
 
-        delete_users = options_input(
-            'Who can delete an existing ' + title.lower() + '?',
-            with_owner, 'Owner')
+    # Ask questions if necessary
+    if custom:
+        list_answer = options_input(list_q, ownerless, list_answer)
+        details_answer = options_input(details_q, ownerless, details_answer)
+        post_answer = options_input(post_q, ownerless, post_answer)
+        update_answer = options_input(update_q, ownerless, update_answer)
+        delete_answer = options_input(delete_q, ownerless, delete_answer)
 
-        cfg['current_scaffold']['permissions'] = {
-            'post': post_users,
-            'list': list_users,
-            'details': details_users,
-            'update': update_users,
-            'delete': delete_users
-        }
-        set_cfg(cfg)
+    # Update config
+    cfg['current_scaffold']['permissions'] = {
+        'list': list_answer,
+        'details': details_answer,
+        'post': post_answer,
+        'update': update_answer,
+        'delete': delete_answer,
+    }
+    set_cfg(cfg)
 
-
-        new_permission = f('$assets/permissions/new.py', 'r').format(
-            Model = model,
-            post_users = post_users,
-            list_users = list_users,
-            details_users = details_users,
-            update_users = update_users,
-            delete_users = delete_users,
-        )
-
-        f('$api/permissions.py', 'a', new_permission)
-        wl('Created permission')
-    else:
-        default_update = 'Staff'
-        default_delete = 'Staff'
-        if cfg['current_scaffold']['need_owner'] == 'True':
-            default_update = 'Owner'
-            default_delete = 'Owner'
-        default_post = 'Anonymous' if model == 'User' else 'Authenticated'
-
-        cfg['current_scaffold']['permissions'] = {
-            'post': default_post,
-            'list': 'Anyone',
-            'details': 'Anyone',
-            'update': default_update,
-            'delete': default_delete
-        }
-        set_cfg(cfg)
-
-        new_permission = f('$assets/permissions/new.py', 'r').format(
-            Model = model,
-            post_users = default_post,
-            list_users = 'Anyone',
-            details_users = 'Anyone',
-            update_users = default_update,
-            delete_users = default_delete,
-        )
-
-        f('$api/permissions.py', 'a', new_permission)
-        wl('Created permission')
+    # Build permisionset
+    new_permission = f('$assets/permissions/new.py', 'r').format(
+        Model = model,
+        list_users = list_answer,
+        details_users = details_answer,
+        post_users = post_answer,
+        update_users = update_answer,
+        delete_users = delete_answer,
+    )
+    f('$api/permissions.py', 'a', new_permission)
+    wl('Created permission')
