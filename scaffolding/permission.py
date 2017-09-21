@@ -24,6 +24,7 @@ def scaffold_permission():
     custom = boolean_input('Customize permissions for ' + model + '?', 'y')
     auth = cfg['need_users'] == 'True'
     owner = cfg['current_scaffold']['need_owner'] == 'True'
+    is_user = model == 'User'
 
     # Adjust data
     if not auth:
@@ -41,7 +42,7 @@ def scaffold_permission():
     details_options = all_types
     details_q = 'Who can view the details of a ' + model.lower() + '?'
 
-    post_answer = 'Authenticated'
+    post_answer = 'Anonymous' if is_user else 'Authenticated'
     post_options = ownerless
     post_q = 'Who can create a ' + model.lower() + '?'
 
