@@ -2,6 +2,7 @@ from helpers.config_manager import get_cfg, set_cfg
 from helpers.worklist import worklist as wl
 from helpers.file_manager import file_manager as f
 from helpers.ui import string_input, options_input, boolean_input
+from helpers.compose import quote
 types = [
     'AutoField', 'BigAutoField', 'BigIntegerField', 'BinaryField',
     'BooleanField', 'CharField', 'CommaSeparatedIntegerField',
@@ -12,10 +13,6 @@ types = [
     'TextField','TimeField','URLField','UUIDField','ForeignKey'
 ]
 lower_types = [t.lower() for t in types]
-
-# Forces quotes around an input
-def quote(string):
-	return "'{}'".format(string)
 
 # Returns a string showing the model being created so far.
 def return_model():

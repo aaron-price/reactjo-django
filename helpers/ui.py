@@ -34,8 +34,7 @@ def string_input(string, default = ""):
 
 	# If input is optional
 	if default != "":
-		default = paint(' (default: ' + default + '): ')
-		answer = input(string + default)
+		answer = input(string + paint(' (default: ' + default + '): '))
 		if answer == "":
 			return default
 		else:
