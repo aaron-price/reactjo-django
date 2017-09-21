@@ -19,20 +19,26 @@ def isSuperuser(request):
     return request.user.is_superuser
 
 def check_allowed(allowed_users, request, obj = None):
-    # Return false if any of the checks don't pass.
+    # Return False if None of the checks pass.
+    # Return True if Any of the checks do pass.
+
     for user in allowed_users:
-        if user == 'Active' and not isActive(request):
+        if user == 'Active' and isActive(request):
+            return True
+        elif user == 'Anonymous' and isAnon(request):
+            return True
+        elif user == 'Anyone':
+            return True
+        elif user == 'Nobody':
             return False
-        elif user == 'Anonymous' and not isAnon(request):
-            return False
-        elif user == 'Authenticated' and not isAuth(request):
-            return False
-        elif user == 'Owner' and not isOwner(request, obj):
-            return False
-        elif user == 'Staff' and not isStaff(request):
-            return False
-        elif user == 'Superuser' and not isSuperuser(request):
-            return False
+        elif user == 'Authenticated' and isAuth(request):
+            return True
+        elif user == 'Owner' and isOwner(request, obj):
+            return True
+        elif user == 'Staff' and isStaff(request):
+            return True
+        elif user == 'Superuser' and isSuperuser(request):
+            return True
 
     # If everything passed, then return True
-    return True
+    return False
