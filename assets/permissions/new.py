@@ -16,7 +16,7 @@ class {Model}Permissions(permissions.BasePermission):
             return check_allowed(['{details_users}'], request, obj)
         # Update
         if request.method == 'PUT':
-            return check_allowed(['{put_users}'], request, obj)
+            return check_allowed(['{update_users}'], request, obj)
         # Delete
         elif request.method == 'DELETE':
             return check_allowed(['{delete_users}'], request, obj)
