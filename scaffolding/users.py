@@ -45,6 +45,8 @@ def scaffold_config():
     set_cfg(cfg)
     return_model()
 
+    print(' ')
+    print(' ')
     if boolean_input('Add some fields to the user model?'):
         get_model_field()
 
