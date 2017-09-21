@@ -20,8 +20,7 @@ def scaffold_permission():
         'Nobody',
         'Owner'
     ]
-    ownerless = all_types
-    ownerless = ownerless.remove('Owner')
+    ownerless = all_types[:-1]
     custom = boolean_input('Customize permissions for ' + model + '?', 'y')
     auth = cfg['need_users'] == 'True'
     owner = cfg['current_scaffold']['need_owner'] == 'True'

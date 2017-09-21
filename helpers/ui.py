@@ -29,12 +29,12 @@ def boolean_input(string, default = False):
 # (optional) pass a default value
 # e.g. string_input("What's your name") No default.
 def string_input(string, default = ""):
-	string = paint(string)
 	answer = ""
 
 	# If input is optional
 	if default != "":
-		answer = input(string + paint(' (default: ' + default + '): '))
+		question = paint(string + ' (default: ' + default + '): ')
+		answer = input(question)
 		if answer == "":
 			return default
 		else:
@@ -42,7 +42,7 @@ def string_input(string, default = ""):
 
 	# If input is required
 	while answer == "" or answer == False:
-		answer = input(string + ": ")
+		answer = input(paint(string + ": "))
 
 	return str(answer)
 
