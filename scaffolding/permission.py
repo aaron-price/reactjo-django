@@ -5,14 +5,10 @@ from helpers.worklist import worklist as wl
 from helpers.file_manager import file_manager as f
 from helpers.ui import boolean_input, options_input
 
-def quote(string):
-    return "'" + string + "'"
-
 def scaffold_permission():
     cfg = get_cfg()
     title = cfg['current_scaffold']['model']['title']
     model = 'User' if title == 'UserProfile' else title
-    quotes = "'"
 
     if boolean_input('Customize permissions for ' + model + '?', 'y'):
         all_types = [
