@@ -53,6 +53,8 @@ def build_structure():
     wl('Prepped the api files')
 
     # Prepare for heroku
+    mkdir('$out/utils')
+    f('$out/utils/renderers.py', 'w', '$assets/utils/renderers.py')
     if need_prod:
         procfile = f('$assets/Procfile.txt', 'r').replace(
             'backend', backend_name)

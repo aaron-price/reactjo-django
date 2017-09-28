@@ -121,6 +121,19 @@ def build_settings(prev_path):
     }
     f(prod_settings_path, 'w', data)
 
+    prod_drf_settings = dedent("""\
+
+        'DEFAULT_RENDERER_CLASSES': (
+            'rest_framework.renderers.JSONRenderer',
+            'utils.renderers.BrowsableAPIRendererWithoutForms',
+        )
+    """)
+    data = {
+        'target': ['REST_FRAMEWORK'],
+        'content': prod_drf_settings
+    }
+    f(prod_settings_path, 'a', data)
+
     db_settings = dedent("""\
     import dj_database_url
     db_from_env = dj_database_url.config(conn_max_age=500)
