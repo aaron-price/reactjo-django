@@ -12,5 +12,5 @@ def new():
 
 	try:
 		build_structure()
-	except as e:
+	except Exception as e:
 		console.log(e)
