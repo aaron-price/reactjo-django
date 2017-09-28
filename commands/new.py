@@ -1,6 +1,6 @@
 from scaffolding.main_structure import build_structure
 from helpers.config_manager import get_cfg, set_cfg
-from helpers.ui import boolean_input
+from helpers.ui import boolean_input, string_input
 
 def new():
 	backend_name = string_input('Name the Django backend app:', 'backend')
