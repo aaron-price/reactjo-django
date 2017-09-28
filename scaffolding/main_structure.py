@@ -23,7 +23,8 @@ def build_structure():
 
     # Start django project
     os.chdir(f('$prj', '$'))
-    backend_name = get_cfg()['backend_name']
+    cfg = get_cfg()
+    backend_name = cfg['backend_name']
     subprocess.run(['django-admin', 'startproject', backend_name])
     wl('Created Django project', prev_path)
 

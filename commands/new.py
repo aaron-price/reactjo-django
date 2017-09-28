@@ -10,4 +10,7 @@ def new():
 	cfg['backend_name'] = backend_name
 	set_cfg(cfg)
 
-	build_structure()
+	try:
+		build_structure()
+	except as e:
+		console.log(e)
