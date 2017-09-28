@@ -30,6 +30,7 @@ def scaffold_permission():
     if not auth:
         all_types.remove('Authenticated')
         all_types.remove('Staff')
+        all_types.remove('Active')
     if not owner:
         all_types.remove('Owner')
 
@@ -46,11 +47,11 @@ def scaffold_permission():
     post_options = ownerless
     post_q = 'Who can create a ' + model.lower() + '?'
 
-    update_answer = 'Owner'
+    update_answer = 'Owner' if auth else 'Superuser'
     update_options = all_types
     update_q = 'Who can update an existing ' + model.lower() + '?'
 
-    delete_answer = 'Owner'
+    delete_answer = 'Owner' if auth else 'Superuser'
     delete_options = all_types
     delete_q = 'Who can delete an existing ' + model.lower() + '?'
 
