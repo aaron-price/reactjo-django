@@ -43,7 +43,11 @@ def scaffold_permission():
     details_options = all_types
     details_q = 'Who can view the details of a ' + model.lower() + '?'
 
-    post_answer = 'Anonymous' if is_user else 'Authenticated'
+    post_answer = ''
+    if is_user:
+        post_answer = 'Anonymous'
+    else:
+        post_answer = 'Authenticated' if auth else 'Anyone'
     post_options = ownerless
     post_q = 'Who can create a ' + model.lower() + '?'
 
