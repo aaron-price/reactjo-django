@@ -192,8 +192,11 @@ def scaffold_model():
         cfg['models'] = []
         set_cfg(cfg)
 
-    # Add owner field
-    if boolean_input('Will users own instances of this model?'):
+    # Add owner field if necessary
+    need_owner = False
+    if cfg['need_users']:
+        need_owner = boolean_input('Will users own instances of this model?')
+    if need_owner:
         cfg['current_scaffold']['model']['fields'].append({
             'title': 'owner',
             'type': 'ForeignKey',

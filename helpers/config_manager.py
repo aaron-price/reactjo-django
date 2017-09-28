@@ -3,8 +3,6 @@ import os
 import json
 from textwrap import dedent
 
-checked = []
-
 # JSON functions duplicated here to avoid circular imports with file_manager
 def json_read(path):
     with open(path, 'r') as file:
@@ -14,21 +12,30 @@ def json_write(path, content):
     with open(path, 'w') as file:
         json.dump(content, file, indent = 4)
 
+checked = []
+current_path = os.getcwd()
+
+
 def find_config_path():
     def check():
         # reactjo.json exists?
-        config_file = os.path.isfile('./reactjorc/config.json')
+        cfg_path = os.path.join(current_path, 'reactjorc/config.json')
+        config_file = os.path.isfile(cfg_path)
         checked.append(os.getcwd())
-        return found() if config_file else bubble_up(os.getcwd())
+        return found() if config_file else bubble_up()
 
-    def bubble_up(prev_path):
-        os.chdir("..")
-        next_path = os.getcwd()
-        # Escape the recursion if "cd .." does nothing.
-        raise Exception() if prev_path == next_path else check()
+    def bubble_up():
+        parent_path = os.path.dirname(current_path)
+        # Escape the recursion if already at highest level.
+        if current_path == parent_path:
+            raise Exception()
+        else:
+            current_path = parent_path
+            check()
 
     def found():
-        return os.getcwd() + '/reactjorc/config.json'
+        checked = []
+        return os.path.join(current_path, 'reactjorc/config.json')
 
     return check()
 
