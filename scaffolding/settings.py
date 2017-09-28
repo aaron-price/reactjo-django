@@ -2,7 +2,6 @@ from helpers.path_manager import mkdir
 from helpers.file_manager import file_manager as f
 from helpers.worklist import worklist as wl
 import os
-from helpers.extension_constants import OUTPUT_HOME
 from textwrap import dedent
 from helpers.config_manager import get_cfg
 
