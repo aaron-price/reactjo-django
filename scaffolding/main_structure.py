@@ -8,22 +8,22 @@ from scaffolding.users import scaffold_users
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.ui import boolean_input
 
-def pip_install(prev_path):
+def pip_install():
     # Solves chicken and egg problem.
     # Temporarily create requirements, installs it, removes it,
     # We make it again somewhere else after directories exist.
     f('$su/requirements.txt', 'w', '$assets/requirements.txt')
     subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
     f('$su/requirements.txt', 'd')
-    wl('Installed pip packages', prev_path)
+    wl('Installed pip packages')
 
 def build_structure():
+    cfg = get_cfg()
     prev_path = os.getcwd()
-    pip_install(prev_path)
+    pip_install()
 
     # Start django project
     os.chdir(f('$prj', '$'))
-    cfg = get_cfg()
     backend_name = cfg['backend_name']
     subprocess.run(['django-admin', 'startproject', backend_name])
     wl('Created Django project', prev_path)
