@@ -47,6 +47,28 @@ def build_structure():
     f('$api/admin.py', 'w', '$assets/admin/imports.py')
     wl('Prepped the api files')
 
+    # Prepare for heroku
+    need_prod = boolean_input('Will you be deploying this to heroku?', 'y')
+    cfg = get_cfg()
+    cfg['need_production'] = need_prod
+    set_cfg(cfg)
+
+    if need_prod:
+        procfile = f('$assets/Procfile.txt', 'r').replace(
+            'backend', backend_name)
+        f('$out/Procfile', 'w', procfile)
+        f('$out/runtime.txt', 'w', '$assets/runtime.txt')
+        f('$out/.env', 'w', '$assets/env.txt')
+
+        # Install some production specific packages
+        f('$out/requirements.txt', 'w', '$assets/requirements_prod.txt')
+        prev_path = os.getcwd()
+        os.chdir(f('$out', '$'))
+        subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
+        os.chdir(prev_path)
+
+    f('$out/requirements.txt', 'w', '$assets/requirements.txt')
+
     # Users
     cfg = get_cfg()
     if cfg['need_users'] == 'True':
