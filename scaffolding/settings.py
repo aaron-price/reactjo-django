@@ -10,9 +10,7 @@ def build_settings(prev_path):
     os.chdir(prev_path)
     cfg = get_cfg()
 
-    path_above_settings = f(
-        '$out/{}/{}'.format(OUTPUT_HOME, OUTPUT_HOME),
-        '$')
+    path_above_settings = f('$main', '$')
     settings_dir = os.path.join(path_above_settings, 'settings')
 
     # settings dir

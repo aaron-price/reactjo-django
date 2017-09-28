@@ -1,28 +1,51 @@
 from helpers.config_manager import get_cfg, set_cfg
-from helpers.extension_constants import OUTPUT_HOME, RC_HOME
+from helpers.extension_constants import RC_HOME
 import os
+
+# /                                                         $su
+# /prj_path                                                 $prj
+# /prj_path/reactjorc/                                      $rc
+# /prj_path/reactjorc/extensions/reactjo-django             $ext
+# /prj_path/reactjorc/extensions/reactjo-django/assets      $assets
+# /prj_path/output_name                                     $out
+# /prj_path/output_name/output_name                         $main
+# /prj_path/output_name/api                                 $api
+
+# USAGE:
+# from file_manager import file_manager as f
+# f('$api/urls.py', '$')    # Returns the api/urls.py PATH as a string
+# f('$api/urls.py', 'r')    # Returns the api/urls.py FILE as a string
 
 def parse_shortcuts(path):
     cfg = get_cfg()
+    output_name = cfg['backend_name']
+
+    # Build all the paths
     su_path = cfg['paths']['super_root']
     prj_path = cfg['paths']['project_root']
-    out_path = os.path.join(prj_path, OUTPUT_HOME)
+    rc = os.path.join(su_path, 'reactjorc')
+    ext = os.path.join(ext, 'extensions', RC_HOME)
+    assets = os.path.join(ext, 'assets')
+    out_path = os.path.join(prj_path, output_name)
+    main_app = os.path.join(out_path, output_name)
+    api = os.path.join(out_path, 'api')
 
+    # Build the shortcuts
     shortcuts = {
-        '$assets': os.path.join(su_path, 'reactjorc/extensions', RC_HOME, 'assets'),
-        '$api': os.path.join(out_path, 'backend/api'),
-        '$ext': os.path.join(su_path, 'reactjorc/extensions', RC_HOME),
-        '$extension': os.path.join(su_path, 'reactjorc/extensions', RC_HOME),
-        '$man': os.path.join(out_path, OUTPUT_HOME),
+        '$su': su_path,
+        '$prj': prj_path,
+        '$project': prj_path,
+        '$rc': rc,
+        '$ext': ext,
+        '$extension': ext,
+        '$assets': assets,
         '$out': out_path,
         '$output': out_path,
-        '$project': prj_path,
-        '$prj': prj_path,
-        '$rc': os.path.join(su_path, 'reactjorc'),
-        '$su': su_path,
+        '$main': main_app,
+        '$api': api,
     }
-    if 'shortcuts' not in cfg['paths'].keys():
-        cfg['paths']['shortcuts'] = shortcuts
+
+    # Iterate over all shortcuts. If the path argument contains it, use it.
     parsed_string = path
     for key, value in shortcuts.items():
         parsed_string = os.path.join(parsed_string.replace(key, value))

@@ -10,8 +10,8 @@ def quote(string):
 
 def user_permission():
     scaffold_permission()
-    f('$man/api/permissions.py', 'a', '$assets/permissions/post_own_content.py')
-    f('$man/api/permissions.py', 'a', '$assets/permissions/update_own_profile.py')
+    f('$api/permissions.py', 'a', '$assets/permissions/post_own_content.py')
+    f('$api/permissions.py', 'a', '$assets/permissions/update_own_profile.py')
     wl('Added user permissions')
 
 def scaffold_config():
@@ -82,7 +82,7 @@ def user_model_file():
         'field_strings', ''.join(field_strings)).replace(
         'assignment_list', ', '.join(assignment_list))
 
-    f('$man/api/models.py', 'a', model)
+    f('$api/models.py', 'a', model)
     wl('Added UserProfile model')
 
 def user_serializers():
@@ -99,19 +99,19 @@ def user_serializers():
     serializer = serializer.replace(
         'fields_list', ''.join(fields_list)).replace(
         'validated_list', ''.join(validated_list))
-    f('$man/api/serializers.py', 'a', serializer)
+    f('$api/serializers.py', 'a', serializer)
     wl('Added user serializer')
 
 def user_routes():
     # Puts the user routes below the router, but above urlpatterns
     route_flag = '# Register new routes below'
-    route_start = f('$man/api/urls.py','r').find(route_flag)+len(route_flag)+1
-    old_urls = f('$man/api/urls.py', 'r')
+    route_start = f('$api/urls.py','r').find(route_flag)+len(route_flag)+1
+    old_urls = f('$api/urls.py', 'r')
     begin = old_urls[:route_start]
     mid = f('$assets/urls/user_urls.py', 'r')
     end = old_urls[route_start:]
-    f('$man/api/urls.py', 'w', begin + mid + end)
-    f('$man/api/urls.py', 'w', '$assets/urls/app_urls_with_users.py')
+    f('$api/urls.py', 'w', begin + mid + end)
+    f('$api/urls.py', 'w', '$assets/urls/app_urls_with_users.py')
     wl('Added user routes')
 
 def scaffold_users():
@@ -120,5 +120,5 @@ def scaffold_users():
     user_serializers()
     user_routes()
 
-    f('$man/api/views.py', 'a', '$assets/views/users.py')
-    f('$man/api/admin.py', 'a', '$assets/admin/users.py')
+    f('$api/views.py', 'a', '$assets/views/users.py')
+    f('$api/admin.py', 'a', '$assets/admin/users.py')
