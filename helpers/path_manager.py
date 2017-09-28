@@ -24,7 +24,7 @@ def parse_shortcuts(path):
     su_path = cfg['paths']['super_root']
     prj_path = cfg['paths']['project_root']
     rc = os.path.join(su_path, 'reactjorc')
-    ext = os.path.join(ext, 'extensions', RC_HOME)
+    ext = os.path.join(rc, 'extensions', RC_HOME)
     assets = os.path.join(ext, 'assets')
     out_path = os.path.join(prj_path, output_name)
     main_app = os.path.join(out_path, output_name)
