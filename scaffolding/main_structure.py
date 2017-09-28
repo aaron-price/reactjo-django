@@ -8,7 +8,7 @@ from scaffolding.users import scaffold_users
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.ui import boolean_input
 
-def pip_install():
+def pip_install(prev_path):
     # Solves chicken and egg problem.
     # Temporarily create requirements, installs it, removes it,
     # We make it again somewhere else after directories exist.
@@ -18,10 +18,10 @@ def pip_install():
     wl('Installed pip packages', prev_path)
 
 def build_structure():
-    pip_install()
+    prev_path = os.getcwd()
+    pip_install(prev_path)
 
     # Start django project
-    prev_path = os.getcwd()
     os.chdir(f('$prj', '$'))
     backend_name = get_cfg()['backend_name']
     subprocess.run(['django-admin', 'startproject', backend_name])
