@@ -33,6 +33,11 @@ def build_structure():
     subprocess.run(['python', 'manage.py', 'startapp', 'api'])
     wl('Created api app', prev_path)
 
+    need_prod = boolean_input('Will you be deploying this to heroku?', 'y')
+    cfg = get_cfg()
+    cfg['need_production'] = need_prod
+    set_cfg(cfg)
+
     build_settings(prev_path)
 
     f('$main/urls.py', 'w', '$assets/urls/root_urls.py')
@@ -48,11 +53,6 @@ def build_structure():
     wl('Prepped the api files')
 
     # Prepare for heroku
-    need_prod = boolean_input('Will you be deploying this to heroku?', 'y')
-    cfg = get_cfg()
-    cfg['need_production'] = need_prod
-    set_cfg(cfg)
-
     if need_prod:
         procfile = f('$assets/Procfile.txt', 'r').replace(
             'backend', backend_name)

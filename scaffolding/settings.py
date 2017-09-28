@@ -93,11 +93,40 @@ def build_settings(prev_path):
     }
     f(dev_settings_path, 'w', data)
 
+    # PRODUCTION ONLY
+    backend_name = cfg['backend_name']
+
     data = {
         'target': 'DEBUG = True',
         'content': 'DEBUG = False'
     }
     f(prod_settings_path, 'w', data)
+
+    data = {
+        'target': 'ROOT_URLCONF = ',
+        'content': "ROOT_URLCONF = '{}.urls'".format(backend_name)
+    }
+    f(prod_settings_path, 'w', data)
+
+    data = {
+        'target': "WSGI_APPLICATION = ",
+        'content': "WSGI_APPLICATION = '{}.wsgi.application'".format(
+            backend_name)
+    }
+    f(prod_settings_path, 'w', data)
+
+    data = {
+        'target': "STATIC_URL = '/static/'",
+        'content': ''
+    }
+    f(prod_settings_path, 'w', data)
+
+    db_settings = dedent("""\
+    import dj_database_url
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
+    """)
+    f(prod_settings_path, 'a', db_settings)
 
     cors = dedent("""\
     CORS_ORIGIN_WHITELIST = (

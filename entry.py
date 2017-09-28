@@ -9,3 +9,5 @@ if cmd in ['n', 'new']:
 	new()
 if cmd in ['c', 'content']:
 	content()
+if cmd in ['p', 'prod', 'production']:
+	production()
