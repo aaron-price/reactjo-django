@@ -121,13 +121,11 @@ def build_settings(prev_path):
     }
     f(prod_settings_path, 'w', data)
 
-    prod_drf_settings = dedent("""\
-
-        'DEFAULT_RENDERER_CLASSES': (
-            'rest_framework.renderers.JSONRenderer',
-            'utils.renderers.BrowsableAPIRendererWithoutForms',
-        )
-    """)
+    prod_drf_settings = """
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'utils.renderers.BrowsableAPIRendererWithoutForms',
+    )"""
     data = {
         'target': ['REST_FRAMEWORK'],
         'content': prod_drf_settings

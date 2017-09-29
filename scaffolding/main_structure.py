@@ -55,6 +55,7 @@ def build_structure():
     # Prepare for heroku
     mkdir('$out/utils')
     f('$out/utils/renderers.py', 'w', '$assets/utils/renderers.py')
+    f('$out/requirements.txt', 'w', '$assets/requirements.txt')
     if need_prod:
         procfile = f('$assets/Procfile.txt', 'r').replace(
             'backend', backend_name)
@@ -68,8 +69,6 @@ def build_structure():
         os.chdir(f('$out', '$'))
         subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
         os.chdir(prev_path)
-
-    f('$out/requirements.txt', 'w', '$assets/requirements.txt')
 
     # Users
     cfg = get_cfg()
