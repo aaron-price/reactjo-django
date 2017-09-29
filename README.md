@@ -20,3 +20,10 @@ reactjo c
 reactjo content
 ```
 Creates a model and CRUD api endpoints for interacting with it.
+
+```bash
+reactjo p
+// or
+reactjo production
+```
+Gives you step-by-step instructions for deploying the app to heroku.

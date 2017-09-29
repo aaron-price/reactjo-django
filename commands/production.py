@@ -23,13 +23,15 @@ def production():
 
         8. > heroku config:set DISABLE_COLLECTSTATIC=1
 
-        9. > heroku addons:create heroku-postgresql   # Create a database
+        9. > heroku config:set IS_PRODUCTION=True
 
-        10. > git add -A
+        10. > heroku addons:create heroku-postgresql   # Create a database
 
-        11. > git commit -m "Updated ALLOWED_HOSTS"
+        11. > git add -A
 
-        12. > git push heroku master
+        12. > git commit -m "Updated ALLOWED_HOSTS"
+
+        13. > git push heroku master
 
         (Optionally, if you want a superuser in production)
         13. > heroku run bash
