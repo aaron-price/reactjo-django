@@ -1,7 +1,7 @@
+import os
 from .base import *
-from .production import *
 
-try:
+if os.environ.get('IS_PRODUCTION'):
+    from .production import *
+else:
     from .development import *
-except:
-    pass

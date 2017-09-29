@@ -33,6 +33,11 @@ def build_structure():
     subprocess.run(['python', 'manage.py', 'startapp', 'api'])
     wl('Created api app', prev_path)
 
+    need_prod = boolean_input('Will you be deploying this to heroku?', 'y')
+    cfg = get_cfg()
+    cfg['need_production'] = need_prod
+    set_cfg(cfg)
+
     build_settings(prev_path)
 
     f('$main/urls.py', 'w', '$assets/urls/root_urls.py')
@@ -46,6 +51,24 @@ def build_structure():
     f('$api/urls.py', 'w', '$assets/urls/app_urls_without_users.py')
     f('$api/admin.py', 'w', '$assets/admin/imports.py')
     wl('Prepped the api files')
+
+    # Prepare for heroku
+    mkdir('$out/utils')
+    f('$out/utils/renderers.py', 'w', '$assets/utils/renderers.py')
+    f('$out/requirements.txt', 'w', '$assets/requirements.txt')
+    if need_prod:
+        procfile = f('$assets/Procfile.txt', 'r').replace(
+            'backend', backend_name)
+        f('$out/Procfile', 'w', procfile)
+        f('$out/runtime.txt', 'w', '$assets/runtime.txt')
+        f('$out/.env', 'w', '$assets/env.txt')
+
+        # Install some production specific packages
+        f('$out/requirements.txt', 'w', '$assets/requirements_prod.txt')
+        prev_path = os.getcwd()
+        os.chdir(f('$out', '$'))
+        subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
+        os.chdir(prev_path)
 
     # Users
     cfg = get_cfg()

@@ -93,11 +93,53 @@ def build_settings(prev_path):
     }
     f(dev_settings_path, 'w', data)
 
+    # PRODUCTION ONLY
+    backend_name = cfg['backend_name']
+
     data = {
         'target': 'DEBUG = True',
         'content': 'DEBUG = False'
     }
     f(prod_settings_path, 'w', data)
+
+    data = {
+        'target': 'ROOT_URLCONF = ',
+        'content': "ROOT_URLCONF = '{}.urls'".format(backend_name)
+    }
+    f(prod_settings_path, 'w', data)
+
+    data = {
+        'target': "WSGI_APPLICATION = ",
+        'content': "WSGI_APPLICATION = '{}.wsgi.application'".format(
+            backend_name)
+    }
+    f(prod_settings_path, 'w', data)
+
+    data = {
+        'target': "STATIC_URL = '/static/'",
+        'content': ''
+    }
+    f(prod_settings_path, 'w', data)
+
+    prod_drf_settings = """
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'utils.renderers.BrowsableAPIRendererWithoutForms',
+    )"""
+    data = {
+        'target': ['REST_FRAMEWORK'],
+        'content': prod_drf_settings
+    }
+    f(prod_settings_path, 'a', data)
+
+    db_settings = dedent("""\
+    import dj_database_url
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
+
+    # CORS_ORIGIN_WHITELIST = ('your-frontend-app.herokuapp.com',)
+    """)
+    f(prod_settings_path, 'a', db_settings)
 
     cors = dedent("""\
     CORS_ORIGIN_WHITELIST = (
