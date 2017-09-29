@@ -3,6 +3,9 @@ from helpers.ui import paint
 from helpers.file_manager import file_manager as f
 
 def production():
+    print(' ')
+    print(paint('BACKEND INSTRUCTIONS:', 'green'))
+    print(' ')
 
     print(paint(dedent("""\
         To deploy the backend to heroku, run these commands:
@@ -18,8 +21,8 @@ def production():
 
         6. > heroku create                            # Copy the URL it gives you
 
-        7. Add that URL (as a string) to the ALLOWED_HOSTS list of each file
-            in the settings/ directory. Leave off the 'https://' and the trailing slash
+        7. Add that URL (as a string) to the ALLOWED_HOSTS list of settings/production.py.
+            Leave off the 'https://' and the trailing slash
 
         8. > heroku config:set DISABLE_COLLECTSTATIC=1
 
@@ -37,6 +40,9 @@ def production():
         13. > heroku run bash
 
         14. > python manage.py createsuperuser
+            # Fill out your info...
+
+        15. > exit
 
 
         Note that if you visit the URL, the site is an unstyled mess. This is
