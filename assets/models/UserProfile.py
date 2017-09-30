@@ -6,7 +6,6 @@ class UserProfileManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(assignment_list)
 
-
         user.set_password(password)
         user.save(using=self._db)
 
