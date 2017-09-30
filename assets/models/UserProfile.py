@@ -15,7 +15,7 @@ class UserProfileManager(BaseUserManager):
 
     def create_superuser(self, title_list, password):
         owner = name
-        user = self.create_user(title_list, owner, password)
+        user = self.create_user(title_list, password)
         user.is_superuser = True
         user.is_staff = True
 
