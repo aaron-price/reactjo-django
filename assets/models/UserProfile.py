@@ -4,8 +4,7 @@ class UserProfileManager(BaseUserManager):
             raise ValueError('Users must have an email address.')
 
         email = self.normalize_email(email)
-        owner = name
-        user = self.model(assignment_list, owner=owner)
+        user = self.model(assignment_list)
 
 
         user.set_password(password)
@@ -14,7 +13,6 @@ class UserProfileManager(BaseUserManager):
         return user
 
     def create_superuser(self, title_list, password):
-        owner = name
         user = self.create_user(title_list, password)
         user.is_superuser = True
         user.is_staff = True
@@ -35,4 +33,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = [required_list]
 
     def get_short_name(self):
+        return self.name
+
+    @property
+    def owner(self):
         return self.name
