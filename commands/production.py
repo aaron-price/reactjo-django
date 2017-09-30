@@ -13,36 +13,32 @@ def production():
 
         2. > git init
 
-        3. > git add -A
+        3. > heroku login                             # Enter your login credentials
 
-        4. > git commit -m "Initialize"
+        4. > heroku create                            # Copy the URL it gives you
 
-        5. > heroku login                             # Enter your login credentials
-
-        6. > heroku create                            # Copy the URL it gives you
-
-        7. Add that URL (as a string) to the ALLOWED_HOSTS list of settings/production.py.
+        5. Add that URL (as a string) to the ALLOWED_HOSTS list of settings/production.py.
             Leave off the 'https://' and the trailing slash
 
-        8. > heroku config:set DISABLE_COLLECTSTATIC=1
+        6. > heroku config:set DISABLE_COLLECTSTATIC=1
 
-        9. > heroku config:set IS_PRODUCTION=True
+        7. > heroku config:set IS_PRODUCTION=True
 
-        10. > heroku addons:create heroku-postgresql   # Create a database
+        8. > heroku addons:create heroku-postgresql   # Create a database
 
-        11. > git add -A
+        9. > git add -A
 
-        12. > git commit -m "Updated ALLOWED_HOSTS"
+        10. > git commit -m "Prepare app for production"
 
-        13. > git push heroku master
+        11. > git push heroku master
 
         (Optionally, if you want a superuser in production)
-        13. > heroku run bash
+        12. > heroku run bash
 
-        14. > python manage.py createsuperuser
+        13. > python manage.py createsuperuser
             # Fill out your info...
 
-        15. > exit
+        14. > exit
 
 
         Note that if you visit the URL, the site is an unstyled mess. This is
