@@ -10,7 +10,7 @@ def isAuth(request):
     return not request.user.is_anonymous()
 
 def isOwner(request, obj):
-    return request.user == obj.owner
+    return str(request.user) == (obj.owner)
 
 def isStaff(request):
     return request.user.is_staff

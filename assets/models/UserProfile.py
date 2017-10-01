@@ -33,3 +33,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.name
+
+    @property
+    def owner(self):
+        return self.name
