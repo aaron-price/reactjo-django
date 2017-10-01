@@ -3,6 +3,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = models.UserProfile
         fields = (
             'id'fields_list,
+            'owner',
             'password',
             'is_staff',
             'is_superuser',
