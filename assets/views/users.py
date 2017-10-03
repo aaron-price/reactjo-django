@@ -1,5 +1,4 @@
 class UserProfileViewSet(viewsets.ModelViewSet):
-    """Handles creating, reading, and updating profiles."""
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
     authentication_classes = (TokenAuthentication,)
