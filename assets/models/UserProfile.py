@@ -36,4 +36,4 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     @property
     def owner(self):
-        return self.name
+        return self.pk
