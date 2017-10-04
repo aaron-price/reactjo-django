@@ -74,6 +74,9 @@ def build_structure():
     cfg = get_cfg()
     if cfg['need_users'] == 'True':
         scaffold_users()
+        f('$out/README.md', 'w', '$assets/README_users.md')
+    else:
+        f('$out/README.md', 'w', '$assets/README.md')
 
     # Migrations
     if boolean_input('Run DB migrations now?', 'y'):
