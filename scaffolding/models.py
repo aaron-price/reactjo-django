@@ -132,6 +132,7 @@ def get_model_field():
                 'related_name =',
                 cfg['current_scaffold']['model']['title'].lower()
             )
+            field_object['options'].append('related_name = ' + quote(related_name))
 
     if field_type in ['ForeignKey', 'OneToOneField']:
         choices = [
