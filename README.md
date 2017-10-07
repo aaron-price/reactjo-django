@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/aaron-price/reactjo-nextjs.svg?branch=master)](https://travis-ci.org/aaron-price/reactjo-nextjs)
+
 # Installation
 This is a default extension for reactjo, so just install reactjo.
 
