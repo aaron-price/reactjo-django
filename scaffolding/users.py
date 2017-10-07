@@ -43,8 +43,10 @@ def scaffold_config():
     cfg['current_scaffold']['model'] = model
     cfg['current_scaffold']['need_owner'] = 'True'
     set_cfg(cfg)
-    return_model()
 
+    print(' ')
+    print(' ')
+    print(paint(return_model(), 'green'))
     print(' ')
     print(' ')
     if boolean_input('Add some fields to the user model?'):
