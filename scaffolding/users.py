@@ -1,5 +1,6 @@
 from helpers.config_manager import get_cfg, set_cfg
 from helpers.ui import boolean_input
+from helpers.compose import paint
 from scaffolding.models import get_model_field, return_model
 from scaffolding.permission import scaffold_permission
 from helpers.file_manager import file_manager as f
