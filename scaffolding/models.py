@@ -33,6 +33,10 @@ def return_model():
         )
         new_model = new_model + str_method
 
+    if cfg['current_scaffold']['need_owner'] == 'True':
+        string = 'def owner_name(self):\n        return self.owner.name\n    '
+        new_model = new_model + '\n\n' + str_method
+
     return new_model
 
 def get_model_field():
@@ -221,13 +225,6 @@ def scaffold_model():
             'type': 'ForeignKey',
             'options': ['UserProfile', 'on_delete = models.CASCADE'],
             'string': f"owner = models.ForeignKey('UserProfile', on_delete = models.CASCADE)\n    "
-        })
-
-        cfg['current_scaffold']['model']['fields'].append({
-            'title': 'owner_name',
-            'type': 'method',
-            'options': [],
-            'string': f"def owner_name(self):\n        return self.owner.name\n    "
         })
 
         cfg['current_scaffold']['need_owner'] = 'True'
