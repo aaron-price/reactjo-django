@@ -175,7 +175,7 @@ def get_model_field():
     print('========================')
     print('Your model so far:')
     print(' ')
-    print(return_model())
+    print(paint(return_model(), 'green'))
     print('========================')
 
     another_field = boolean_input('Make another field? ')
