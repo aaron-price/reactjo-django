@@ -222,6 +222,14 @@ def scaffold_model():
             'options': ['UserProfile', 'on_delete = models.CASCADE'],
             'string': f"owner = models.ForeignKey('UserProfile', on_delete = models.CASCADE)\n    "
         })
+
+        cfg['current_scaffold']['model']['fields'].append({
+            'title': 'owner_name',
+            'type': 'method',
+            'options': [],
+            'string': f"def owner_name(self):\n        return self.owner.name\n    "
+        })
+
         cfg['current_scaffold']['need_owner'] = 'True'
     else:
         cfg['current_scaffold']['need_owner'] = 'False'
