@@ -35,7 +35,7 @@ def return_model():
 
     if cfg['current_scaffold']['need_owner'] == 'True':
         string = 'def owner_name(self):\n        return self.owner.name\n    '
-        new_model = new_model + '\n\n' + string
+        new_model = new_model + '\n    ' + string
 
     return new_model
 

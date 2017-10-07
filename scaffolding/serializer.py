@@ -10,6 +10,7 @@ def scaffold_serializer():
     cfg = get_cfg()
     fields_arr = cfg['current_scaffold']['model']['fields']
     titles = [quote(field['title']) for field in fields_arr]
+    titles.append(quote('owner_name'))
     fields_str = ', '.join(titles)
     fields_str = "'pk', " + fields_str
 
