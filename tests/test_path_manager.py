@@ -1,7 +1,8 @@
 from tests.config_mock import setup_config, teardown_config
 from helpers.path_manager import mkdir, parse_shortcuts
-from helpers.extension_constants import RC_HOME, OUTPUT_HOME
+from helpers.extension_constants import RC_HOME
 import os
+OUTPUT_HOME = 'backend'
 
 def test_parse_shortcuts():
     setup_config()

@@ -10,7 +10,8 @@ types = [
     'FileField','FilePathField','FloatField','ImageField',
     'IntegerField','GenericIPAddressField','NullBooleanField',
     'PositiveIntegerField','PositiveSmallIntegerField','SlugField',
-    'TextField','TimeField','URLField','UUIDField','ForeignKey'
+    'TextField','TimeField','URLField','UUIDField',
+    'ForeignKey','ManyToManyField','OneToOneField'
 ]
 lower_types = [t.lower() for t in types]
 
@@ -31,6 +32,10 @@ def return_model():
             title = cfg['current_scaffold']['model']['__str__'],
         )
         new_model = new_model + str_method
+
+    if cfg['current_scaffold']['need_owner'] == 'True':
+        string = 'def owner_name(self):\n        return self.owner.name\n    '
+        new_model = new_model + '\n    ' + string
 
     return new_model
 
@@ -81,7 +86,7 @@ def get_model_field():
             field_object['options'].append('max_length = ' + max_length)
 
     # FilePathField specific arguments
-    if field_type in ['FilePathField', 'ImageField']:
+    if field_type in ['FilePathField']:
         path = string_input('path = ')
         field_object['options'].append('path = ' + quote(path))
 
@@ -120,18 +125,35 @@ def get_model_field():
         field_object['options'].append('max_length = ' + max_length)
 
     foreign = False
-    if field_type == 'ForeignKey':
+    if field_type in ['ForeignKey', 'OneToOneField', 'ManyToManyField']:
         models = [model['title'] for model in cfg['models']]
         models.append('self')
         other_model = options_input('Choose a foreign model', models)
         field_object['options'].append(quote(other_model))
 
+        if boolean_input('Add a related_name option?', 'n'):
+            related_name = string_input(
+                'related_name =',
+                cfg['current_scaffold']['model']['title'].lower()
+            )
+            field_object['options'].append('related_name = ' + quote(related_name))
+
+    if field_type in ['ForeignKey', 'OneToOneField']:
         choices = [
             'CASCADE', 'PROTECT', 'SET_NULL',
             'SET_DEFAULT','SET()','DO_NOTHING'
         ]
         on_delete = options_input('on_delete ', choices, 'CASCADE')
         field_object['options'].append('on_delete = models.' + on_delete)
+
+    # If we missed anything, let the user add it now.
+    def more_options():
+        if boolean_input(
+            'Add another option to' + field_object['title'] + '?',
+            'n'):
+            new_option = string_input("enter it now. (e.g. foo='bar')")
+            field_object['options'].append(new_option)
+            more_options()
 
     # Build the string
     ftitle = field_object['title']
@@ -148,6 +170,7 @@ def get_model_field():
         'options': field_object['options'],
         'string': f'{ftitle} = models.{ftype}({foptions})\n    '
     })
+
     set_cfg(cfg)
     print('========================')
     print('Your model so far:')
@@ -203,6 +226,7 @@ def scaffold_model():
             'options': ['UserProfile', 'on_delete = models.CASCADE'],
             'string': f"owner = models.ForeignKey('UserProfile', on_delete = models.CASCADE)\n    "
         })
+
         cfg['current_scaffold']['need_owner'] = 'True'
     else:
         cfg['current_scaffold']['need_owner'] = 'False'

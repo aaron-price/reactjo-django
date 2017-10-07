@@ -10,14 +10,18 @@ def boolean_input(string, default = False):
 
 	# If input is optional
 	if default in ['y','n']:
-		answer = input(
-			paint(string + " (y/n default " + default + "): ")).lower()
-		if answer == 'y':
-			return True
-		elif answer == 'n':
-			return False
-		else:
-			return default == 'y'
+		def ask_optional():
+			answer = input(
+				paint(string + " (y/n default " + default + "): ")).lower()
+			if answer == 'y':
+				return True
+			elif answer == 'n':
+				return False
+			elif answer == '':
+				return default == 'y'
+			else:
+				ask_optional()
+		return ask_optional()
 
 	# If input is required
 	while answer not in ['y','n']:
