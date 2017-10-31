@@ -6,10 +6,10 @@ from helpers.compose import paint
 from helpers.compose import quote
 
 types = [
-    'AutoField', 'BigAutoField', 'BigIntegerField', 'BinaryField',
-    'BooleanField', 'CharField', 'CommaSeparatedIntegerField',
-    'DateField','DecimalField','DurationField','EmailField',
-    'FileField','FilePathField','FloatField','ImageField',
+    'AutoField','BigAutoField','BigIntegerField','BinaryField',
+    'BooleanField','CharField','CommaSeparatedIntegerField',
+    'DateField','DateTimeField','DecimalField','DurationField',
+    'EmailField','FileField','FilePathField','FloatField','ImageField',
     'IntegerField','GenericIPAddressField','NullBooleanField',
     'PositiveIntegerField','PositiveSmallIntegerField','SlugField',
     'TextField','TimeField','URLField','UUIDField',
@@ -59,12 +59,17 @@ def get_model_field():
         field_object['options'].append('max_length = ' + ml)
 
     # Datefield specific arguments
-    if field_type in ['DateField', 'TimeField']:
-        auto_now = boolean_input('Use DateField auto_now? ')
-        auto_now_add = boolean_input('Use DateField auto_now_add? ')
+    if field_type in ['DateField', 'DateTimeField', 'TimeField']:
+        # auto_now_add and auto_now cannot be used together.
+        auto_now_add = str(boolean_input('Use DateField auto_now_add? '))
+        if auto_now_add != 'True':
+            auto_now = str(boolean_input('Use DateField auto_now? '))
 
-        field_object['options'].append('auto_now = ' + auto_now)
-        field_object['options'].append('auto_now_add = ' + auto_now_add)
+        # Set the option
+        if auto_now_add == 'True':
+            field_object['options'].append('auto_now_add = True')
+        elif auto_now == 'True':
+            field_object['options'].append('auto_now = True')
 
     # Decimalfield specific arguments
     if field_type == 'DecimalField':
@@ -100,13 +105,13 @@ def get_model_field():
         if max_length != None:
             field_object['options'].append('max_length = ' + max_length)
 
-        recursive = boolean_input('recursive', 'n')
+        recursive = str(boolean_input('recursive', 'n'))
         field_object['options'].append('recursive = ' + recursive)
 
-        allow_files = boolean_input('allow_files', 'y')
+        allow_files = str(boolean_input('allow_files', 'y'))
         field_object['options'].append('allow_files = ' + allow_files)
 
-        allow_folders = boolean_input('allow_folders', 'n')
+        allow_folders = str(boolean_input('allow_folders', 'n'))
         field_object['options'].append('allow_folders = ' + allow_folders)
 
     if field_type == 'ImageField':
