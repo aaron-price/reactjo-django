@@ -19,8 +19,8 @@ def content():
 	scaffold_model()
 	prev_path = os.getcwd()
 	os.chdir(f('$out', '$'))
-	subprocess.run(['python', 'manage.py', 'makemigrations'])
-	subprocess.run(['python', 'manage.py', 'migrate'])
+	subprocess.run([cfg['py_cmd'], 'manage.py', 'makemigrations'])
+	subprocess.run([cfg['py_cmd'], 'manage.py', 'migrate'])
 	os.chdir(prev_path)
 	wl('Ran migrations')
 
