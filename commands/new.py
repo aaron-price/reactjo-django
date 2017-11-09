@@ -4,7 +4,7 @@ from helpers.ui import boolean_input, string_input
 
 def new():
 	backend_name = string_input('Name the Django backend app:', 'backend')
-	need_users = boolean_input('Will you need user authentication?', 'y')
+	need_users = True # Kept for legacy
 	cfg = get_cfg()
 	cfg['need_users'] = str(need_users)
 	cfg['backend_name'] = backend_name

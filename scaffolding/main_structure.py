@@ -71,18 +71,15 @@ def build_structure():
         os.chdir(prev_path)
 
     # Users
-    cfg = get_cfg()
-    if cfg['need_users'] == 'True':
-        scaffold_users()
-        f('$out/README.md', 'w', '$assets/README_users.md')
-    else:
-        f('$out/README.md', 'w', '$assets/README.md')
+    scaffold_users()
+    f('$out/README.md', 'w', '$assets/README_users.md')
 
     # Migrations
+    cfg = get_cfg()
     if boolean_input('Run DB migrations now?', 'y'):
         os.chdir(f('$out', '$'))
-        subprocess.run(['python', 'manage.py', 'makemigrations'])
-        subprocess.run(['python', 'manage.py', 'migrate'])
+        subprocess.run([cfg['py_cmd'], 'manage.py', 'makemigrations'])
+        subprocess.run([cfg['py_cmd'], 'manage.py', 'migrate'])
         os.chdir(prev_path)
         wl('Ran some database migrations')
 
@@ -90,5 +87,5 @@ def build_structure():
         need_su = boolean_input('Would you like to create a superuser now?', 'y')
         if need_su:
             os.chdir(f('$out', '$'))
-            subprocess.run(['python', 'manage.py', 'createsuperuser'])
+            subprocess.run([cfg['py_cmd'], 'manage.py', 'createsuperuser'])
             os.chdir(prev_path)
