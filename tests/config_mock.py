@@ -16,19 +16,19 @@ def file_write(path, content):
     file.close()
 
 def setup_config():
-	src = file_read(config_asset_path)
-	target = config_destination_path
-	if not os.path.isdir(reactjorc_path):
-		os.mkdir(reactjorc_path)
-	file_write(target, src)
-	cfg = get_cfg()
-	super_root = os.getcwd()
-	project_name = 'www'
+    src = file_read(config_asset_path)
+    target = config_destination_path
+    if not os.path.isdir(reactjorc_path):
+        os.mkdir(reactjorc_path)
+    file_write(target, src)
+    cfg = get_cfg()
+    super_root = os.getcwd()
+    project_name = 'www'
 
-	cfg['paths']['super_root'] = super_root
-	cfg['paths']['project_root'] = os.path.join(super_root, project_name)
+    cfg['paths']['super_root'] = super_root
+    cfg['paths']['project_root'] = os.path.join(super_root, project_name)
 
-	set_cfg(cfg)
+    set_cfg(cfg)
 
 def teardown_config():
-	shutil.rmtree(reactjorc_path)
+    shutil.rmtree(reactjorc_path)

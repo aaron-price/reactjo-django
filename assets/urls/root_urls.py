@@ -6,7 +6,7 @@ from django.views.generic.base import RedirectView
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='api/', permanent=True)),
     url(r'^admin/', admin.site.urls),
-	url(r'^api/', include('api.urls'))
+    url(r'^api/', include('api.urls'))
 ]
 
 # Add debug toolbar route
