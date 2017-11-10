@@ -31,4 +31,4 @@ def setup_config():
     set_cfg(cfg)
 
 def teardown_config():
-shutil.rmtree(reactjorc_    path)
+    shutil.rmtree(reactjorc_path)
