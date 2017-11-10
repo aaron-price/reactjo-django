@@ -143,8 +143,8 @@ def build_settings(prev_path):
 
     cors = dedent("""\
     CORS_ORIGIN_WHITELIST = (
-    	'localhost:3000'
-    	'127.0.0.1:3000'
+        'localhost:3000'
+        '127.0.0.1:3000'
     )
 
     DEBUG_TOOLBAR_CONFIG = {
